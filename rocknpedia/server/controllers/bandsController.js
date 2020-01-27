@@ -16,7 +16,7 @@ bandsController.list = ((req, res) => {
     let sql = "SELECT name, foundation_year, band_image FROM band";
       connection.query(sql, (error, results) => {
         if (error) console.log(error);
-        res.send(results);
+        res.send('/bands');
       });
     
   } catch {
@@ -41,7 +41,7 @@ bandsController.save = ((req, res, next) => {
         connection.query(
           sql,
           (results) => {
-            res.send(results);
+            res.send('/bands');
           }
         );
       }
@@ -50,25 +50,16 @@ bandsController.save = ((req, res, next) => {
 });
 
 bandsController.delete = ((req, res) => {
-  const { id } = req.params;
+  const { band_id } = req.params;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
-    const { isAdmin } = jwt.verify(token, myKey);
-    let sql = "SELECT id, username, isAdmin FROM usuarios WHERE id = " + id;
-    let sql2 = "SELECT id, username FROM usuarios WHERE id = " + id;
-    if (isAdmin) {
+    let sql = `DELETE from band WHERE band_id = ${band_id}`;
+    if (token) {
       connection.query(sql, (error, results) => {
         if (error) console.log(error);
-        res.send(results.map (user => ({ ...user, isAdmin: Boolean(user.isAdmin)})));
+        res.send('/bands');
       });
     }
-    else {
-      connection.query(sql2, (error, results) => {
-        if (error) console.log(error);
-        res.send(results);
-      });
-    }
-    
   } catch {
     res.sendStatus(401);
   }
