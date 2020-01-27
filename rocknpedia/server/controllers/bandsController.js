@@ -1,109 +1,78 @@
-// const express = require("express");
-// const server = express();
-// const jwt = require("jsonwebtoken");
-// const mysql = require("mysql");
-// const sha1 = require("sha1");
-// const cors = require("cors");
-// let myKey = "myprivatekey";
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const mysql = require("mysql");
+const sha1 = require("sha1");
+const cors = require("cors");
+let myKey = "rocknpediakey";
+let router = express.Router();
 
-// server.get("/users", (req, res) => {
-//   try {
-//     const token = req.headers.authorization.replace("Bearer ", "");
-//     const { isAdmin } = jwt.verify(token, myKey);
-//     let sql = "SELECT id, username, isAdmin FROM usuarios";
-//     let sql2 = "SELECT id, username, isAdmin FROM usuarios";
-//     if (isAdmin) {
-//       connection.query(sql, (error, results) => {
-//         if (error) console.log(error);
-//         // res.send(results.map((usuarios) => ({ username: usuarios.username}))); // esto es la versión larga del resultado de abajo en el que se muestra solo el username
-//         // res.send(results.map(({ username }) => ({ username }))); con el destructuration, se podría sacar solo el id si quisiéramos
-//         res.send(results.map (user => ({ ...user, isAdmin: Boolean(user.isAdmin)})));
-//       });
-//     }
-//     else {
-//       connection.query(sql2, (error, results) => {
-//         if (error) console.log(error);
-//         // res.send(results.map((usuarios) => ({ username: usuarios.username}))); // esto es la versión larga del resultado de abajo en el que se muestra solo el username
-//         // res.send(results.map(({ username }) => ({ username }))); con el destructuration, se podría sacar solo el id si quisiéramos
-//         res.send(results);
-//       });
-//     }
+const connection = require("../config/db.js");
+
+const bandsController = {};
+
+//GET query for the bands info
+bandsController.list = ((req, res) => {
+  try {
+    let sql = "SELECT name, foundation_year, band_image FROM band";
+      connection.query(sql, (error, results) => {
+        if (error) console.log(error);
+        res.send(results);
+      });
     
-//   } catch {
-//     res.sendStatus(401);
-//   }
-// });
-
-// // versión guapa de Ángel
-
-// // server.get("/users", (request, response) => {
-// //   try {
-// //     const token = request.headers.authorization.replace("Bearer ", "");
-// //     const { isAdmin } = jwt.verify(token, myPrivateKey);
-// //     const query = `SELECT id, username${isAdmin ? ", isAdmin" : ""} FROM users`;
-// //     connection.query(query, (error, results) => {
-// //       if (error) console.log(error);
-// //       response.send(
-// //         isAdmin
-// //           ? results.map(user => ({ ...user, isAdmin: Boolean(isAdmin) }))
-// //           : results
-// //       );
-// //     });
-// //   } catch {
-// //     response.sendStatus(401);
-// //   }
-// // });
+  } catch {
+    res.sendStatus(400);
+  }
+});
 
 
-// //METIENDO UN NUEVO USUARIO Y CONTROLANDO QUE NO EXISTA
-// server.post("/users", (req, res, next) => {
-//   let username = req.body.username;
-//   let password = sha1(req.body.password);
-//   connection.query(
-//     "INSERT INTO usuarios SET?",
-//     {
-//       username,
-//       password
-//     },
-//     (err, results) => {
-//       if (err) {
-//         res.status(400).send("El usuario ya existe");
-//       } else {
-//         connection.query(
-//           `SELECT id, username FROM usuarios WHERE username = '${username}'`,
-//           (err, results) => {
-//             res.send(results[0]);
-//           }
-//         );
-//       }
-//     }
-//   );
-// });
+//Post of a new band
+bandsController.save = ((req, res, next) => {
+  let name = req.body.name;
+  let foundation_year = req.body.foundation_year;
+  let band_image = req.body.band_image;
+  let sql = `INSERT INTO band (name, foundation_year, band_image) values ('${name}', ${foundation_year}, '${band_image}')`;
+  console.log(sql)
+  connection.query(
+    sql,
+    (err) => {
+      if (err) {
+        res.status(400).send("La banda ya existe");
+      } else {
+        connection.query(
+          sql,
+          (results) => {
+            res.send(results);
+          }
+        );
+      }
+    }
+  );
+});
 
-// server.get("/users/:id", (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const token = req.headers.authorization.replace("Bearer ", "");
-//     const { isAdmin } = jwt.verify(token, myKey);
-//     let sql = "SELECT id, username, isAdmin FROM usuarios WHERE id = " + id;
-//     let sql2 = "SELECT id, username FROM usuarios WHERE id = " + id;
-//     if (isAdmin) {
-//       connection.query(sql, (error, results) => {
-//         if (error) console.log(error);
-//         res.send(results.map (user => ({ ...user, isAdmin: Boolean(user.isAdmin)})));
-//       });
-//     }
-//     else {
-//       connection.query(sql2, (error, results) => {
-//         if (error) console.log(error);
-//         res.send(results);
-//       });
-//     }
+bandsController.delete = ((req, res) => {
+  const { id } = req.params;
+  try {
+    const token = req.headers.authorization.replace("Bearer ", "");
+    const { isAdmin } = jwt.verify(token, myKey);
+    let sql = "SELECT id, username, isAdmin FROM usuarios WHERE id = " + id;
+    let sql2 = "SELECT id, username FROM usuarios WHERE id = " + id;
+    if (isAdmin) {
+      connection.query(sql, (error, results) => {
+        if (error) console.log(error);
+        res.send(results.map (user => ({ ...user, isAdmin: Boolean(user.isAdmin)})));
+      });
+    }
+    else {
+      connection.query(sql2, (error, results) => {
+        if (error) console.log(error);
+        res.send(results);
+      });
+    }
     
-//   } catch {
-//     res.sendStatus(401);
-//   }
-// });
+  } catch {
+    res.sendStatus(401);
+  }
+});
 
 // server.put("/users/:id", (req, res) => {
 //   const { id } = req.params;
@@ -329,3 +298,5 @@
 //     res.sendStatus(401);
 //   }
 // });
+
+module.exports = bandsController;
