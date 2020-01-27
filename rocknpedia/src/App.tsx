@@ -4,7 +4,7 @@ import './App.css';
 
 const App: React.FC = () => {
   return (
-    <span>emilio</span>
+    <div>Hola, esto es RockNPedia</div>
   );
 }
 
