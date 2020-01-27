@@ -4,34 +4,22 @@ const jwt = require("jsonwebtoken");
 const mysql = require("mysql");
 const sha1 = require("sha1");
 const cors = require("cors");
-let myKey = "myprivatekey";
+let myKey = "rocknpediakey";
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "emilio"
-});
+var bandsRouter = require('./routes/bands');
+var usersRouter = require('./routes/users');
+const connection = require("./config/db.js")
 
-connection.connect(function(error) {
-  if (error) {
-    throw error;
-  } else {
-    console.log("conexión correcta");
-  }
-});
 
 server.use(express.json());
 server.use(express.urlencoded());
 server.use(cors());
 
 server.post("/auth", (request, response) => {
-  // let user = request.body.user;
-  // let password = request.body.password;
   const { username, password } = request.body;
   connection.query(
     `SELECT *
-      FROM usuarios
+      FROM user
       WHERE username = '${username}'
       AND password = sha1('${password}');`,
     function(error, results) {
