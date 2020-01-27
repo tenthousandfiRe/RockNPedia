@@ -97,14 +97,14 @@ usersController.save = ((req, res, next) => {
     }
   );
 });
-
+//HERE WE LIST USERS BY ID
 usersController.listId = ((req, res) => {
-  const { user_id } = req.params;
+  const { id } = req.params;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const { is_admin } = jwt.verify(token, myKey);
-    let sql = "SELECT user_id, username, is_admin FROM usuarios WHERE user_id = " + id;
-    let sql2 = "SELECT user_id, username FROM usuarios WHERE user_id = " + id;
+    let sql = `SELECT user_id, username, is_admin, user_image FROM user WHERE user_id = ${id} `;
+    let sql2 = `SELECT user_id, username, is_admin, user_image FROM user WHERE user_id = ${id} `;
     if (is_admin) {
       connection.query(sql, (error, results) => {
         if (error) console.log(error);
@@ -122,22 +122,22 @@ usersController.listId = ((req, res) => {
     res.sendStatus(401);
   }
 });
-
+//HERE WE UPDATE USERS BY ID 
 usersController.update = ((req, res) => {
   const { id } = req.params;
   let password = sha1(req.body.password);
-  let is_admin = req.body.is_admin;
+  let {is_admin, username, user_image } = req.body;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const Admin = jwt.verify(token, myKey).is_admin;
    
     if (Admin) {
-      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, (error, results) => {
+      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password, is_admin, username, user_image }, (error, results) => {
         if (error) console.log(error);
         res.send("usuario actualizado");
       });
     } else {
-      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password }, (error, results) => {
+      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password, is_admin, username, user_image }, (error, results) => {
         if (error) console.log(error);
         res.send("/users");
       });
@@ -146,10 +146,11 @@ usersController.update = ((req, res) => {
     res.sendStatus(401);
   }
 });
-
+//HERE DELETE USERS
 usersController.delete = ((req, res) => {
   const { id } = req.params;
   let password = sha1(req.body.password);
+  
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const Admin = jwt.verify(token, myKey).is_admin;
