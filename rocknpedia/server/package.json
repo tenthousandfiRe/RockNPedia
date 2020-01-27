@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./bin/www"
+    "start": "nodemon index.js"
   },
-  "author": "Emilio",
+  "author": "ARR",
   "license": "ISC",
   "dependencies": {
     "@types/cors": "^2.8.6",
