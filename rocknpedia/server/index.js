@@ -272,50 +272,6 @@ server.get("/userBooks/:id", (req, res) => {
   }
 });
 
-//post de los libros del usuario a través de la tabla intermedia
-server.post("/userBooks/:id/:idBook/", (req, res) => {// copia de seguridad
-  const { id, idBook } = req.params;
-  try {
-    const token = req.headers.authorization.replace("Bearer ", "");
-    const idUser = jwt.verify(token, myKey).id;
-    let sql = `INSERT INTO user_books (id_user, id_book) VALUES ('${id}', '${idBook}')`;
-    console.log(sql)
-    if (idUser) {
-      connection.query(sql, (error, results) => {
-        if (error) res.send("no se puede hacer esto");
-        res.send(results);
-      });
-    }
-    else {
-      res.send("no puedes añadir este libro, primo")
-    }
-    
-  } catch {
-    res.sendStatus(401);
-  }
-});
-
-//delete de los libros del usuario a través de la tabla intermedia
-server.delete("/userBooks/:id/:idBook/", (req, res) => {// copia de seguridad
-  const { id, idBook } = req.params;
-  try {
-    const token = req.headers.authorization.replace("Bearer ", "");
-    const idUser = jwt.verify(token, myKey).id;
-    let sql = `DELETE FROM user_books WHERE id_book = '${idBook}' and id_user = '${id}'`;
-    if (idUser) {
-      connection.query(sql, (error, results) => {
-        if (error) console.log(error);
-        res.send(results);
-      });
-    }
-    else {
-      res.send("no puedes borrar este libro, primo")
-    }
-    
-  } catch {
-    res.sendStatus(401);
-  }
-});
 
 
 
