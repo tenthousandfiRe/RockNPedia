@@ -6,13 +6,16 @@ const sha1 = require("sha1");
 const cors = require("cors");
 let myKey = "rocknpediakey";
 
-var bandsRouter = require('./routes/bands');
-var usersRouter = require('./routes/users');
+//var bandsRouter = require('./routes/bands');
+var usersRouter = require('./routes/users.js');
 const connection = require("./config/db.js");
 
 
 server.use(express.json());
 server.use(express.urlencoded());
 server.use(cors());
+server.use('/users', usersRouter)
+
+
 
 server.listen(3003);
