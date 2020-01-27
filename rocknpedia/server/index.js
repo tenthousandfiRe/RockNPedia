@@ -8,7 +8,7 @@ let myKey = "rocknpediakey";
 
 var bandsRouter = require('./routes/bands');
 var usersRouter = require('./routes/users');
-const connection = require("./config/db.js")
+const connection = require("./config/db.js");
 
 
 server.use(express.json());
@@ -38,53 +38,8 @@ server.post("/auth", (request, response) => {
   );
 });
 
-server.get("/users", (req, res) => {
-  try {
-    const token = req.headers.authorization.replace("Bearer ", "");
-    const { isAdmin } = jwt.verify(token, myKey);
-    let sql = "SELECT id, username, isAdmin FROM usuarios";
-    let sql2 = "SELECT id, username, isAdmin FROM usuarios";
-    if (isAdmin) {
-      connection.query(sql, (error, results) => {
-        if (error) console.log(error);
-        // res.send(results.map((usuarios) => ({ username: usuarios.username}))); // esto es la versión larga del resultado de abajo en el que se muestra solo el username
-        // res.send(results.map(({ username }) => ({ username }))); con el destructuration, se podría sacar solo el id si quisiéramos
-        res.send(results.map (user => ({ ...user, isAdmin: Boolean(user.isAdmin)})));
-      });
-    }
-    else {
-      connection.query(sql2, (error, results) => {
-        if (error) console.log(error);
-        // res.send(results.map((usuarios) => ({ username: usuarios.username}))); // esto es la versión larga del resultado de abajo en el que se muestra solo el username
-        // res.send(results.map(({ username }) => ({ username }))); con el destructuration, se podría sacar solo el id si quisiéramos
-        res.send(results);
-      });
-    }
-    
-  } catch {
-    res.sendStatus(401);
-  }
-});
 
-// versión guapa de Ángel
 
-// server.get("/users", (request, response) => {
-//   try {
-//     const token = request.headers.authorization.replace("Bearer ", "");
-//     const { isAdmin } = jwt.verify(token, myPrivateKey);
-//     const query = `SELECT id, username${isAdmin ? ", isAdmin" : ""} FROM users`;
-//     connection.query(query, (error, results) => {
-//       if (error) console.log(error);
-//       response.send(
-//         isAdmin
-//           ? results.map(user => ({ ...user, isAdmin: Boolean(isAdmin) }))
-//           : results
-//       );
-//     });
-//   } catch {
-//     response.sendStatus(401);
-//   }
-// });
 
 
 //METIENDO UN NUEVO USUARIO Y CONTROLANDO QUE NO EXISTA
