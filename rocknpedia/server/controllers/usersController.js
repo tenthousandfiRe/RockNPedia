@@ -124,20 +124,20 @@ usersController.listId = ((req, res) => {
 });
 
 usersController.update = ((req, res) => {
-  const { user_id } = req.params;
+  const { id } = req.params;
   let password = sha1(req.body.password);
   let is_admin = req.body.is_admin;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const Admin = jwt.verify(token, myKey).is_admin;
-    let sql = "UPDATE user SET? WHERE user_id = " + user_id;
+   
     if (Admin) {
-      connection.query(sql, { password, is_admin }, (error, results) => {
+      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, (error, results) => {
         if (error) console.log(error);
-        res.send("/users");
+        res.send("usuario actualizado");
       });
     } else {
-      connection.query(sql, { password }, (error, results) => {
+      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password }, (error, results) => {
         if (error) console.log(error);
         res.send("/users");
       });
@@ -148,18 +148,18 @@ usersController.update = ((req, res) => {
 });
 
 usersController.delete = ((req, res) => {
-  const { user_id } = req.params;
+  const { id } = req.params;
   let password = sha1(req.body.password);
-  let is_admin = req.body.is_admin;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const Admin = jwt.verify(token, myKey).is_admin;
     const aidi = jwt.verify(token, myKey).user_id;
-    let sql = "DELETE from user WHERE user_id = " + user_id;
+    
     if (Admin) {
-      connection.query(sql, { password,   }, (error, results) => {
+        
+      connection.query(`DELETE from user WHERE user_id = ${id};`, (error, results) => {
         if (error) console.log(error);
-        res.send("/users");
+        res.send("tu user ha sido borrado");
       });
     } else if (aidi == user_id) {
       connection.query(sql, { password }, (error, results) => {
