@@ -10,6 +10,7 @@ import { generateAccountFromToken } from "./utils";
 import Login from './components/login/index'
 import Register from "./components/register";
 import Navbar from "./components/navbar";
+import Bands from "./components/bands/"
 
 interface IGlobalStateProps {
   account: IAccount | null;
@@ -34,6 +35,12 @@ class App extends React.PureComponent<TProps> {
     return <>
      <BrowserRouter>
      <Route path='/' component={Navbar} />
+     {/* <Route path='/' component={Login} /> */}
+     {/* <Route path='/' component={Register} /> */}
+     <Route path='/' component={Bands} />
+
+
+
      
      
 
