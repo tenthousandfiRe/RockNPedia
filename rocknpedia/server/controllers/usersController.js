@@ -73,13 +73,15 @@ usersController.save = ((req, res, next) => {
   let password = sha1(req.body.password);
   let is_admin = req.body.is_admin;
   let user_image = req.body.user_image;
+  let rol = req.body.rol;
   connection.query(
     "INSERT INTO user SET?",
     {
       username,
       password,
       is_admin,
-      user_image
+      user_image,
+      rol
 
     },
     (err, result) => {
@@ -103,8 +105,8 @@ usersController.listId = ((req, res) => {
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const { is_admin } = jwt.verify(token, myKey);
-    let sql = `SELECT user_id, username, is_admin, user_image FROM user WHERE user_id = ${id} `;
-    let sql2 = `SELECT user_id, username, is_admin, user_image FROM user WHERE user_id = ${id} `;
+    let sql = `SELECT user_id, username, is_admin, user_image, rol FROM user WHERE user_id = ${id} `;
+    let sql2 = `SELECT user_id, username, is_admin, user_image, rol FROM user WHERE user_id = ${id} `;
     if (is_admin) {
       connection.query(sql, (error, results) => {
         if (error) console.log(error);
@@ -126,18 +128,18 @@ usersController.listId = ((req, res) => {
 usersController.update = ((req, res) => {
   const { id } = req.params;
   let password = sha1(req.body.password);
-  let {is_admin, username, user_image } = req.body;
+  let {is_admin, username, user_image, rol } = req.body;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const Admin = jwt.verify(token, myKey).is_admin;
    
     if (Admin) {
-      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password, is_admin, username, user_image }, (error, results) => {
+      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password, is_admin, username, user_image, rol }, (error, results) => {
         if (error) console.log(error);
         res.send("usuario actualizado");
       });
     } else {
-      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password, is_admin, username, user_image }, (error, results) => {
+      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password, is_admin, username, user_image, rol }, (error, results) => {
         if (error) console.log(error);
         res.send("/users");
       });
