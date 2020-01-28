@@ -1,11 +1,21 @@
 import React from 'react';
 import './App.css';
+import "bulma/css/bulma.min.css";
+import { BrowserRouter,Switch, Route,Redirect, Link } from "react-router-dom";
 
+interface IGlobalStateProps {
 
-const App: React.FC = () => {
-  return (
-    <div>Hola, esto es RockNPedia</div>
-  );
 }
 
-export default App;
+interface IGlobalActionProps {
+
+}
+class App extends React.PureComponent {
+render() {
+
+  return (
+    <> </>
+  );
+
+}
+}
