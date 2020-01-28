@@ -15,7 +15,7 @@ interface IState {
     username: string;
     password: string;
     confirmation: string;
-    error: string
+    error: string;
 }
 
 type TProps = IProps & IGlobalActionProps;
@@ -67,24 +67,24 @@ class Login extends React.PureComponent<TProps, IState> {
     render() {
         const { username, password } = this.state;
         return (
-            <div className="card">
-                <div className="card-content">
+            <div className="form-group">
+                <div className="form-group">
                     <div className="field">
-                        <label className="label">Username</label>
+                        <label className="label"><strong>Username</strong></label>
                         <div className="control">
                             <input
-                                className="input"
+                                className="form-control"
                                 type="text"
                                 value={username}
                                 onChange={this.onUsernameChange}
                             />
                         </div>
                     </div>
-                    <div className="field">
-                        <label className="label">Password</label>
+                    <div className="form-group">
+                        <label className="label"><strong>Password</strong></label>
                         <div className="control">
                             <input
-                                className="input"
+                                className="form-control"
                                 type="password"
                                 value={password}
                                 onChange={this.onPasswordChange}
@@ -94,7 +94,7 @@ class Login extends React.PureComponent<TProps, IState> {
                     <div className="field is-grouped">
                         <div className="control">
                             <button
-                                className="button is-link"
+                                className="btn btn-primary mt-3"
                                 disabled={username.length === 0 || password.length === 0}
                                 onClick={this.login}
                             >
