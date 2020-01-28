@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import "bulma/css/bulma.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from "react-redux";
 import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
 import { SetAccountAction } from "./redux/actions";
@@ -8,6 +8,7 @@ import { IStore } from "./interfaces/IStore";
 import { IAccount } from "./interfaces/IAccount";
 import { generateAccountFromToken } from "./utils";
 import Login from './components/login/index'
+import Bands from './components//bands/index'
 
 interface IGlobalStateProps {
   account: IAccount | null;
@@ -32,7 +33,7 @@ class App extends React.PureComponent<TProps> {
     return <>
      <BrowserRouter>
      <Route path='/' component={Login} />
-
+     <Route path='/' component={Bands} />
      </BrowserRouter>
      </>;
   }

@@ -1,19 +1,23 @@
 import { IAccount } from './../interfaces/IAccount';
-
-
+import { IBand, IBands } from './../interfaces/IBand'
 
 
 interface ISetAccountAction {
-    type: "SET_ACCOUNT";
-    payload: IAccount;
-  }
-  
-  interface ILogoutAction {
-    type: "LOGOUT";
-  }
+  type: "SET_ACCOUNT";
+  payload: IAccount;
+}
 
+interface ILogoutAction {
+  type: "LOGOUT";
+}
+
+interface IBandsAction {
+  type: "SET_BANDS";
+  payload: IBand[];
+}
 
 
 export type TAction =
-| ISetAccountAction
-| ILogoutAction;
+  | ISetAccountAction
+  | ILogoutAction
+  | IBandsAction
