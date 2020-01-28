@@ -97,6 +97,7 @@ class Login extends React.PureComponent<TProps, IState> {
                                 className="btn btn-primary mt-3"
                                 disabled={username.length === 0 || password.length === 0}
                                 onClick={this.login}
+                                data-dismiss="modal"
                             >
                                 Login
                   </button>
