@@ -1,27 +1,117 @@
 import React from 'react'
+import { connect } from "react-redux";
+import { IAccount } from "../../interfaces/IAccount";
+import { myFetch, generateAccountFromToken } from "../../utils";
+import { SetAccountAction } from "../../redux/actions"
 
 
 interface IProps {}
 
 interface IGlobalActionProps {
+    setAccount(account: IAccount): void;
 }
 
 interface IState {
-  username: string;
-  password: string;
-  confirmation: string;
+    username: string;
+    password: string;
+    confirmation: string;
+    error: string
 }
 
 type TProps = IProps & IGlobalActionProps;
 
 class Login extends React.PureComponent<TProps, IState> {
-    constructor(props: TProps){
+    constructor(props: TProps) {
         super(props);
 
         this.state = {
             username: "",
             password: "",
-            confirmation: ""
+            confirmation: "",
+            error: ""
         }
+
+        this.onUsernameChange = this.onUsernameChange.bind(this);
+        this.onPasswordChange = this.onPasswordChange.bind(this);
+        this.login = this.login.bind(this);
     }
-}
+
+    onUsernameChange(event: any) {
+        const username = event.target.value;
+        this.setState({ username, error: "" });
+    }
+
+    onPasswordChange(event: any) {
+        const password = event.target.value;
+        this.setState({ password, error: "" });
+    }
+
+    login() {
+        const { setAccount } = this.props;
+        const { username, password } = this.state;
+        myFetch({
+          path: "/users/auth",
+          method: "POST",
+          json: { username, password }
+        }).then(json => {
+          if (json) {
+            const { token } = json;
+            localStorage.setItem("token", token);
+            setAccount(generateAccountFromToken(token));
+          } else {
+            this.setState({ error: "Credenciales inválidas" });
+          }
+        });
+      }
+
+    render() {
+        const { username, password } = this.state;
+        return (
+            <div className="card">
+                <div className="card-content">
+                    <div className="field">
+                        <label className="label">Username</label>
+                        <div className="control">
+                            <input
+                                className="input"
+                                type="text"
+                                value={username}
+                                onChange={this.onUsernameChange}
+                            />
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Password</label>
+                        <div className="control">
+                            <input
+                                className="input"
+                                type="password"
+                                value={password}
+                                onChange={this.onPasswordChange}
+                            />
+                        </div>
+                    </div>
+                    <div className="field is-grouped">
+                        <div className="control">
+                            <button
+                                className="button is-link"
+                                disabled={username.length === 0 || password.length === 0}
+                                onClick={this.login}
+                            >
+                                Login
+                  </button>
+                            {this.state.error}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+};
+
+const mapDispatchToProps: IGlobalActionProps = {
+    setAccount: SetAccountAction
+};
+
+export default connect(null, mapDispatchToProps)(Login);
