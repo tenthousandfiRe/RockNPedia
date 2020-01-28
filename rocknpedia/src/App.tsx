@@ -8,7 +8,8 @@ import { IStore } from "./interfaces/IStore";
 import { IAccount } from "./interfaces/IAccount";
 import { generateAccountFromToken } from "./utils";
 import Login from './components/login/index'
-import Bands from './components//bands/index'
+import Register from "./components/register";
+import Navbar from "./components/navbar";
 
 interface IGlobalStateProps {
   account: IAccount | null;
@@ -32,8 +33,11 @@ class App extends React.PureComponent<TProps> {
     const { account } = this.props;
     return <>
      <BrowserRouter>
-     <Route path='/' component={Login} />
-     <Route path='/' component={Bands} />
+     <Route path='/' component={Navbar} />
+     
+     
+
+
      </BrowserRouter>
      </>;
   }
