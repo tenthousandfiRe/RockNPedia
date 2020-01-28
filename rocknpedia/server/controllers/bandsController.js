@@ -16,7 +16,7 @@ bandsController.list = ((__, res) => {
     let sql = "SELECT name, foundation_year, band_image FROM band";
       connection.query(sql, (error, results) => {
         if (error) console.log(error);
-        res.send('/bands');
+        res.send(results);
       });
     
   } catch {
@@ -41,7 +41,7 @@ bandsController.save = ((req, res) => {
         connection.query(
           sql,
           (results) => {
-            res.send('/bands');
+            res.send(results);
           }
         );
       }

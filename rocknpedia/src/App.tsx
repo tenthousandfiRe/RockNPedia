@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import "bulma/css/bulma.min.css";
 
 
 const App: React.FC = () => {
