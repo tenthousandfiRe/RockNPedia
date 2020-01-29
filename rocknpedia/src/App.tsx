@@ -12,8 +12,10 @@ import Register from "./components/register";
 import Navbar from "./components/navbar";
 import Bands from "./components/bands/";
 import BandDetails from "./components/bands/bandDetails/";
-import InsertBand from "./components/bands/insertBand/"
+import InsertBand from "./components/bands/insertBand/";
 import { IBand } from "./interfaces/IBand";
+import userProfile from "./components/userprofile/index"
+
 
 interface IGlobalStateProps {
   account: IAccount | null;
@@ -46,6 +48,7 @@ class App extends React.PureComponent<TProps> {
      <Route path='/' exact component={Bands} />
      <Route path={`/bands/${band_id}`} exact component={BandDetails} />
      {/* <Route path='/' exact component={InsertBand} /> */}
+     <Route path='/userProfile' exact component={userProfile} />
      </BrowserRouter>
      </>;
   }

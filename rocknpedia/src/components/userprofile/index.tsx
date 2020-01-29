@@ -79,7 +79,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       const avatar = this.inputFileRef.current.files[0];
       const formData = new FormData();
       formData.append("avatar", avatar);
-      fetch("http://localhost:3003/avatar", {
+      fetch("http://localhost:3003/users/avatar", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`
@@ -87,7 +87,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
         body: formData
       });
     }
-  }
+  };
 
   render() {
     const { account } = this.props;

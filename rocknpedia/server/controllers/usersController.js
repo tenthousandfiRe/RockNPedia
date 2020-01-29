@@ -183,7 +183,7 @@ usersController.delete = (req, res) => {
 usersController.updateAvatar = (req, res) => {
   const avatar = req.file.originalname;
   const token = req.headers.authorization.replace("Bearer ", "");
-  const id = jwt.verify(token, myKey).id;
+  const id = jwt.verify(token, myKey).user_id;
   let sql = `UPDATE user SET user_image = "${avatar}" where user_id = ${id}`;
 
   console.log("entro a la query");
