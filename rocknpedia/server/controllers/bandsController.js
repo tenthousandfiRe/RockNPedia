@@ -5,6 +5,7 @@ const sha1 = require("sha1");
 const cors = require("cors");
 let myKey = "rocknpediakey";
 let router = express.Router();
+const multer = require("multer");
 
 const connection = require("../config/db.js");
 
@@ -25,14 +26,31 @@ bandsController.list = ((__, res) => {
 });
 
 
-//Post of a new band
-bandsController.save = ((req, res) => {
+
+
+
+//Post of a new band and an image using multer module
+const storage = multer.diskStorage({
+  destination: "public/avatars",
+  filename: (_req, file, cb) => {
+    const extension = file.originalname.slice(
+      file.originalname.lastIndexOf(".")
+    );
+    cb(null, new Date().valueOf() + extension);
+  }
+});
+const upload = multer({ storage });
+
+bandsController.save = (upload.single("avatar"), (req, res) => {
+  const token = req.headers.authorization.replace("Bearer ", "");
   let name = req.body.name;
   let foundation_year = req.body.foundation_year;
-  let band_image = req.body.band_image;
+  let band_image = request.file.filename;
   let sql = `INSERT INTO band (name, foundation_year, band_image) values ('${name}', ${foundation_year}, '${band_image}')`;
   console.log(sql)
-  connection.query(
+  connection.query
+  if (token) {
+    (
     sql,
     (err) => {
       if (err) {
@@ -47,7 +65,13 @@ bandsController.save = ((req, res) => {
       }
     }
   );
+  } else {
+    res.status(401).send("no puedes subir imágenes");
+  }
 });
+
+
+
 
 //Listing one band details 
 bandsController.getBand = (req, res) => {
