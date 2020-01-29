@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction } from "../../redux/actions"
+import "./style.css";
 
 
 interface IProps {}
@@ -94,7 +95,7 @@ class Login extends React.PureComponent<TProps, IState> {
                     <div className="field is-grouped">
                         <div className="control">
                             <button
-                                className="btn btn-primary mt-3"
+                                className="btn btn-outline-info mt-3 boton"
                                 disabled={username.length === 0 || password.length === 0}
                                 onClick={this.login}
                                 data-dismiss="modal"

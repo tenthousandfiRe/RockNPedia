@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IBand } from '../../../interfaces/IBand';
 import { IStore } from '../../../interfaces/IStore';
+import "./style.css";
 
 
 interface IProps {
@@ -25,10 +26,10 @@ class BandDetails extends React.PureComponent<TProps, IState> {
         const { band_id, name, foundation_year, band_image } = band
         return(
             <div className="container">
-                     <div className="card mb-3" style={{ width: 900, marginTop: 20, marginLeft: "auto", marginRight: "auto" }}>
+                     <div className="card mb-3 bandDivs">
                      <div className="row no-gutters">
-                         <div className="col-md-4">
-                             <img style={{ width: 100 }} src="http://www.publicidadeuskadi.com/img/2013/03/rollingstonestonguelogo.jpg" className="card-img" alt="..."></img>
+                     <div className="col-md-3 d-flex justify-content-center mt-4">
+                             <img style={{ width: 100, height: 100 }} src="https://www.stickpng.com/assets/images/5852df4b394e280271f3b491.png" className="card-img" alt="..."></img>
                          </div>
                          <div className="col-md-8">
                              <div className="card-body">
