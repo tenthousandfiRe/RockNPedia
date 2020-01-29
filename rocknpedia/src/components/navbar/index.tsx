@@ -71,42 +71,25 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 Link
               </a>
             </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item">
-              {!account ? (<button
-                type="button"
-                className="btn btn-primary mr-3"
-                data-toggle="modal"
-                data-target="#exampleModal"
-              >
-                {" "}
-                Log In
-              </button>) : ""}
-              
+
+            
+            
+          </ul>
+          <a className="nav-item">
+              {/* ternary to show the button to login */}
+              {!account ? (
+                <button
+                  type="button"
+                  className="btn btn-outline-success my-2 my-sm-0"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  {" "}
+                  Log In
+                </button>
+              ) : (
+                ""
+              )}
 
               <div
                 className="modal fade"
@@ -142,18 +125,22 @@ class Navbar extends React.PureComponent<TProps, IState> {
                   </div>
                 </div>
               </div>
-            </li>
-            <li className="nav-item">
-              {!account ? (<button
-                type="button"
-                className="btn btn-primary"
-                data-toggle="modal"
-                data-target="#exampleModal2"
-              >
-                {" "}
-                Register
-              </button>):""}
-              
+            </a>
+          <a className="nav-item">
+              {/* ternary to show or not the button register */}
+              {!account ? (
+                <button
+                  type="button"
+                  className="btn btn-outline-success my-2 my-sm-0 ml-3"
+                  data-toggle="modal"
+                  data-target="#exampleModal2"
+                >
+                  {" "}
+                  Register
+                </button>
+              ) : (
+                ""
+              )}
 
               <div
                 className="modal fade"
@@ -189,23 +176,48 @@ class Navbar extends React.PureComponent<TProps, IState> {
                   </div>
                 </div>
               </div>
-            </li>
-          </ul>
-          <div className="navbar-item">{account?.username}</div>
-          
+            </a>
           {token ? (
-            <div className="buttons">
-              <button
-                type="button"
-                className="btn btn-primary ml-2"
-                onClick={this.logout}
+            <div className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                Logout
-              </button>
+                {" "}
+                {account?.username}
+              </a>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a className="dropdown-item" href="#">
+                  Profile
+                </a>
+                <a className="dropdown-item" href="#">
+                  Reviews
+                </a>
+                
+                <a className="dropdown-item" href="#">
+                  Lists
+                </a>
+                <div className="dropdown-divider"></div>
+                <div className="">
+                  <a
+                    type="button"
+                    className="dropdown-item btn"
+                    onClick={this.logout}
+                  >
+                    Logout
+                  </a>
+                </div>
+              </div>
             </div>
           ) : (
             ""
           )}
+
           <div className="col-2">
             <input
               className="form-control mr-sm-1"
