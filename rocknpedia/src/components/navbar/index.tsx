@@ -5,7 +5,7 @@ import { IStore } from "../../interfaces/IStore";
 import { LogoutAction } from "../../redux/actions";
 import { IAccount } from "../../interfaces/IAccount";
 import Register from "../register/index";
-
+import "./style.css"
 interface IGlobalStateProps {
   account: IAccount | null;
   
@@ -53,7 +53,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
     console.log(token);
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light navie">
         <a className="navbar-brand" href="#">
           Rock 'N' Pedia
         </a>
@@ -90,7 +90,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
               {!account ? (
                 <button
                   type="button"
-                  className="btn btn-outline-success my-2 my-sm-0"
+                  className="btn btn-outline-info boton my-2 my-sm-0"
                   data-toggle="modal"
                   data-target="#exampleModal"
                 >
@@ -112,7 +112,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
                   className="modal-dialog modal-dialog-centered"
                   role="document"
                 >
-                  <div className="modal-content">
+                  <div className="modal-content modalIndex">
                     <div className="modal-header">
                       <h5
                         className="modal-title offset-5"
@@ -129,7 +129,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <div className="modal-body d-flex justify-content-center mt-5">
+                    <div className="modal-body d-flex justify-content-center mt-5 ">
                       <Login />
                     </div>
                   </div>
@@ -141,7 +141,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
               {!account ? (
                 <button
                   type="button"
-                  className="btn btn-outline-success my-2 my-sm-0 ml-3"
+                  className="btn btn-outline-info my-2 boton my-sm-0 ml-3"
                   data-toggle="modal"
                   data-target="#exampleModal2"
                 >
@@ -163,7 +163,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
                   className="modal-dialog modal-dialog-centered"
                   role="document"
                 >
-                  <div className="modal-content">
+                  <div className="modal-content  modalIndex">
                     <div className="modal-header">
                       <h5
                         className="modal-title offset-5"
@@ -238,7 +238,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
           </div>
 
           <button
-            className="btn btn-outline-success my-2 my-sm-0"
+            className="btn btn-outline-info  boton my-2 my-sm-0"
             type="submit"
           >
             Search

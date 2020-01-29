@@ -1,5 +1,6 @@
 import React from "react";
 import { myFetch } from "../../utils";
+import "./style.css";
 
 interface IProps {}
 
@@ -107,7 +108,7 @@ class Register extends React.PureComponent<IProps, IState> {
           <div className="field is-grouped">
             <div className="control">
               <button
-                className="btn btn-info mt-5 "
+                className="btn btn-outline-info mt-3 boton "
                 disabled={username.length === 0 || password.length === 0}
                 onClick={this.register}
                 data-dismiss="modal"

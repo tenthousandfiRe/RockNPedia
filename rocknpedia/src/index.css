@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-image: url("http://www.photoplato.com/photoplato/27204-rock-music-background-wallpaper_130044.jpg");
+  background-image: url("https://helpingmehear.com/wp-content/uploads/2019/03/musicians-hearing-loss.jpg");
   height: cover;
   background-attachment: fixed;
   background-position: center;
@@ -12,7 +12,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* .parallax {
+  background-image: url("https://helpingmehear.com/wp-content/uploads/2019/03/musicians-hearing-loss.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
 
+} */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
