@@ -38,7 +38,6 @@ class App extends React.PureComponent<TProps> {
     const { account } = this.props;
     const { band } = this.props
     const { band_id } = band
-    console.log(band_id)
     return <>
      <BrowserRouter>
      <Route path='/' component={Navbar} />
@@ -46,7 +45,7 @@ class App extends React.PureComponent<TProps> {
      {/* <Route path='/' component={Register} /> */}
      <Route path='/' exact component={Bands} />
      <Route path={`/bands/${band_id}`} exact component={BandDetails} />
-     <Route path='/' exact component={InsertBand} />
+     {/* <Route path='/' exact component={InsertBand} /> */}
      </BrowserRouter>
      </>;
   }
