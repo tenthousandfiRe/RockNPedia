@@ -38,9 +38,9 @@ class Bands extends React.PureComponent<TProps> {
     render() {
         const { bands } = this.props
         return (
-            <div className="container-fluid">
+            <div className="container">
                 {bands.map(({ name, foundation_year, band_image }) => (
-                     <div className="card mb-3" style={{ width: 900 }}>
+                     <div className="card mb-3" style={{ width: 900, marginTop: 20, marginLeft: "auto", marginRight: "auto" }}>
                      <div className="row no-gutters">
                          <div className="col-md-4">
                              <img style={{ width: 100 }} src="http://www.publicidadeuskadi.com/img/2013/03/rollingstonestonguelogo.jpg" className="card-img" alt="..."></img>
