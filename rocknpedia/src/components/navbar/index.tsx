@@ -8,11 +8,15 @@ import Register from "../register/index";
 
 interface IGlobalStateProps {
   account: IAccount | null;
+  
 }
+
 
 interface IGlobalActionProps {
   logout(): void;
+  history: any;
 }
+
 
 interface IState {
   isLogged: boolean;
@@ -25,16 +29,22 @@ class Navbar extends React.PureComponent<TProps, IState> {
     super(props);
 
     this.state = {
-      isLogged: false
+      isLogged: false,
+      
     };
 
     this.logout = this.logout.bind(this);
+    this.vistaProfile = this.vistaProfile.bind(this);
   }
 
   logout() {
     const { logout } = this.props;
     localStorage.removeItem("token");
     logout();
+    this.props.history.push('/');
+  }
+  vistaProfile() {
+    this.props.history.push("/userProfile")
   }
   render() {
     const { account } = this.props;
@@ -192,7 +202,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 {account?.username}
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" onClick={this.vistaProfile}>
                   Profile
                 </a>
                 <a className="dropdown-item" href="#">

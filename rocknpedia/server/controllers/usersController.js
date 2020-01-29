@@ -5,14 +5,15 @@ const mysql = require("mysql");
 const sha1 = require("sha1");
 const cors = require("cors");
 let myKey = "rocknpediakey";
-
+const multer = require("multer");
 
 const usersController = {};
 
 const connection = require("../config/db.js");
+server.use(express.static("public"));
 
 //HERE WE GET THE AUTHENTICATION WITH THE TOKEN TO LOG IN.
-usersController.auth = ((request, response) => {
+usersController.auth = (request, response) => {
   const { username, password } = request.body;
   connection.query(
     `SELECT *
@@ -22,10 +23,16 @@ usersController.auth = ((request, response) => {
     function(error, results) {
       if (error) console.log(error);
       else if (results.length) {
-        const { is_admin, user_id } = results[0];
+        const { is_admin, user_id, user_image, rol } = results[0];
 
         const token = jwt.sign(
-          { user_id, username, is_admin: is_admin ? true : false },
+          {
+            user_id,
+            username,
+            user_image,
+            rol,
+            is_admin: is_admin ? true : false
+          },
           myKey
         );
         response.send({
@@ -36,11 +43,10 @@ usersController.auth = ((request, response) => {
       }
     }
   );
-});
-
+};
 
 // //FIRST GET OF THE USERS
-usersController.list = ((req, res) => {
+usersController.list = (req, res) => {
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const { is_admin } = jwt.verify(token, myKey);
@@ -64,11 +70,11 @@ usersController.list = ((req, res) => {
   } catch {
     res.sendStatus(401);
   }
-});
+};
 
-usersController.save = ((req, res, next) => {
-    console.log(req.body)
-    console.log("entro a la query")
+usersController.save = (req, res, next) => {
+  console.log(req.body);
+  console.log("entro a la query");
   let username = req.body.username;
   let password = sha1(req.body.password);
   let is_admin = req.body.is_admin;
@@ -82,7 +88,6 @@ usersController.save = ((req, res, next) => {
       is_admin,
       user_image,
       rol
-
     },
     (err, result) => {
       if (err) {
@@ -91,16 +96,16 @@ usersController.save = ((req, res, next) => {
         connection.query(
           `SELECT user_id, username FROM user WHERE username = '${username}'`,
           (err, results) => {
-              console.log(results);
+            console.log(results);
             res.send(results[0]);
           }
         );
       }
     }
   );
-});
+};
 //HERE WE LIST USERS BY ID
-usersController.listId = ((req, res) => {
+usersController.listId = (req, res) => {
   const { id } = req.params;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
@@ -123,47 +128,45 @@ usersController.listId = ((req, res) => {
   } catch {
     res.sendStatus(401);
   }
-});
-//HERE WE UPDATE USERS BY ID 
-usersController.update = ((req, res) => {
+};
+//HERE WE UPDATE USERS BY ID
+usersController.update = (req, res) => {
   const { id } = req.params;
-  let password = sha1(req.body.password);
-  let {is_admin, username, user_image, rol } = req.body;
+  let { is_admin, username, user_image, rol } = req.body;
   try {
-    const token = req.headers.authorization.replace("Bearer ", "");
-    const Admin = jwt.verify(token, myKey).is_admin;
-   
-    if (Admin) {
-      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password, is_admin, username, user_image, rol }, (error, results) => {
+    console.log(req.headers);
+
+    connection.query(
+      `UPDATE user SET? WHERE user_id = ${id};`,
+      { is_admin, username, user_image, rol },
+      (error, results) => {
         if (error) console.log(error);
         res.send("usuario actualizado");
-      });
-    } else {
-      connection.query(`UPDATE user SET? WHERE user_id = ${id};`, { password, is_admin, username, user_image, rol }, (error, results) => {
-        if (error) console.log(error);
-        res.send("/users");
-      });
-    }
-  } catch {
+      }
+    );
+  } catch (e) {
+    console.log(e);
     res.sendStatus(401);
   }
-});
+};
 //HERE DELETE USERS
-usersController.delete = ((req, res) => {
+usersController.delete = (req, res) => {
   const { id } = req.params;
   let password = sha1(req.body.password);
-  
+
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const Admin = jwt.verify(token, myKey).is_admin;
     const aidi = jwt.verify(token, myKey).user_id;
-    
+
     if (Admin) {
-        
-      connection.query(`DELETE from user WHERE user_id = ${id};`, (error, results) => {
-        if (error) console.log(error);
-        res.send("tu user ha sido borrado");
-      });
+      connection.query(
+        `DELETE from user WHERE user_id = ${id};`,
+        (error, results) => {
+          if (error) console.log(error);
+          res.send("tu user ha sido borrado");
+        }
+      );
     } else if (aidi == user_id) {
       connection.query(sql, { password }, (error, results) => {
         if (error) console.log(error);
@@ -175,7 +178,28 @@ usersController.delete = ((req, res) => {
   } catch {
     res.sendStatus(401);
   }
-});
+};
 
+usersController.updateAvatar = (req, res) => {
+  const avatar = req.file.originalname;
+  const token = req.headers.authorization.replace("Bearer ", "");
+  const id = jwt.verify(token, myKey).id;
+  let sql = `UPDATE user SET user_image = "${avatar}" where user_id = ${id}`;
+
+  console.log("entro a la query");
+  connection.query(sql, (error, results) => {
+    console.log("entro al envio");
+    if (error) console.log(error);
+    res.send("/users");
+    console.log(results);
+  });
+
+  connection.query(sql, (error, results) => {
+    if (error) console.log(error);
+    res.send("/users");
+  });
+
+  // response.sendStatus(200);
+};
 
 module.exports = usersController;

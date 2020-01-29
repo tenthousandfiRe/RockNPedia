@@ -13,9 +13,11 @@ const connection = require("./config/db.js");
 
 server.use(express.json());
 server.use(express.urlencoded());
+server.use(express.static("public"));
 server.use(cors());
 server.use('/users', usersRouter)
 server.use('/bands', bandsRouter);
+
 
 
 server.listen(3003);

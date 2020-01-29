@@ -13,11 +13,12 @@ export const myFetch = async ({
     token
   }: {
     path: string;
-    method?: "GET" | "POST" | "DELETE";
+    method?: "GET" | "POST" | "DELETE" | "PUT";
     json?: Object;
     formData?: FormData;
-    token?: string;
+    token?: string | any;
   }) => {
+      console.log(token)
     let headers = new Headers();
     let body = undefined;
     if (json) {
@@ -43,7 +44,7 @@ export const myFetch = async ({
   };
   
   export const generateAccountFromToken = (token: string): IAccount => {
-    const { user_id, username, is_admin } = decode(token) as ITokenPayload;
-    return { token, user_id, username, is_admin };
+    const { user_id, username, is_admin, user_image, rol } = decode(token) as ITokenPayload;
+    return { token, user_id, username, is_admin, user_image, rol };
   };
   
