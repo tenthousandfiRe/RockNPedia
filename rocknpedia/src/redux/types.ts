@@ -16,8 +16,14 @@ interface IBandsAction {
   payload: IBand[];
 }
 
+interface IBandAction {
+  type: "SET_BAND";
+  payload: IBand;
+}
+
 
 export type TAction =
   | ISetAccountAction
   | ILogoutAction
   | IBandsAction
+  | IBandAction

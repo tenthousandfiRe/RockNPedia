@@ -10,10 +10,14 @@ import { generateAccountFromToken } from "./utils";
 import Login from './components/login/index'
 import Register from "./components/register";
 import Navbar from "./components/navbar";
-import Bands from "./components/bands/"
+import Bands from "./components/bands/";
+import BandDetails from "./components/bands/bandDetails/";
+import InsertBand from "./components/bands/insertBand/"
+import { IBand } from "./interfaces/IBand";
 
 interface IGlobalStateProps {
   account: IAccount | null;
+  band: IBand
 }
 
 interface IGlobalActionProps {
@@ -32,26 +36,24 @@ class App extends React.PureComponent<TProps> {
   }
   render() {
     const { account } = this.props;
+    const { band } = this.props
+    const { band_id } = band
+    console.log(band_id)
     return <>
      <BrowserRouter>
      <Route path='/' component={Navbar} />
      {/* <Route path='/' component={Login} /> */}
      {/* <Route path='/' component={Register} /> */}
-     <Route path='/' component={Bands} />
-
-
-
-     
-     
-
-
+     <Route path='/' exact component={Bands} />
+     <Route path={`/bands/${band_id}`} exact component={BandDetails} />
+     <Route path='/' exact component={InsertBand} />
      </BrowserRouter>
      </>;
   }
 }
 
-const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
-  account
+const mapStateToProps = ({ account, band }: IStore): IGlobalStateProps => ({
+  account, band
 });
 
 const mapDispatchToProps: IGlobalActionProps = {

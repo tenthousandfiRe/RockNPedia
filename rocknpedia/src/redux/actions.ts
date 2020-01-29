@@ -12,4 +12,9 @@ export const SetBandsAction = (bands: IBand[]): TAction => ({
   payload: bands
 })
 
+export const SetBandAction = (band: IBand): TAction => ({
+  type: "SET_BAND",
+  payload: band
+})
+
 export const LogoutAction = (): TAction => ({ type: "LOGOUT" });

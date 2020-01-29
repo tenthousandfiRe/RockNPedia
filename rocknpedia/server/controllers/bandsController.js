@@ -13,7 +13,7 @@ const bandsController = {};
 //GET query for listing all the bands info
 bandsController.list = ((__, res) => {
   try {
-    let sql = "SELECT name, foundation_year, band_image FROM band";
+    let sql = "SELECT band_id, name, foundation_year, band_image FROM band";
       connection.query(sql, (error, results) => {
         if (error) console.log(error);
         res.send(results);
@@ -52,7 +52,7 @@ bandsController.save = ((req, res) => {
 //Listing one band details 
 bandsController.getBand = (req, res) => {
   const { band_id } = req.params;
-  let sql = `SELECT name, foundation_year, band_image FROM band WHERE band_id = ${band_id}`;
+  let sql = `SELECT band_id, name, foundation_year, band_image FROM band WHERE band_id = ${band_id}`;
   try {
     connection.query(sql, (error, results) => {
       if (error) console.log(error);
