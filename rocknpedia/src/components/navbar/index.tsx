@@ -2,21 +2,22 @@ import React from "react";
 import Login from "../login/index";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
-import { LogoutAction } from "../../redux/actions";
+import { LogoutAction, SetAccountAction } from "../../redux/actions";
 import { IAccount } from "../../interfaces/IAccount";
 import Register from "../register/index";
-import "./style.css"
+import "./style.css";
+import { myFetch } from "../../utils";
+import jwt from "jsonwebtoken";
+// import API_URL_AVATAR from "../../constants";
 interface IGlobalStateProps {
   account: IAccount | null;
-  
 }
-
 
 interface IGlobalActionProps {
   logout(): void;
   history: any;
+  setAccount(account: IAccount): void;
 }
-
 
 interface IState {
   isLogged: boolean;
@@ -29,8 +30,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
     super(props);
 
     this.state = {
-      isLogged: false,
-      
+      isLogged: false
     };
 
     this.logout = this.logout.bind(this);
@@ -42,14 +42,23 @@ class Navbar extends React.PureComponent<TProps, IState> {
     const { logout } = this.props;
     localStorage.removeItem("token");
     logout();
-    this.props.history.push('/');
+    this.props.history.push("/");
   }
   vistaProfile() {
-    this.props.history.push("/userProfile")
+    this.props.history.push("/userProfile");
   }
 
   vistaInsertBand() {
-    this.props.history.push("/insertBand")
+    this.props.history.push("/insertBand");
+  }
+
+  PaintImage(token: string) {
+    let { user_id } = jwt.decode(token) as any;
+
+    myFetch({ path: `/users/${user_id}` }).then(json => {
+      // this.props.setBand(json[0])
+      console.log(json)
+    });
   }
 
   render() {
@@ -87,114 +96,106 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 Link
               </a>
             </li>
-
-            
-            
           </ul>
           <a className="nav-item">
-              {/* ternary to show the button to login */}
-              {!account ? (
-                <button
-                  type="button"
-                  className="btn btn-outline-info boton my-2 my-sm-0"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                >
-                  {" "}
-                  Log In
-                </button>
-              ) : (
-                ""
-              )}
-
-              <div
-                className="modal fade"
-                id="exampleModal"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
+            {/* ternary to show the button to login */}
+            {!account ? (
+              <button
+                type="button"
+                className="btn btn-outline-info boton my-2 my-sm-0"
+                data-toggle="modal"
+                data-target="#exampleModal"
               >
-                <div
-                  className="modal-dialog modal-dialog-centered"
-                  role="document"
-                >
-                  <div className="modal-content modalIndex">
-                    <div className="modal-header">
-                      <h5
-                        className="modal-title offset-5"
-                        id="exampleModalLabel"
-                      >
-                        Loguéate
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body d-flex justify-content-center mt-5 ">
-                      <Login />
-                    </div>
+                {" "}
+                Log In
+              </button>
+            ) : (
+              ""
+            )}
+
+            <div
+              className="modal fade"
+              id="exampleModal"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div
+                className="modal-dialog modal-dialog-centered"
+                role="document"
+              >
+                <div className="modal-content modalIndex">
+                  <div className="modal-header">
+                    <h5 className="modal-title offset-5" id="exampleModalLabel">
+                      Loguéate
+                    </h5>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div className="modal-body d-flex justify-content-center mt-5 ">
+                    <Login />
                   </div>
                 </div>
               </div>
-            </a>
+            </div>
+          </a>
           <a className="nav-item">
-              {/* ternary to show or not the button register */}
-              {!account ? (
-                <button
-                  type="button"
-                  className="btn btn-outline-info my-2 boton my-sm-0 ml-3"
-                  data-toggle="modal"
-                  data-target="#exampleModal2"
-                >
-                  {" "}
-                  Register
-                </button>
-              ) : (
-                ""
-              )}
-
-              <div
-                className="modal fade"
-                id="exampleModal2"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
+            {/* ternary to show or not the button register */}
+            {!account ? (
+              <button
+                type="button"
+                className="btn btn-outline-info my-2 boton my-sm-0 ml-3"
+                data-toggle="modal"
+                data-target="#exampleModal2"
               >
-                <div
-                  className="modal-dialog modal-dialog-centered"
-                  role="document"
-                >
-                  <div className="modal-content  modalIndex">
-                    <div className="modal-header">
-                      <h5
-                        className="modal-title offset-5"
-                        id="exampleModalLabel"
-                      >
-                        Registrate
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body d-flex justify-content-center mt-5">
-                      <Register />
-                    </div>
+                {" "}
+                Register
+              </button>
+            ) : (
+              ""
+            )}
+
+            <div
+              className="modal fade"
+              id="exampleModal2"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div
+                className="modal-dialog modal-dialog-centered"
+                role="document"
+              >
+                <div className="modal-content  modalIndex">
+                  <div className="modal-header">
+                    <h5 className="modal-title offset-5" id="exampleModalLabel">
+                      Registrate
+                    </h5>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div className="modal-body d-flex justify-content-center mt-5">
+                    <Register />
                   </div>
                 </div>
               </div>
-            </a>
+            </div>
+          </a>
           {token ? (
-            <div className="nav-item dropdown">
+            <div className="nav-item dropdown botonUser">
+              <img />
               <a
                 className="nav-link dropdown-toggle"
                 href="#"
@@ -217,7 +218,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 <a className="dropdown-item" href="#">
                   Reviews
                 </a>
-                
+
                 <a className="dropdown-item" href="#">
                   Lists
                 </a>
@@ -263,7 +264,8 @@ const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
 });
 
 const mapDispatchToProps = {
-  logout: LogoutAction
+  logout: LogoutAction,
+  setAccount: SetAccountAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

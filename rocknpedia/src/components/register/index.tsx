@@ -124,4 +124,6 @@ class Register extends React.PureComponent<IProps, IState> {
   }
 }
 
+
+
 export default Register;

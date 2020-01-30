@@ -14,7 +14,7 @@ server.use(express.static("public"));
 
 //HERE WE GET THE AUTHENTICATION WITH THE TOKEN TO LOG IN.
 usersController.auth = (request, response) => {
-  const { username, password } = request.body;
+  const { username, password } = request.body; 
   connection.query(
     `SELECT *
         FROM user
@@ -23,14 +23,14 @@ usersController.auth = (request, response) => {
     function(error, results) {
       if (error) console.log(error);
       else if (results.length) {
-        const { is_admin, user_id, user_image, rol } = results[0];
+        const { is_admin, user_id, rol, user_image} = results[0];
 
         const token = jwt.sign(
           {
             user_id,
             username,
-            user_image,
             rol,
+            user_image,
             is_admin: is_admin ? true : false
           },
           myKey
@@ -181,7 +181,7 @@ usersController.delete = (req, res) => {
 };
 
 usersController.updateAvatar = (req, res) => {
-  const avatar = req.file.originalname;
+  const avatar = req.file.filename;
   const token = req.headers.authorization.replace("Bearer ", "");
   const id = jwt.verify(token, myKey).user_id;
   let sql = `UPDATE user SET user_image = "${avatar}" where user_id = ${id}`;
@@ -190,14 +190,14 @@ usersController.updateAvatar = (req, res) => {
   connection.query(sql, (error, results) => {
     console.log("entro al envio");
     if (error) console.log(error);
-    res.send("/users");
+    res.send("the image has been upload");
     console.log(results);
   });
 
-  connection.query(sql, (error, results) => {
-    if (error) console.log(error);
-    res.send("/users");
-  });
+  // connection.query(sql, (error, results) => {
+  //   if (error) console.log(error);
+  //   res.send("/users");
+  // });
 
   // response.sendStatus(200);
 };
