@@ -130,9 +130,6 @@ class InsertBand extends React.PureComponent<TProps, IState> {
                                     <label className="mt-3">Imagen</label>
                                     <br />
                                     <div className="col-2 border">
-                                    <button className="btn btn-primary" onClick={this.insertBand}>
-                                        Insertar imagen
-              </button>
                                         <input
                                             type="file"
 
@@ -141,6 +138,9 @@ class InsertBand extends React.PureComponent<TProps, IState> {
                                         />
                                     </div>
                                     <br />
+                                    <button className="btn btn-primary" onClick={this.insertBand}>
+                                        Insertar imagen
+              </button>
                                     <div className="row"></div>
                                 </div>
                             </div>
