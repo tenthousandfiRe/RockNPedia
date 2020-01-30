@@ -5,7 +5,6 @@ const sha1 = require("sha1");
 const cors = require("cors");
 let myKey = "rocknpediakey";
 let router = express.Router();
-const multer = require("multer");
 
 const connection = require("../config/db.js");
 

@@ -13,12 +13,12 @@ const URL_images = 'http://localhost:3003/avatars/'
 interface IGlobalStateProps {
     band: IBand
     bands: IBand[];
+    history: any
 }
 
 interface IGlobalActionProps {
     setBand(band: IBand): void
     setBands(bands: IBand[]): void,
-    history: any
 }
 
 type TProps = IGlobalStateProps & IGlobalActionProps;
