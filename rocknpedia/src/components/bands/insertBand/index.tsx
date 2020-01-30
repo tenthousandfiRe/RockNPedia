@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { createRef } from "react";
 import { myFetch } from '../../../utils'
-interface IProps {}
+import { IAccount } from '../../../interfaces/IAccount'
 
-interface IGlobalActionProps {}
+interface IProps {
+    account: IAccount
+}
+
+interface IGlobalActionProps {
+}
 
 interface IState {
     name: string;
-    foundation_year: number;
+    foundation_year: any;
     band_image: string;
     error: string;
     history: string;
@@ -14,17 +19,22 @@ interface IState {
 
 
 class InsertBand extends React.PureComponent<any, IState> {
+    inputFileRef: React.RefObject<HTMLInputElement>;
     constructor(props: any) {
         super(props);
 
+        this.inputFileRef = createRef();
+
+
         this.state = {
             name: "",
-            foundation_year: 0,
+            foundation_year: null,
             band_image: "",
             error: "",
             history: ""
         }
 
+        this.insertBand = this.insertBand.bind(this);
         this.onNameChange = this.onNameChange.bind(this)
         this.onFoundationYearChange = this.onFoundationYearChange.bind(this)
         this.insertBand = this.insertBand.bind(this)
@@ -42,77 +52,105 @@ class InsertBand extends React.PureComponent<any, IState> {
         console.log(foundation_year)
     }
 
-    onBandImageChange(event: any){
-        const band_image = event.target.value;
-        this.setState({band_image})
-        console.log(band_image)
-    }
-
-    insertBand(){
-        const { name, foundation_year, band_image } = this.state
-        myFetch({ path: `/bands/`, method: "POST", json: { name, foundation_year, band_image } }).then(json => {
-            if (!json) {
-                this.setState({ error: "Banda ya existente" });
+    insertBand() {
+        const { name,  foundation_year } = this.state;
+        if (this.inputFileRef.current?.files) {
+          const formData = new FormData();
+          const token = localStorage.getItem("token");
+          const band_image = this.inputFileRef.current.files[0];
+            console.log(band_image)
+          formData.append("band_image", band_image);
+          formData.append("name", name)
+          formData.append("foundation_year", foundation_year)
+          myFetch({ method: "POST", path: "/bands/", token, formData }).then(
+            json => {
+              if (json) {
+                console.log(json);
               }
-        })
-    }
-
-
+            }
+          );
+          this.inputFileRef.current.value = "";
+        }
+      }
 
 
     render() {
-        const { name, foundation_year, band_image, history } = this.state
+        const { name, foundation_year,band_image, history } = this.state
+        console.log(this.state)
+        console.log(this.state.band_image)
+
         return(
-            <div className="">
-            <div className="card-content">
-              <div className="form">
-                <label className="label"><strong>Nombre de la banda</strong></label>
-                <div className="control">
-                  <input
-                    className="form-control"
-                    type="text"
-                    value={name}
-                    onChange={this.onNameChange}
-                  />
-                </div>
+            <>
+        <div className="col-6">
+          <div className="card-content">
+            <div className="form">
+              <label className="label">
+                <strong>Nombre de banda</strong>
+              </label>
+              <div className="control">
+                <input
+                  className="form-control"
+                  type="text"
+                  value={name}
+                  onChange={this.onNameChange}
+                />
               </div>
-              <div className="form-group">
-                <label className="label"><strong>Año de fundación</strong></label>
-                <div className="control">
+            </div>
+            <div className="field">
+              <label className="label">
+                <strong>Año de fundación</strong>
+              </label>
+              <div className="control">
+                <div className="select">
                   <input
                     className="form-control"
-                    type="number" 
-                    max="4" 
+                    type="number"
                     value={foundation_year}
-                    placeholder=""
                     onChange={this.onFoundationYearChange}
-                  />
+                  >
+                  </input>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="label"><strong>Imagen</strong></label>
-                <div className="control">
-                  <input
-                    className="form-control"
-                    type="text" 
-                    value={band_image}
-                    onChange={this.onBandImageChange}
-                  />
-                </div>
+            </div>
+            <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              <label className="mt-3">Imagen</label>
+              <br />
+              <div className="col-2 border">
+                <input
+                  type="file"
+                  
+                  className="custom-file-input"
+                  ref={this.inputFileRef}
+                />
               </div>
-              <div className="field is-grouped">
-            <div className="control">
-              <button
-                className="btn btn-info mt-5 "
-                onClick={this.insertBand}
-              >
-                Register
+              <br />
+              <button className="btn btn-primary" onClick={this.insertBand}>
+                Subir imagen
               </button>
-              {this.state.error}
+              <div className="row"></div>
             </div>
           </div>
+        </div>
+            <div className="field is-grouped">
+              <div className="control">
+                <button
+                  className="btn btn-info mt-3 "
+                  disabled={name.length === 0}
+                  onClick={this.insertBand}
+                  data-dismiss="modal"
+                >
+                  Enviar
+                </button>
+                {this.state.error}
               </div>
             </div>
+          </div>
+        </div>
+
+        
+      </>
         )
     }
 }

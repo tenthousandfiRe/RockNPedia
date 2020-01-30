@@ -15,6 +15,9 @@ server.use(express.json());
 server.use(express.urlencoded());
 server.use(express.static("public"));
 server.use(cors());
+
+
+
 server.use('/users', usersRouter)
 server.use('/bands', bandsRouter);
 

@@ -15,56 +15,46 @@ const bandsController = {};
 bandsController.list = ((__, res) => {
   try {
     let sql = "SELECT band_id, name, foundation_year, band_image FROM band";
-      connection.query(sql, (error, results) => {
-        if (error) console.log(error);
-        res.send(results);
-      });
-    
+    connection.query(sql, (error, results) => {
+      if (error) console.log(error);
+      res.send(results);
+    });
+
   } catch {
     res.sendStatus(400);
   }
 });
 
 
-
-
-
 //Post of a new band and an image using multer module
-const storage = multer.diskStorage({
-  destination: "public/avatars",
-  filename: (_req, file, cb) => {
-    const extension = file.originalname.slice(
-      file.originalname.lastIndexOf(".")
-    );
-    cb(null, new Date().valueOf() + extension);
-  }
-});
-const upload = multer({ storage });
+// const storage = multer.diskStorage({
+//   destination: "public/avatars",
+//   filename: (_req, file, cb) => {
+//     const extension = file.originalname.slice(
+//       file.originalname.lastIndexOf(".")
+//     );
+//     cb(null, new Date().valueOf() + extension);
+//   }
+// });
+// const upload = multer({ storage });
 
-bandsController.save = (upload.single("avatar"), (req, res) => {
+bandsController.save = ((req, res) => {
   const token = req.headers.authorization.replace("Bearer ", "");
   let name = req.body.name;
   let foundation_year = req.body.foundation_year;
-  let band_image = request.file.filename;
+  console.log(req.body)
+  console.log(req.file)
+  let band_image = req.file.originalname;
   let sql = `INSERT INTO band (name, foundation_year, band_image) values ('${name}', ${foundation_year}, '${band_image}')`;
   console.log(sql)
   connection.query
   if (token) {
-    (
-    sql,
-    (err) => {
-      if (err) {
-        res.status(400).send("La banda ya existe");
-      } else {
-        connection.query(
-          sql,
-          (results) => {
-            res.send(results);
-          }
-        );
+    connection.query(
+      sql,
+      (results) => {
+        res.send(results);
       }
-    }
-  );
+    );
   } else {
     res.status(401).send("no puedes subir imágenes");
   }
@@ -82,7 +72,7 @@ bandsController.getBand = (req, res) => {
       if (error) console.log(error);
       res.send(results);
     });
-    
+
   } catch {
     res.sendStatus(401);
   }
@@ -109,7 +99,7 @@ bandsController.update = (req, res) => {
     else {
       res.send(error)
     }
-    
+
   } catch {
     res.sendStatus(401);
   }

@@ -35,6 +35,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
 
     this.logout = this.logout.bind(this);
     this.vistaProfile = this.vistaProfile.bind(this);
+    this.vistaInsertBand = this.vistaInsertBand.bind(this);
   }
 
   logout() {
@@ -46,6 +47,11 @@ class Navbar extends React.PureComponent<TProps, IState> {
   vistaProfile() {
     this.props.history.push("/userProfile")
   }
+
+  vistaInsertBand() {
+    this.props.history.push("/insertBand")
+  }
+
   render() {
     const { account } = this.props;
     const { isLogged } = this.state;
@@ -203,7 +209,10 @@ class Navbar extends React.PureComponent<TProps, IState> {
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a className="dropdown-item" onClick={this.vistaProfile}>
-                  Profile
+                  Perfil
+                </a>
+                <a className="dropdown-item" onClick={this.vistaInsertBand}>
+                  Añadir banda
                 </a>
                 <a className="dropdown-item" href="#">
                   Reviews
