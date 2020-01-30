@@ -27,26 +27,13 @@ bandsController.list = ((__, res) => {
 
 
 //Post of a new band and an image using multer module
-// const storage = multer.diskStorage({
-//   destination: "public/avatars",
-//   filename: (_req, file, cb) => {
-//     const extension = file.originalname.slice(
-//       file.originalname.lastIndexOf(".")
-//     );
-//     cb(null, new Date().valueOf() + extension);
-//   }
-// });
-// const upload = multer({ storage });
-
 bandsController.save = ((req, res) => {
   const token = req.headers.authorization.replace("Bearer ", "");
   let name = req.body.name;
   let foundation_year = req.body.foundation_year;
-  console.log(req.body)
-  console.log(req.file)
-  let band_image = req.file.originalname;
-  let sql = `INSERT INTO band (name, foundation_year, band_image) values ('${name}', ${foundation_year}, '${band_image}')`;
-  console.log(sql)
+  let band_image = req.file.filename;
+  let created_by = req.body.created_by;
+  let sql = `INSERT INTO band (name, foundation_year, band_image, created_by) values ('${name}', ${foundation_year}, '${band_image}', ${created_by})`;
   connection.query
   if (token) {
     connection.query(

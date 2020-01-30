@@ -6,8 +6,9 @@ import { myFetch } from "../../utils";
 import { SetBandsAction, SetBandAction } from '../../redux/actions'
 import { IBand } from '../../interfaces/IBand'
 import { IStore } from '../../interfaces/IStore'
-import BandDetails from './bandDetails/'
 import "./style.css";
+const URL_images = 'http://localhost:3003/avatars/'
+
 
 interface IGlobalStateProps {
     band: IBand
@@ -28,8 +29,6 @@ class Bands extends React.PureComponent<TProps> {
         super(props)
 
         this.bandView = this.bandView.bind(this);
-
-
     }
 
     getBands() {
@@ -41,7 +40,7 @@ class Bands extends React.PureComponent<TProps> {
     componentDidMount() {
         this.getBands()
     }
-    // changing to the specific band view, getting the info by the ID
+    // function to change the view to the specific band components, getting the info by the ID
     bandView(band_id?: number){
         myFetch({ path: `/bands/${band_id}` }).then(json => {
             this.props.setBand(json[0])
@@ -57,7 +56,7 @@ class Bands extends React.PureComponent<TProps> {
                      <div className="card mb-3 bandDivs">
                      <div className="row no-gutters">
                          <div className="col-md-3 d-flex justify-content-center mt-4">
-                             <img style={{ width: 100, height: 100 }} src="https://www.stickpng.com/assets/images/5852df4b394e280271f3b491.png" className="card-img" alt="..."></img>
+                             <img style={{ width: 100, height: 100 }} src={URL_images+band_image} className="card-img" alt="..."></img>
                          </div>
                          <div className="col-md-8">
                              <div className="card-body">

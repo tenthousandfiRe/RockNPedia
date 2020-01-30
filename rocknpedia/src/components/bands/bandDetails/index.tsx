@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { IBand } from '../../../interfaces/IBand';
 import { IStore } from '../../../interfaces/IStore';
 import "./style.css";
+const URL_images = 'http://localhost:3003/avatars/'
 
 
 interface IProps {
@@ -29,7 +30,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                      <div className="card mb-3 bandDivs">
                      <div className="row no-gutters">
                      <div className="col-md-3 d-flex justify-content-center mt-4">
-                             <img style={{ width: 100, height: 100 }} src="https://www.stickpng.com/assets/images/5852df4b394e280271f3b491.png" className="card-img" alt="..."></img>
+                             <img style={{ width: 100, height: 100 }} src={URL_images+band_image} className="card-img" alt="..."></img>
                          </div>
                          <div className="col-md-8">
                              <div className="card-body">
