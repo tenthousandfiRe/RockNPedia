@@ -91,7 +91,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   render() {
     const { account } = this.props;
 
-    const { username, rol, user_image } = this.state;
+    const { username, rol,  } = this.state;
     return (
       <>
         <div className="col-6">
@@ -157,7 +157,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                   type="file"
                   className="custom-file-input"
                   ref={this.inputFileRef}
-                  value={user_image}
+                  
                 />
               </div>
               <br />
