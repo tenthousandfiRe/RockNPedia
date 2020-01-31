@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
 import { IAccount } from "../../interfaces/IAccount";
-import { myFetch, generateAccountFromToken } from "../../utils";
-import { SetAccountAction } from "../../redux/actions";
+import { myFetch } from "../../utils";
 
 interface IGlobalStateProps {
   account: IAccount | any;
@@ -11,7 +10,6 @@ interface IGlobalStateProps {
 
 interface IGlobalActionProps {
   uploadAvatar(id: number): void;
-  setAccount(account: IAccount): void;
 }
 type TProps = IGlobalStateProps & IGlobalActionProps;
 
@@ -19,7 +17,6 @@ interface IState {
   username: string;
   user_image: string;
   rol: string;
-
   error: string;
   is_admin: number;
 }
@@ -31,25 +28,21 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     this.inputFileRef = React.createRef();
     this.uploadAvatar = this.uploadAvatar.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
-    this.onAvatarChange = this.onAvatarChange.bind(this);
+   
     this.onRolChange = this.onRolChange.bind(this);
     this.updateUser = this.updateUser.bind(this);
     this.state = {
-      username: "",
-      user_image: "",
-      rol: "",
+      username: this.props.account?.username,
+      user_image: this.props.account?.user_image,
+      rol: this.props.account?.rol,
       is_admin: 0,
-      error: ""
+      error: "",
+      
     };
   }
   onUsernameChange(event: any) {
     const username = event.target.value;
     this.setState({ username, error: "" });
-  }
-
-  onAvatarChange(event: any) {
-    const user_image = event.target.value;
-    this.setState({ user_image, error: "" });
   }
 
   // onPasswordChange(event: any) {
@@ -64,8 +57,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   }
 
   updateUser() {
-    const { setAccount } = this.props;
-    const { username, rol, is_admin } = this.state;
+    const { username, rol, is_admin} = this.state;
     const { user_id } = this.props.account;
     const token = localStorage.getItem("token");
     console.log(token);
@@ -74,16 +66,13 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       method: "PUT",
       json: { username, rol, is_admin }
     }).then(json => {
-      if (json) {
-        const { token } = json;
-        localStorage.setItem("token", token);
-        setAccount(generateAccountFromToken(token));
+      if (!json) {
+        this.setState({ error: "error" });
       }
     });
   }
 
   uploadAvatar() {
-    const { setAccount } = this.props;
     if (this.inputFileRef.current?.files) {
       let token = localStorage.getItem("token");
       const avatar = this.inputFileRef.current.files[0];
@@ -95,25 +84,14 @@ class UserProfile extends React.PureComponent<TProps, IState> {
           Authorization: `Bearer ${token}`
         },
         body: formData
-      }).then(json => {
-        if (json) {
-          console.log(json);
-          //TODO
-          // const {token} = json;
-          // localStorage.setItem("token", token);
-          // setAccount(generateAccountFromToken(token));
-        }
       });
     }
-  }
+  };
 
   render() {
     const { account } = this.props;
 
-    const { username } = this.state;
-    console.log(account);
-    console.log(this.state);
-
+    const { username, rol, user_image } = this.state;
     return (
       <>
         <div className="col-6">
@@ -126,7 +104,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 <input
                   className="form-control"
                   type="text"
-                  placeholder={account?.username}
+                  value={username}
                   onChange={this.onUsernameChange}
                 />
               </div>
@@ -140,7 +118,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                   <select
                     className="custom-select"
                     onChange={this.onRolChange}
-                    defaultValue={account?.rol}
+                    defaultValue={rol}
                   >
                     <option value="usuario">Usuario</option>
                     <option value="guitarra">Guitarra</option>
@@ -177,9 +155,9 @@ class UserProfile extends React.PureComponent<TProps, IState> {
               <div className="col-2 border">
                 <input
                   type="file"
-                  onChange={this.onAvatarChange}
                   className="custom-file-input"
                   ref={this.inputFileRef}
+                  value={user_image}
                 />
               </div>
               <br />
@@ -198,8 +176,6 @@ const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
   account
 });
 
-const mapDispatchToProps = {
-  setAccount: SetAccountAction
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

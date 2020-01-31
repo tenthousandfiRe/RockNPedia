@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css';
 import { connect } from "react-redux";
-import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
+// import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
 import { myFetch } from "../../utils";
 import { SetBandsAction, SetBandAction } from '../../redux/actions'
 import { IBand } from '../../interfaces/IBand'
@@ -13,12 +13,12 @@ const URL_images = 'http://localhost:3003/avatars/'
 interface IGlobalStateProps {
     band: IBand
     bands: IBand[];
+    history: any
 }
 
 interface IGlobalActionProps {
     setBand(band: IBand): void
     setBands(bands: IBand[]): void,
-    history: any
 }
 
 type TProps = IGlobalStateProps & IGlobalActionProps;

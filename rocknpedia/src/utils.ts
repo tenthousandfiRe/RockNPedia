@@ -18,6 +18,7 @@ export const myFetch = async ({
     formData?: FormData;
     token?: string | any;
   }) => {
+      console.log(token)
     let headers = new Headers();
     let body = undefined;
     if (json) {
