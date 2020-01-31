@@ -1,5 +1,5 @@
 .bandDivs {
-  background-color: rgba(250, 2, 138, 0.562);
+  background-color: rgba(245, 245, 245, 0.89);
   margin-top: 40px;
   height: 150px; }
 
@@ -9,5 +9,5 @@
   justify-content: left; }
 
 .boton {
-  color: white !important;
-  border-color: white; }
+  color: black !important;
+  border-color: black; }
