@@ -6,10 +6,10 @@ const bandsController = require('../controllers/bandsController.js');
 const storage = multer.diskStorage({
     destination: "public/avatars",
     filename: (_req, file, cb) => {
-      // const extension = file.originalname.slice(
-      //   file.originalname.lastIndexOf(".")
-      // );
-      cb(null, file.originalname);
+      const extension = file.originalname.slice(
+        file.originalname.lastIndexOf(".")
+      );
+      cb(null, new Date().valueOf() + extension);
     }
   });
   const upload = multer({ storage }).single("band_image");
@@ -18,7 +18,7 @@ router.get('/', bandsController.list);
 router.post('/', upload, bandsController.save);
 router.get('/:band_id', bandsController.getBand);
 router.delete('/delete/:band_id', bandsController.delete);
-router.put('/update/:band_id', upload, bandsController.update);
+router.put('/update/:band_id', bandsController.update);
 
 
 

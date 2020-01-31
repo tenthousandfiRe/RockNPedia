@@ -67,29 +67,26 @@ bandsController.getBand = (req, res) => {
 //Update the band 
 bandsController.update = (req, res) => {
   const { band_id } = req.params;
+  const token = req.headers.authorization.replace("Bearer ", "");
   let name = req.body.name;
   let foundation_year = req.body.foundation_year;
   let band_image = req.file.filename;
-  try {
-    const token = req.headers.authorization.replace("Bearer ", "");
-    // const Admin = jwt.verify(token, myKey).isAdmin;
-    // const idUser = jwt.verify (token, myKey).id;
-    let sql = `UPDATE band SET name = '${name}', foundation_year = ${foundation_year}, band_image = '${band_image}' WHERE (band_id = ${band_id})`;
-    console.log(sql)
-    if (token) {
-      connection.query(sql, (error, results) => {
-        if (error) console.log(error);
-        res.send('banda actualizada');
-      });
-    }
-    else {
-      res.send(error)
-    }
-
-  } catch {
-    res.sendStatus(401);
-  }
-};
+    let sql = `UPDATE band SET? name = '${name}', foundation_year = ${foundation_year}, band_image = '${band_image}' WHERE (band_id = ${band_id})`;
+    let sqlSelect = `SELECT album_id, name, record_label, album_image
+    FROM album 
+    WHERE album.band_id = ${band_id}`;
+    connection.query(sql, { name, foundation_year, band_image }, (error) => {
+      if (error) console.log(error);
+      else if (token) {
+        connection.query(sqlSelect, results => {
+          response.send(results)
+          console.log(results)
+        })
+      } else {
+        res.send("No ze puede")
+      }
+    });
+}
 
 
 //Deleting one band

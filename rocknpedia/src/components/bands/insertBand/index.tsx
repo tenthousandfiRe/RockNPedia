@@ -109,7 +109,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
                             <div className="control">
                                 <input
                                     className="form-control"
-                                    type="month"
+                                    type="number"
                                     min="1000"
                                     max="3000"
                                     value={foundation_year}
@@ -129,7 +129,9 @@ class InsertBand extends React.PureComponent<TProps, IState> {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-12">
-                                    <label className="mt-3">Imagen</label>
+                                <label className="label">
+                                <strong>Subir imagen</strong>
+                            </label>
                                     <br />
                                     <div className="col-2 border">
                                         <input
@@ -137,13 +139,11 @@ class InsertBand extends React.PureComponent<TProps, IState> {
 
                                             className="custom-file-input"
                                             ref={this.inputFileRef}
+                                            onClick={this.insertBand}
                                         />
                                     </div>
                                     <br />
-                                    <button className="btn btn-primary" onClick={this.insertBand}>
-                                        Insertar imagen
-              </button>
-                                    <div className="row"></div>
+                                   <div className="row"></div>
                                 </div>
                             </div>
                             <div className="field is-grouped">
