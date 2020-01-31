@@ -5,11 +5,11 @@ const usersController = require('../controllers/usersController.js');
 
 const storage = multer.diskStorage({
     destination: "public/avatars",
-    filename: (_req, file, cb) => {
+    originalname: (_req, file, cb) => {
       const extension = file.originalname.slice(
         file.originalname.lastIndexOf(".")
       );
-      cb(null, file.originalname);
+      cb(null, file.originalname, extension);
     }
   });
   
@@ -21,9 +21,9 @@ router.post('/', usersController.save);
 router.get('/', usersController.list);
 router.post('/auth', usersController.auth);
 router.get('/:id', usersController.listId);
-router.put('/:id', usersController.update);
+router.post('/:id', upload, usersController.update);
 router.delete('/:id', usersController.delete);
-router.post('/avatar', upload, usersController.updateAvatar);
+// router.post('/avatar', upload, usersController.updateAvatar);
 
 
 

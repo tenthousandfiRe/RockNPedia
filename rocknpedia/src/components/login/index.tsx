@@ -22,6 +22,13 @@ interface IState {
 type TProps = IProps & IGlobalActionProps;
 
 class Login extends React.PureComponent<TProps, IState> {
+    componentWillMount() {
+        const { setAccount } = this.props;
+        const token = localStorage.getItem("token");
+        if (token) {
+          setAccount(generateAccountFromToken(token));
+        }
+      }
     constructor(props: TProps) {
         super(props);
 

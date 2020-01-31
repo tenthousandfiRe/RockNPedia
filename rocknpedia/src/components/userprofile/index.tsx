@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
 import { IAccount } from "../../interfaces/IAccount";
-import { myFetch } from "../../utils";
+import { myFetch, generateAccountFromToken } from "../../utils";
+import { SetAccountAction } from "../../redux/actions";
+import "./style.css";
 
 interface IGlobalStateProps {
   account: IAccount | any;
@@ -10,6 +12,7 @@ interface IGlobalStateProps {
 
 interface IGlobalActionProps {
   uploadAvatar(id: number): void;
+  setAccount(account: any): void;
 }
 type TProps = IGlobalStateProps & IGlobalActionProps;
 
@@ -22,13 +25,20 @@ interface IState {
 }
 
 class UserProfile extends React.PureComponent<TProps, IState> {
+  componentWillMount() {
+    const { setAccount } = this.props;
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAccount(generateAccountFromToken(token));
+    }
+  }
   inputFileRef: React.RefObject<HTMLInputElement>;
   constructor(props: TProps) {
     super(props);
     this.inputFileRef = React.createRef();
-    this.uploadAvatar = this.uploadAvatar.bind(this);
+    // this.uploadAvatar = this.uploadAvatar.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
-   
+
     this.onRolChange = this.onRolChange.bind(this);
     this.updateUser = this.updateUser.bind(this);
     this.state = {
@@ -36,8 +46,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       user_image: this.props.account?.user_image,
       rol: this.props.account?.rol,
       is_admin: 0,
-      error: "",
-      
+      error: ""
     };
   }
   onUsernameChange(event: any) {
@@ -57,65 +66,78 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   }
 
   updateUser() {
-    const { username, rol, is_admin} = this.state;
-    const { user_id } = this.props.account;
-    const token = localStorage.getItem("token");
-    console.log(token);
-    myFetch({
-      path: `/users/${user_id}`,
-      method: "PUT",
-      json: { username, rol, is_admin }
-    }).then(json => {
-      if (!json) {
-        this.setState({ error: "error" });
-      }
-    });
-  }
-
-  uploadAvatar() {
+    const { username, rol, is_admin } = this.state;
     if (this.inputFileRef.current?.files) {
-      let token = localStorage.getItem("token");
-      const avatar = this.inputFileRef.current.files[0];
+      const { user_id } = this.props.account;
       const formData = new FormData();
-      formData.append("avatar", avatar);
-      fetch("http://localhost:3003/users/avatar", {
+      const token = localStorage.getItem("token");
+      const user_image = this.inputFileRef.current.files[0];
+      console.log(token);
+      formData.append("user_image", user_image);
+      formData.append("username", username);
+      formData.append("rol", rol);
+
+      myFetch({
+        path: `/users/${user_id}`,
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData
+        json: { username, rol, is_admin },
+        token,
+        formData
+      }).then(json => {
+        if (json) {
+        console.log(json);
+        const { username, rol } = json;
+        
+          this.props.setAccount({ username, rol });
+        }
       });
     }
-  };
+  }
+
+  // uploadAvatar() {
+  //   if (this.inputFileRef.current?.files) {
+  //     let token = localStorage.getItem("token");
+  //     const avatar = this.inputFileRef.current.files[0];
+  //     const formData = new FormData();
+  //     formData.append("avatar", avatar);
+  //     fetch("http://localhost:3003/users/avatar", {
+  //       method: "POST",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       },
+  //       body: formData
+  //     });
+  //   }
+  // }
 
   render() {
     const { account } = this.props;
 
-    const { username, rol,  } = this.state;
+    const { username, rol } = this.state;
     return (
       <>
-        <div className="col-6">
-          <div className="card-content">
-            <div className="form">
-              <label className="label">
-                <strong>Username</strong>
-              </label>
-              <div className="control">
-                <input
-                  className="form-control"
-                  type="text"
-                  value={username}
-                  onChange={this.onUsernameChange}
-                />
-              </div>
+        <div className="container backform d-flex justify-content-center mt-5">
+          <div className="col-10 mt-5">
+            <label className="label">
+              <strong>Nombre de Usuario</strong>
+            </label>
+            <div className="control">
+              <input
+                className="form-control"
+                style={{ backgroundColor: "transparent" }}
+                type="text"
+                value={username}
+                onChange={this.onUsernameChange}
+              />
             </div>
             <div className="field">
               <label className="label">
-                <strong>Rol</strong>
+                <strong>Actualiza tu Rol!</strong>
               </label>
               <div className="control">
                 <div className="select">
                   <select
+                    style={{ backgroundColor: "transparent" }}
                     className="custom-select"
                     onChange={this.onRolChange}
                     defaultValue={rol}
@@ -128,43 +150,34 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     <option value="vocal">Vocal</option>
                     <option value="banda">Banda</option>
                   </select>
+                  <label className="mt-3">
+                    Clica aquí para actualizar tu avatar!
+                  </label>
+                
+
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    ref={this.inputFileRef}
+                  />
                 </div>
               </div>
             </div>
             <div className="field is-grouped">
               <div className="control">
                 <button
-                  className="btn btn-info mt-3 "
-                  disabled={username.length === 0}
-                  onClick={this.updateUser}
+                  className="btn btn-info"
+                  // disabled={username.length === 1}
+                  onClick={() => {
+                    this.updateUser();
+                    // this.uploadAvatar();
+                  }}
                   data-dismiss="modal"
                 >
                   Actualizar
                 </button>
                 {this.state.error}
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
-              <label className="mt-3">Avatar</label>
-              <br />
-              <div className="col-2 border">
-                <input
-                  type="file"
-                  className="custom-file-input"
-                  ref={this.inputFileRef}
-                  
-                />
-              </div>
-              <br />
-              <button className="btn btn-primary" onClick={this.uploadAvatar}>
-                Upload Avatar
-              </button>
-              <div className="row"></div>
             </div>
           </div>
         </div>
@@ -176,6 +189,8 @@ const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
   account
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  setAccount: SetAccountAction
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
