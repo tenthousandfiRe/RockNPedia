@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
       const extension = file.originalname.slice(
         file.originalname.lastIndexOf(".")
       );
-      cb(null, new Date().valueOf() + extension);
+      cb(null, file.originalname);
     }
   });
   

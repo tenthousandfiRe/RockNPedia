@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css';
 import { connect } from "react-redux";
-import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
+// import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
 import { myFetch } from "../../utils";
 import { SetBandsAction, SetBandAction } from '../../redux/actions'
 import { IBand } from '../../interfaces/IBand'

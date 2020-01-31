@@ -60,7 +60,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light navie">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           Rock 'N' Pedia
         </a>
         <button
@@ -77,7 +77,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
+            {/* <li className="nav-item active">
               <a className="nav-link" href="#">
                 Home <span className="sr-only">(current)</span>
               </a>
@@ -86,14 +86,14 @@ class Navbar extends React.PureComponent<TProps, IState> {
               <a className="nav-link" href="#">
                 Link
               </a>
-            </li>
+            </li> */}
 
             
             
           </ul>
           <a className="nav-item">
               {/* ternary to show the button to login */}
-              {!account ? (
+              {!token ? (
                 <button
                   type="button"
                   className="btn btn-outline-info boton my-2 my-sm-0"
@@ -144,7 +144,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
             </a>
           <a className="nav-item">
               {/* ternary to show or not the button register */}
-              {!account ? (
+              {!token ? (
                 <button
                   type="button"
                   className="btn btn-outline-info my-2 boton my-sm-0 ml-3"

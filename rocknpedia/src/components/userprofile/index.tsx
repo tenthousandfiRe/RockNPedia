@@ -17,7 +17,6 @@ interface IState {
   username: string;
   user_image: string;
   rol: string;
-  
   error: string;
   is_admin: number;
 }
@@ -33,9 +32,9 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     this.onRolChange = this.onRolChange.bind(this);
     this.updateUser = this.updateUser.bind(this);
     this.state = {
-      username: "",
-      user_image: "",
-      rol: "",
+      username: this.props.account?.username,
+      user_image: this.props.account?.user_image,
+      rol: this.props.account?.rol,
       is_admin: 0,
       error: "",
       
@@ -92,7 +91,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   render() {
     const { account } = this.props;
 
-    const { username } = this.state;
+    const { username, rol, user_image } = this.state;
     return (
       <>
         <div className="col-6">
@@ -105,7 +104,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 <input
                   className="form-control"
                   type="text"
-                  placeholder={account?.username}
+                  value={username}
                   onChange={this.onUsernameChange}
                 />
               </div>
@@ -119,7 +118,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                   <select
                     className="custom-select"
                     onChange={this.onRolChange}
-                    defaultValue={account?.rol}
+                    defaultValue={rol}
                   >
                     <option value="usuario">Usuario</option>
                     <option value="guitarra">Guitarra</option>
@@ -158,6 +157,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                   type="file"
                   className="custom-file-input"
                   ref={this.inputFileRef}
+                  value={user_image}
                 />
               </div>
               <br />

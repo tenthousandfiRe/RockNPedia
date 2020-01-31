@@ -6,10 +6,10 @@ const bandsController = require('../controllers/bandsController.js');
 const storage = multer.diskStorage({
     destination: "public/avatars",
     filename: (_req, file, cb) => {
-      const extension = file.originalname.slice(
-        file.originalname.lastIndexOf(".")
-      );
-      cb(null, new Date().valueOf() + extension);
+      // const extension = file.originalname.slice(
+      //   file.originalname.lastIndexOf(".")
+      // );
+      cb(null, file.originalname);
     }
   });
   const upload = multer({ storage }).single("band_image");
