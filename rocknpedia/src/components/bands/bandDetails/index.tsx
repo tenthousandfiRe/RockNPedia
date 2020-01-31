@@ -40,7 +40,11 @@ class BandDetails extends React.PureComponent<TProps, IState> {
         return (
             <div className="container">
                 <div className="container bandDivsImage">
+<<<<<<< Updated upstream
                     <img style={{ width: 600, height: 190 }} src={URL_bandupdate + band_image} className="card-img" alt="..."></img>
+=======
+                    <img style={{ width: "100%", height: "100%" }} src={URL_bandupdate + band_image} className="card-img" alt="..."></img>
+>>>>>>> Stashed changes
                 </div>
                 <div className="container bandDivsInfo">
                     <h1 >{name}</h1>

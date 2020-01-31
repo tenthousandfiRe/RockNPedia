@@ -7,7 +7,8 @@ import { SetBandsAction, SetBandAction } from '../../redux/actions'
 import { IBand } from '../../interfaces/IBand'
 import { IStore } from '../../interfaces/IStore'
 import "./style.css";
-const URL_images = 'http://localhost:3003/avatars/'
+import { API_URL } from '../../constants'
+const URL_images = `${API_URL}/avatars/`
 
 
 interface IGlobalStateProps {

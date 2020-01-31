@@ -4,6 +4,10 @@ import { IStore } from '../../../interfaces/IStore'
 import { IBand } from '../../../interfaces/IBand'
 import { IAccount } from '../../../interfaces/IAccount'
 import { API_URL } from '../../../constants'
+<<<<<<< Updated upstream
+=======
+import "./style.css";
+>>>>>>> Stashed changes
 
 interface IProps {
     account?: IAccount
