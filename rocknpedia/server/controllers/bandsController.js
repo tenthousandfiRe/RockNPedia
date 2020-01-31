@@ -69,7 +69,7 @@ bandsController.update = (req, res) => {
   const { band_id } = req.params;
   let name = req.body.name;
   let foundation_year = req.body.foundation_year;
-  let band_image = req.body.band_image;
+  let band_image = req.file.filename;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     // const Admin = jwt.verify(token, myKey).isAdmin;

@@ -10,10 +10,14 @@ const connection = require("../config/db.js");
 
 const albumsController = {};
 
-//GET query for listing all the albums info
+//GET query for listing all the band albums info
 albumsController.list = ((req, res) => {
   const { band_id } = req.params
-  let sql = `SELECT album.album_id, album.name, record_label, album_image FROM album INNER JOIN band_album ON album.album_id = band_album.album_id INNER JOIN band ON band_album.album_id = band.band_id = ${band_id}`
+  let sql = `SELECT album.album_id, album.name, record_label, album_image
+  FROM album 
+  JOIN band_album 
+  ON band_album.album_id = album.album_id
+  WHERE band_id = ${band_id}`
   try {
     connection.query(sql, (error, results) => {
       if (error) console.log(error);
@@ -33,7 +37,7 @@ albumsController.save = ((req, res) => {
   let name = req.body.name;
   let record_label = req.body.record_label;
   let album_image = req.file.filename;
-  let sql = `INSERT INTO album (name, record_label, album_image) VALUES ('${name}', '${record_label}', '${band_image}');
+  let sql = `INSERT INTO album (name, record_label, album_image) VALUES ('${name}', '${record_label}', '${album_image}');
   `;
   connection.query
   if (token) {
@@ -44,27 +48,12 @@ albumsController.save = ((req, res) => {
       }
     );
   } else {
-    res.status(401).send("no puedes subir imágenes");
+    res.status(401).send("no puedes");
   }
 });
 
 
 
-
-// //Listing albums of one band 
-// bandsController.getBand = (req, res) => {
-//   const { band_id } = req.params;
-//   let sql = `SELECT band_id, name, foundation_year, band_image FROM band WHERE band_id = ${band_id}`;
-//   try {
-//     connection.query(sql, (error, results) => {
-//       if (error) console.log(error);
-//       res.send(results);
-//     });
-
-//   } catch {
-//     res.sendStatus(401);
-//   }
-// };
 
 // //Update the band 
 // bandsController.update = (req, res) => {
