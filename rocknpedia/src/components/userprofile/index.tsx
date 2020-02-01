@@ -166,7 +166,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
             <div className="field is-grouped">
               <div className="control">
                 <button
-                  className="btn btn-info"
+                  className="btn btn-outline-dark"
                   // disabled={username.length === 1}
                   onClick={() => {
                     this.updateUser();

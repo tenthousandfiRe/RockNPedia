@@ -63,8 +63,8 @@ class Bands extends React.PureComponent<TProps> {
                              <div className="card-body">
                                  <h5 className="card-title">{name}</h5>
                                  <p className="card-text">{foundation_year}</p>
-                                 <p className="card-text"><small className="text-muted">{band_image}</small></p>
-                                 <a onClick={() => this.bandView(band_id)} className="btn btn-outline-info boton">Ver historia</a>
+                                 
+                                 <a onClick={() => this.bandView(band_id)} className="btn btn-outline-dark boton">Ver historia</a>
                              </div>
                          </div>
                      </div>
