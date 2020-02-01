@@ -12,6 +12,7 @@ import Register from "./components/register";
 import Navbar from "./components/navbar";
 import Bands from "./components/bands/";
 import BandDetails from "./components/bands/bandDetails/";
+import EditBand from "./components//bands/editBand"
 import InsertBand from "./components/bands/insertBand/";
 import { IBand } from "./interfaces/IBand";
 import userProfile from "./components/userprofile/index"
@@ -48,6 +49,7 @@ class App extends React.PureComponent<TProps> {
      <Route path='/insertBand' exact component={InsertBand} />
      <Route path='/' exact component={Bands} />
      <Route path={`/bands/${band_id}`} exact component={BandDetails} />
+     <Route path={`${band_id}/editBand`} exact component={EditBand} />
     <Route path='/userProfile' exact component={userProfile} />
      </BrowserRouter>
      </>;

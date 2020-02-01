@@ -1,14 +1,23 @@
-.bandDivs {
-    background-color: rgba(250, 2, 138, 0.562) ;
+.bandDivsImage {
     margin-top: 40px;
     height: 150px;
+    width: 900px;
+    text-align:center;
+
+    img{
+        margin:0px auto;
+    }
    
 }
-.imageAdjust {
-    justify-content: left;
+.bandDivsInfo {
+    margin-top: 40px;
+    color: whitesmoke;
+    height: 150px;
+    width: 900px;
+    text-align:center;
 }
 
 .boton {
-    color: white !important;
-    border-color: white;   
+    color: black !important;
+    border-color: black !important;   
 }
