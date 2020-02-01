@@ -105,7 +105,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
               <div className="control">
                 <input
                   className="form-control"
-                  type="number"
+                  type="text"
                   maxLength={4}
                   value={foundation_year}
                   onChange={this.onFoundationYearChange}

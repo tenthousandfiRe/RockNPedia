@@ -8,6 +8,7 @@ import { SetBandAction } from '../../../redux/actions'
 import "./style.css";
 import EditBand from '../editBand'
 import { API_URL } from '../../../constants'
+import { defaultBandImage } from '../../../constants'
 const URL_bandupdate = `${API_URL}/avatars/`
 
 
@@ -35,7 +36,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
     myFetch({ path: `/update/${band_id}` }).then(json => {
         console.log(json)
     })
-    this.props.history.push(`/update/${band_id}`)
+    this.props.history.push(`/bands/update/${band_id}`)
 }
 
   render() {
@@ -45,7 +46,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
     return (
       <div className="container">
         <div className="container bandDivsImage">
-          <img style={{ width: "100%", height: "100%" }} src={URL_bandupdate + band_image} className="card-img" alt="..."></img>
+          <img style={{ width: "100%", height: "100%" }} src={band_image ? URL_bandupdate + band_image : defaultBandImage} className="card-img" alt="..."></img>
         </div>
         <div className="container bandDivsInfo">
           <h1 >{name}</h1>
@@ -63,7 +64,6 @@ class BandDetails extends React.PureComponent<TProps, IState> {
           ) : (
               ""
             )}
-          <EditBand band={band} />
         </div>
         </div>
         )

@@ -10,7 +10,7 @@
 
 .bandDivsInfo {
   margin-top: 40px;
-  color: whitesmoke;
+  color: whitesmoke !important;
   height: 150px;
   width: 900px;
   text-align: center;
