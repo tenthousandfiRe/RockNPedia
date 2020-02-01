@@ -49,7 +49,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                                  <p className="card-text">{band_image}</p>
                                  <p className="card-text"><small className="text-muted">History</small></p>
                              </div>
-                             <button type="button" className="btn btn-primary">Añadir review</button>
+                             <button type="button" className="btn btn-dark">Añadir review</button>
                          </div>
                      </div>
                  </div>

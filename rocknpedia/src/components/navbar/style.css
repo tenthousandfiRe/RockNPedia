@@ -2,9 +2,12 @@ nav {
   background-color: whitesmoke !important; }
 
 .boton {
-  color: white;
-  border-color: white; }
+  color: white !important;
+  border-color: white !important; }
 
 .modalIndex {
-  background-color: rgba(241, 131, 28, 0.733) !important;
+  background-color: rgba(0, 0, 0, 0.904);
+  color: white; }
+
+.light {
   color: white; }
