@@ -66,30 +66,26 @@ bandsController.getBand = (req, res) => {
 
 //Update the band 
 bandsController.update = (req, res) => {
-  const { band_id } = req.params;
+  const token = req.headers.authorization.replace("Bearer ", "");
   let name = req.body.name;
   let foundation_year = req.body.foundation_year;
   let band_image = req.file.filename;
-  try {
-    const token = req.headers.authorization.replace("Bearer ", "");
-    // const Admin = jwt.verify(token, myKey).isAdmin;
-    // const idUser = jwt.verify (token, myKey).id;
-    let sql = `UPDATE band SET name = '${name}', foundation_year = ${foundation_year}, band_image = '${band_image}' WHERE (band_id = ${band_id})`;
-    console.log(sql)
-    if (token) {
-      connection.query(sql, (error, results) => {
-        if (error) console.log(error);
-        res.send('banda actualizada');
-      });
-    }
-    else {
-      res.send(error)
-    }
-
-  } catch {
-    res.sendStatus(401);
+  let sql = `UPDATE band SET ${name ? `name='${name}',` : ""} ${foundation_year ? `foundation_year='${foundation_year}',` : ""}${band_image ? `band_image='${band_image}'` : ""} WHERE id=${band_id}`;
+  connection.query
+  if (token) {
+    connection.query(
+      sql,
+      (results) => {
+        res.send(results);
+      }
+    );
+  } else {
+    res.status(401).send("no puedes actualizarlo");
   }
 };
+
+
+
 
 
 //Deleting one band

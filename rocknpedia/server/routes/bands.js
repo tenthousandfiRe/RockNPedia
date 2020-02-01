@@ -18,7 +18,7 @@ router.get('/', bandsController.list);
 router.post('/', upload, bandsController.save);
 router.get('/:band_id', bandsController.getBand);
 router.delete('/delete/:band_id', bandsController.delete);
-router.put('/update/:band_id', upload, bandsController.update);
+router.post('/update/:band_id', upload, bandsController.update);
 
 
 

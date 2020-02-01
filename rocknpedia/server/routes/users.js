@@ -23,7 +23,7 @@ router.post('/auth', usersController.auth);
 router.get('/:id', usersController.listId);
 router.put('/:id', usersController.update);
 router.delete('/:id', usersController.delete);
-router.post('/avatar', upload, usersController.updateAvatar);
+// router.post('/avatar', upload, usersController.updateAvatar);
 
 
 
