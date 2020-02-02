@@ -1,6 +1,6 @@
 .bandDivsImage {
   margin-top: 40px;
-  height: 150px;
+  height: 900px;
   width: 900px;
   text-align: center;
 }
@@ -16,7 +16,17 @@
   text-align: center;
 }
 
+.bandDivs {
+  background-color: rgba(245, 245, 245, 0.89);
+  margin-top: 40px;
+  height: 150px;
+}
+
+.imageAdjust {
+  justify-content: left;
+}
+
 .boton {
-  color: white !important;
-  border-color: white !important;
+  color: black !important;
+  border-color: black !important;
 }
