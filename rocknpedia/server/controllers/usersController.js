@@ -133,7 +133,7 @@ usersController.listId = (req, res) => {
 usersController.update = (req, res) => {
   const { user_id } = req.params;
   let { is_admin, username, rol } = req.body;
-  let user_image = req.file.originalname;
+  let user_image = req.file.filename;
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     connection.query(

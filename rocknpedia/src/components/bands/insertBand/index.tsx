@@ -3,9 +3,11 @@ import { myFetch } from "../../../utils";
 import { connect } from "react-redux";
 import { IStore } from "../../../interfaces/IStore";
 import { IAccount } from "../../../interfaces/IAccount";
+import iziToast from 'izitoast'
 
 interface IProps {
   account: IAccount;
+  history: any
 }
 
 interface IGlobalActionProps {}
@@ -75,6 +77,13 @@ class InsertBand extends React.PureComponent<TProps, IState> {
       );
       this.inputFileRef.current.value = "";
     }
+    iziToast.show({
+          title: 'Hey',
+          message: 'Banda insertada correctamente',
+      backgroundColor: "grey",
+      position: "topLeft"
+      })
+      setTimeout(this.props.history.push('/'), 2000);
   }
 
   render() {
@@ -105,9 +114,8 @@ class InsertBand extends React.PureComponent<TProps, IState> {
               <div className="control">
                 <input
                   className="form-control"
-                  type="number"
-                  min="1000"
-                  max="3000"
+                  type="text"
+                  maxLength={4}
                   value={foundation_year}
                   onChange={this.onFoundationYearChange}
                 ></input>
