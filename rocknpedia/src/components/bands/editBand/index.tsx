@@ -82,9 +82,8 @@ class EditBand extends React.PureComponent<TProps, IState> {
 
     deleteBand(band_id: number){
         const token = localStorage.getItem("token")
-        myFetch({ method: "DELETE", path: `/bands/delete/${band_id}`, token }).then(json => 
-            this.props.setBands(json)
-        ).then(this.props.history.push(`/`)
+        myFetch({ method: "DELETE", path: `/bands/delete/${band_id}`, token }).
+        then(this.props.history.push(`/`)
         )
     }
 

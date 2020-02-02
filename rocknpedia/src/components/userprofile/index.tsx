@@ -80,17 +80,18 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       myFetch({
         path: `/users/${user_id}`,
         method: "POST",
-        json: { username, rol, is_admin },
+        json: { username, rol, is_admin, user_image },
         token,
         formData
       }).then(json => {
         if (json) {
-        console.log(json);
-        const { username, rol } = json;
-        
+          console.log(json);
+          const { username, rol, user_image } = json;
+
           this.props.setAccount({ username, rol });
         }
       });
+      this.inputFileRef.current.value = "";
     }
   }
 
@@ -113,11 +114,16 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   render() {
     const { account } = this.props;
 
-    const { username, rol } = this.state;
+    const { username, rol, user_image } = this.state;
     return (
       <>
         <div className="container backform d-flex justify-content-center mt-5">
-          <div className="col-10 mt-5">
+          <div className="col-10 mt-5">                       
+              {!user_image?  <img className="d-flex  logoUser mx-auto" src={user_image}></img> : <img
+              className="d-flex  logoUser mx-auto" src="https://img.icons8.com/pastel-glyph/2x/user-male.png" ></img>}
+              
+              
+            
             <label className="label">
               <strong>Nombre de Usuario</strong>
             </label>
@@ -153,7 +159,6 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                   <label className="mt-3">
                     Clica aquí para actualizar tu avatar!
                   </label>
-                
 
                   <input
                     type="file"
@@ -179,6 +184,85 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 {this.state.error}
               </div>
             </div>
+          </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div className="container ">
+          <div className="accordion" id="accordionExample">
+            <div className="card  collapseColor">
+              <div className="card-header d-flex justify-content-center" id="headingOne">
+                <h2 className="mb-0">
+                  <button
+                    className="btn btn btn-outline-dark  mr-5"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
+                  >
+                    <h2>Reviews</h2>
+                  </button>
+                  <button
+                    className="btn btn-outline-dark  ml-5 mr-5"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseTwo"
+                    aria-expanded="true"
+                    aria-controls="collapseTwo"
+                  >
+                    <h2>Amigos</h2>
+                  </button>
+                  <button
+                    className="btn btn btn-outline-dark  ml-5"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseThree"
+                    aria-expanded="true"
+                    aria-controls="collapseThree"
+                  >
+                    <h2>Mis Grupos Favoritos</h2>
+                  </button>
+                </h2>
+              </div>
+
+              <div
+                id="collapseOne"
+                className="collapse"
+                aria-labelledby="headingOne"
+                data-parent="#accordionExample"
+              >
+                <div className="card-body">
+                  Aqui mostrará las Reviews de este usuario
+                </div>
+              </div>
+              <div
+                id="collapseTwo"
+                className="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionExample"
+              >
+                <div className="card-body">
+                  Lista de amigos
+                </div>
+              </div>
+              <div
+                id="collapseThree"
+                className="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionExample"
+              >
+                <div className="card-body">
+                  Lista de grupos favoritos
+                </div>
+              </div>
+            </div>
+            
+            
           </div>
         </div>
       </>

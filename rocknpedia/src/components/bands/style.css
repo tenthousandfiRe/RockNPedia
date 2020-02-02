@@ -1,15 +1,12 @@
-.bandDivs {
-  background-color: rgba(250, 2, 138, 0.562);
-  margin-top: 40px; }
-
 .imageAdjust {
-  -webkit-box-pack: left;
-  -ms-flex-pack: left;
-  justify-content: left; }
+  justify-content: left;
+}
 
 .boton {
   color: white !important;
-  border-color: white; }
+  border-color: white;
+}
 
 .cuerpo {
-  height: 400px !important; }
+  height: 400px !important;
+}
