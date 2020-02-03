@@ -1,7 +1,13 @@
+.titleContainer{
+    margin-bottom: 30px;
+    color: white;
+    text-align: center;
+}
+
 .backform {
     background-color: rgba(245, 245, 245, 0.356);
     color: black;
-    margin-top: 40px;
+    margin-top: 1000px;
     height: 400px;
     width: 500px;
     text-align: center;
@@ -10,10 +16,10 @@
 
     .bandDivsEditImage {
         position: absolute;
-        width: 200px;
-        height: 200px;
-        left: -150px;
-        top: -50px;
+        width: 150px;
+        height: 150px;
+        left: -80px;
+        top: -70px;
     
         img{
             border-radius: 100%;
@@ -24,7 +30,7 @@
     
 }
 
-h2 {
+.editBandText {
     color: white
 }
 
@@ -38,6 +44,13 @@ h2 {
 .buttonsEditBand:hover {
     color: white !important;
     border-color: white !important;   
+}
+
+.historyBackground{
+    color: black;
+    background-color: rgba(245, 245, 245, 0.767);
+    padding: 20px;   
+    position: relative; 
 }
 
 

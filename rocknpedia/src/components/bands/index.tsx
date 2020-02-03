@@ -9,6 +9,7 @@ import { IStore } from '../../interfaces/IStore'
 import "./style.css";
 import { API_URL } from '../../constants'
 import { defaultBandImage } from '../../constants'
+import { Link } from 'react-router-dom';
 const URL_images = `${API_URL}/avatars/`
 
 
@@ -43,9 +44,9 @@ class Bands extends React.PureComponent<TProps> {
         this.getBands()
     }
     // function to change the view to the specific band components, getting the info by the ID
-    bandView(band_id?: number){
+    bandView(band_id?: number) {
         myFetch({ path: `/bands/${band_id}` }).then(json => {
-            this.props.setBand(json[0])
+            this.props.setBand(json)
         })
         this.props.history.push(`/bands/${band_id}`)
     }
@@ -55,20 +56,20 @@ class Bands extends React.PureComponent<TProps> {
         return (
             <div className="container">
                 {bands.map(({ band_id, name, foundation_year, band_image }) => (
-                     <div className="card mb-3 bandDivs mx-auto">
-                     <div className="row no-gutters">
-                         <div className="col-md-3 d-flex justify-content-center mt-4">
-                             <img style={{ width: 100, height: 100 }} src={band_image ? URL_images+band_image : defaultBandImage} className="card-img" alt="..."></img>
-                         </div>
-                         <div className="col-md-8">
-                             <div className="card-body">
-                                 <h5 className="card-title">{name}</h5>
-                                 <p className="card-text">{foundation_year}</p>
-                                 <a onClick={() => this.bandView(band_id)} className="btn btn-outline-dark boton">Ver historia</a>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                    <div className="card mb-3 bandDivs mx-auto">
+                        <div className="row no-gutters">
+                            <div className="col-md-3 d-flex justify-content-center mt-4">
+                                <img style={{ width: 100, height: 100 }} src={band_image ? URL_images + band_image : defaultBandImage} className="card-img" alt="..."></img>
+                            </div>
+                            <div className="col-md-8">
+                                <div className="card-body">
+                                    <h5 className="card-title">{name}</h5>
+                                    <p className="card-text">{foundation_year}</p>
+                                    <a onClick={() => this.bandView(band_id)} className="btn btn-outline-dark boton">Ver historia</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 ))}
             </ div>
 

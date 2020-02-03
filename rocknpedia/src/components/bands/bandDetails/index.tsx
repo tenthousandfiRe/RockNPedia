@@ -2,21 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IBand, IBands } from '../../../interfaces/IBand';
 import { IStore } from '../../../interfaces/IStore';
-import { IAccount } from '../../../interfaces/IAccount'
 import { myFetch } from "../../../utils";
 import { SetBandAction } from '../../../redux/actions'
 import "./style.css";
-import EditBand from '../editBand'
 import { API_URL } from '../../../constants'
 import { defaultBandImage } from '../../../constants'
 const URL_bandupdate = `${API_URL}/avatars/`
 
 
-
 interface IProps {
-  account: IAccount
   band: IBand
   history: any
+  match: any
 }
 
 interface IGlobalActionProps {
@@ -32,16 +29,25 @@ class BandDetails extends React.PureComponent<TProps, IState> {
     super(props)
   }
 
+
   bandEdit(band_id?: number){
     myFetch({ path: `/update/${band_id}` }).then(json => {
-        console.log(json)
-    })
+    console.log(json)})
     this.props.history.push(`/bands/update/${band_id}`)
 }
 
+componentDidMount(){
+  const band_id  = this.props.match.params.id
+    console.log(band_id)
+    myFetch({ path: `/bands/${band_id}` }).then(json => {
+        this.props.setBand(json)
+        console.log(json)
+    })
+}
+
   render() {
-    const { band } = this.props
-    const { band_id, name, foundation_year, band_image } = band
+    const { name, foundation_year, band_image, history } = this.props.band;
+    const band_id = this.props.match.params.id
     var token = localStorage.getItem("token")
     return (
       <div className="container">
@@ -51,11 +57,13 @@ class BandDetails extends React.PureComponent<TProps, IState> {
         <div className="container bandDivsInfo">
           <h1 >{name}</h1>
           <p>{foundation_year}</p>
-          {/* ternary to show the button to edit the band */}
+          <div className="historyBackgroundEditBand">
+            <p>{history}</p>
+            {/* ternary to show the button to edit the band */}
           {token ? (
             <button
               type="button"
-              className="btn btn-outline-light mt-3 buttons"
+              className="btn mt-3 buttonBandDetails"
               onClick={() => this.bandEdit(band_id)}
             >
               Editar
@@ -63,6 +71,8 @@ class BandDetails extends React.PureComponent<TProps, IState> {
           ) : (
               ""
             )}
+            </div>
+          
         </div>
         </div>
         )
@@ -75,4 +85,4 @@ const mapDispatchToProps = {
   setBand: SetBandAction
 }        
         
-export default connect(mapStateToProps, null)(BandDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(BandDetails)

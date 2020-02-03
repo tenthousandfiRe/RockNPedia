@@ -72,13 +72,14 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       const formData = new FormData();
       const token = localStorage.getItem("token");
       const user_image = this.inputFileRef.current.files[0];
+      console.log(user_image)
       console.log(token);
       formData.append("user_image", user_image);
       formData.append("username", username);
       formData.append("rol", rol);
 
       myFetch({
-        path: `/users/${user_id}`,
+        path: `/users/caca/${user_id}`,
         method: "POST",
         json: { username, rol, is_admin, user_image },
         token,
@@ -198,7 +199,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
               <div className="card-header d-flex justify-content-center" id="headingOne">
                 <h2 className="mb-0">
                   <button
-                    className="btn btn btn-outline-dark  mr-5"
+                    className="btn btn btn-outline-dark botonProfile mr-5"
                     type="button"
                     data-toggle="collapse"
                     data-target="#collapseOne"
@@ -208,7 +209,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     <h2>Reviews</h2>
                   </button>
                   <button
-                    className="btn btn-outline-dark  ml-5 mr-5"
+                    className="btn btn-outline-dark ml-5 mr-5"
                     type="button"
                     data-toggle="collapse"
                     data-target="#collapseTwo"
