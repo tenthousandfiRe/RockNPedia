@@ -7,6 +7,7 @@ import { IAccount } from '../../../interfaces/IAccount'
 import { API_URL, defaultBandImage } from '../../../constants'
 import { SetBandAction, SetBandsAction } from '../../../redux/actions'
 import { myFetch } from '../../../utils'
+import iziToast from 'izitoast'
 const URL_bandupdate = `${API_URL}/avatars/`
 
 interface IProps {
@@ -53,13 +54,13 @@ class EditBand extends React.PureComponent<TProps, IState> {
     }
 
     updateBand() {
-        const { name, foundation_year, created_by } = this.state;
+        const { name, foundation_year, band_image } = this.state;
         const { band_id } = this.props.band
         if (this.inputFileRef.current?.files) {
             const formData = new FormData();
             const token = localStorage.getItem("token");
             const band_image = this.inputFileRef.current.files[0];
-            console.log(band_image);
+            // this.setState({band_image});
             formData.append("band_image", band_image);
             formData.append("name", name as any);
             formData.append("foundation_year", foundation_year as any);
@@ -71,6 +72,11 @@ class EditBand extends React.PureComponent<TProps, IState> {
                 }
             );
             this.inputFileRef.current.value = "";
+            iziToast.show({
+                title: '¡banda actualizada!',
+                theme: 'light'
+            })
+            setTimeout(() => {this.props.history.push('/')}, 2000);
         }
     }
 
@@ -94,19 +100,27 @@ class EditBand extends React.PureComponent<TProps, IState> {
 
     render() {
         const { band } = this.props
-        const { band_id, name, foundation_year, band_image } = band
+        const { band_id, name, band_image } = band
         return (
-            <div className="container editBandDiv">
+            <div className="container">
                 <div className="row">
                     <div className="col-12" style={{ textAlign: "center" }}>
                         <h1 style={{ color: "white" }}>{name}</h1>
                     </div>
                 </div>
+            <div className="container-fluid">
                 <div className="row">
-                    <div className="col-6">
-                        <img style={{ width: 500, height: 500 }} src={band_image ? URL_bandupdate + band_image : defaultBandImage} className="card-img" alt="..."></img>
+                    <div className="col-5 align-items-center">
+                        <h2>Mira a vé qué vá a poné</h2>
+                        <h2>Mira a vé qué vá a poné</h2>
+                        <h2>Mira a vé qué vá a poné</h2>
+                        <h2>Mira a vé qué vá a poné</h2>
                     </div>
-                    <div className="col-6">
+                    <div className="col-1"></div>
+                    <div className="col-5 backform d-flex justify-content-center align-items-center">
+                    <div className="bandDivsEditImage">
+                        <img src={band_image ? URL_bandupdate + band_image : defaultBandImage} className="card-img" alt="..."></img>
+                    </div>
                         <div className="card-content">
                             <div className="form">
                                 <label className="label">
@@ -115,6 +129,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
                                 <div className="control">
                                     <input
                                         className="form-control"
+                                        style={{ backgroundColor: "transparent" }}
                                         type="text"
                                         value={this.state.name}
                                         onChange={(e) => this.setState({ name: e.target.value })}
@@ -129,6 +144,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
                                     <input
                                         className="form-control"
                                         type="number"
+                                        style={{ backgroundColor: "transparent" }}
                                         maxLength={4}
                                         value={this.state.foundation_year}
                                         onChange={(e: any) => this.setState({ foundation_year: e.target.value })}
@@ -138,9 +154,9 @@ class EditBand extends React.PureComponent<TProps, IState> {
                             <div className="container-fluid">
                                 <div className="row">
                                     <div className="col-12">
-                                        <label className="mt-3">Imagen</label>
+                                        <label className="mt-3">Pincha aquí para subir otra imagen</label>
                                         <br />
-                                        <div className="col-2 border">
+                                        <div className="col-12 d-flex justify-content-center">
                                             <input
                                                 type="file"
                                                 className="custom-file-input"
@@ -151,12 +167,12 @@ class EditBand extends React.PureComponent<TProps, IState> {
                                         <div className="row"></div>
                                     </div>
                                 </div>
-                                <div className="field is-grouped buttons">
+                                <div className="field is-grouped">
                                     <div className="control">
-                                        <button className="btn btn-info mt-3 buttons" onClick={this.updateBand}>
+                                        <button className="btn btn-outline-dark mt-3 buttonsEditBand" onClick={this.updateBand}>
                                             Enviar
                                         </button>
-                                        <button className="btn btn-info mt-3 buttons" onClick={() => this.deleteBand(band_id as any)}>
+                                        <button className="btn btn-outline-dark mt-3 buttonsEditBand" style={{marginLeft: 10}} onClick={() => this.deleteBand(band_id as any)}>
                                             Borrar banda
                                         </button>
                                         {this.state.error}
@@ -165,6 +181,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         )

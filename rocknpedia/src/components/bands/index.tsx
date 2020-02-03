@@ -55,7 +55,7 @@ class Bands extends React.PureComponent<TProps> {
         return (
             <div className="container">
                 {bands.map(({ band_id, name, foundation_year, band_image }) => (
-                     <div className="card mb-3 bandDivs">
+                     <div className="card mb-3 bandDivs mx-auto">
                      <div className="row no-gutters">
                          <div className="col-md-3 d-flex justify-content-center mt-4">
                              <img style={{ width: 100, height: 100 }} src={band_image ? URL_images+band_image : defaultBandImage} className="card-img" alt="..."></img>
@@ -64,7 +64,6 @@ class Bands extends React.PureComponent<TProps> {
                              <div className="card-body">
                                  <h5 className="card-title">{name}</h5>
                                  <p className="card-text">{foundation_year}</p>
-                                 
                                  <a onClick={() => this.bandView(band_id)} className="btn btn-outline-dark boton">Ver historia</a>
                              </div>
                          </div>

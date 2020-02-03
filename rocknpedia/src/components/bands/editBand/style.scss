@@ -1,9 +1,43 @@
-.editBandDiv{
-    color: whitesmoke !important
+.backform {
+    background-color: rgba(245, 245, 245, 0.356);
+    color: black;
+    margin-top: 40px;
+    height: 400px;
+    width: 500px;
+    text-align: center;
+    border-radius: 40px;
+    position: relative;
+
+    .bandDivsEditImage {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        left: -150px;
+        top: -50px;
+    
+        img{
+            border-radius: 100%;
+            height: auto;
+        }
+       
+    }
     
 }
 
-.buttons {
+h2 {
+    color: white
+}
+
+
+
+.buttonsEditBand {
+    color: black !important;
+    border-color: black !important;   
+}
+
+.buttonsEditBand:hover {
     color: white !important;
     border-color: white !important;   
 }
+
+

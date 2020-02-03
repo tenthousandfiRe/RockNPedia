@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { IStore } from "../../../interfaces/IStore";
 import { IAccount } from "../../../interfaces/IAccount";
 import iziToast from 'izitoast'
+import './style.css'
 
 interface IProps {
   account: IAccount;
@@ -91,9 +92,11 @@ class InsertBand extends React.PureComponent<TProps, IState> {
     let created_by = this.props.account.user_id;
     this.setState({ created_by: created_by });
     return (
-      <>
-        <div className="col-6">
-          <div className="card-content">
+      <div className="container">
+        <div className="row">
+          <div className="col-6"></div>
+        <div className="col-6 backform d-flex justify-content-center" style={{marginTop: 100}}>
+          <div className="card-content " style={{marginTop: 40}}>
             <div className="form">
               <label className="label">
                 <strong>Nombre de banda</strong>
@@ -101,6 +104,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
               <div className="control">
                 <input
                   className="form-control"
+                  style={{ backgroundColor: "transparent" }}
                   type="text"
                   value={name}
                   onChange={this.onNameChange}
@@ -114,6 +118,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
               <div className="control">
                 <input
                   className="form-control"
+                  style={{ backgroundColor: "transparent" }}
                   type="text"
                   maxLength={4}
                   value={foundation_year}
@@ -123,7 +128,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
               <div className="control">
                 <input
                   className="form-control"
-                  style={{ visibility: "hidden" }}
+                  style={{ visibility: "hidden", backgroundColor: "transparent" }}
                   type="number"
                   value={created_by}
                 ></input>
@@ -132,9 +137,9 @@ class InsertBand extends React.PureComponent<TProps, IState> {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-12">
-                  <label className="mt-3">Imagen</label>
+                  <label className="mt-3" style={{color: "black"}}>Click aquí para subir una imagen de la banda</label>
                   <br />
-                  <div className="col-2 border">
+                  <div className="col-12 border d-flex justify-content-center">
                     <input
                       type="file"
                       className="custom-file-input"
@@ -148,7 +153,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
               <div className="field is-grouped">
                 <div className="control">
                   <button
-                    className="btn btn-info mt-3 "
+                    className="btn btn-outline-dark mt-3 boton"
                     disabled={name.length === 0}
                     onClick={this.insertBand}
                     data-dismiss="modal"
@@ -161,7 +166,8 @@ class InsertBand extends React.PureComponent<TProps, IState> {
             </div>
           </div>
         </div>
-      </>
+        </div>
+      </div>
     );
   }
 }

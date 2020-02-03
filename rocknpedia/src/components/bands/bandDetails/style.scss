@@ -1,27 +1,36 @@
 .bandDivsImage {
     margin-top: 40px;
-    height: 900px;
     width: 900px;
     text-align: center;
 
     img{
-        margin:0px auto;
+        border-radius: 50%;
+        height: 50%;
+        width: 50%;
     }
    
 }
 .bandDivsInfo {
-    margin-top: 40px;
     color: whitesmoke !important;
     height: 150px;
     width: 900px;
     text-align:center;
 }
 
+.buttons {
+    color: white !important;
+    border-color: white !important;   
+}
+
+.buttons:hover {
+    color: black !important;
+    border-color: white !important;   
+}
+
 
 
 .bandDivs {
     background-color: rgba(245, 245, 245, 0.89);
-    margin-top: 40px;
     height: 150px;
     width: 900px;
     text-align:center;

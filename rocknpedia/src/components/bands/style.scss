@@ -1,3 +1,20 @@
+.video-container {
+    width: 100%;
+    height: calc(100% + 60px);
+    position: absolute;
+    top: -60px;
+    left: 0;
+    z-index: -1;
+    overflow: hidden;
+    color: #e3e3e3;
+
+    video {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      position: absolute;
+    }
+
 .bandDivs {
     background-color: rgba(245, 245, 245, 0.89);
     margin-top: 40px;
@@ -13,7 +30,14 @@
     border-color: black !important;   
 }
 
+.boton:hover {
+    color: white !important;
+    border-color: white !important;   
+}
+
+
 .cuerpo {  
     height: 400px !important;
     
 }
+

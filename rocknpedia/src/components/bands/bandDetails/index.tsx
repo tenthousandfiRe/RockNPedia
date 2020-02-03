@@ -46,17 +46,16 @@ class BandDetails extends React.PureComponent<TProps, IState> {
     return (
       <div className="container">
         <div className="container bandDivsImage">
-          <img style={{ width: "100%", height: "100%" }} src={band_image ? URL_bandupdate + band_image : defaultBandImage} className="card-img" alt="..."></img>
+          <img src={band_image ? URL_bandupdate + band_image : defaultBandImage} className="card-img" alt="..."></img>
         </div>
         <div className="container bandDivsInfo">
           <h1 >{name}</h1>
-          <p>{band_id}</p>
           <p>{foundation_year}</p>
           {/* ternary to show the button to edit the band */}
           {token ? (
             <button
               type="button"
-              className="btn btn-outline-info boton my-2 my-sm-0"
+              className="btn btn-outline-light mt-3 buttons"
               onClick={() => this.bandEdit(band_id)}
             >
               Editar
