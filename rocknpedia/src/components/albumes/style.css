@@ -1,0 +1,18 @@
+.backform {
+  background-color: rgba(245, 245, 245, 0.89);
+  margin-top: 40px;
+  height: 400px;
+  width: 500px;
+  text-align: center;
+  border-radius: 40px; }
+
+.logoUser {
+  width: 60px;
+  height: 60px; }
+
+.collapseColor {
+  background-color: rgba(245, 245, 245, 0.89) !important;
+  border-radius: 10px !important; }
+
+.separationDiv {
+  height: 100px; }
