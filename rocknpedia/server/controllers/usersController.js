@@ -131,16 +131,20 @@ usersController.listId = (req, res) => {
 };
 //HERE WE UPDATE USERS BY ID
 usersController.update = (req, res) => {
+  console.log("entroo")
   const { user_id } = req.params;
-  let { is_admin, username, rol } = req.body;
-  // let user_image = req.filename;
-  console.log(req.body)
-  console.log(req.file)
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaa")
 
-  console.log(user_image)
+  // console.log(user_id)
+  let { is_admin, username, rol } = req.body;
+  
+  let user_image = req.file.filename;
+  console.log(req.file.filename);
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
+    console.log(token)
+
+    const{ user_id } = jwt.verify(token, myKey)
+    console.log(user_id)
     connection.query(
       `UPDATE user SET? WHERE user_id = ${user_id};`,
       { is_admin, username, user_image, rol },
@@ -148,10 +152,24 @@ usersController.update = (req, res) => {
         if (error) console.log(error);
         else {
           connection.query(
-            `SELECT * FROM  user  WHERE user_id = ${id};`,
-            { is_admin, username, user_image, rol },
+            `SELECT * FROM  user  WHERE user_id = ${user_id};`,
+            { is_admin, username, user_image, rol, user_id },
             (error, results) => {
-              res.send(results[0]);
+              const token = jwt.sign(
+                {
+                  user_id,
+                  username,
+                  rol,
+                  user_image,
+                  is_admin: is_admin ? true : false
+                },
+                myKey
+              );
+              res.send({
+                token
+              });
+              // res.send(results[0]);
+              // console.log(results[0])
             }
           );
         }

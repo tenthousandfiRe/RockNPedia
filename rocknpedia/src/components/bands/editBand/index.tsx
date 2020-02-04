@@ -57,8 +57,8 @@ class EditBand extends React.PureComponent<TProps, IState> {
     }
 
     updateBand() {
-        const { name, foundation_year, band_image } = this.state;
-        const { band_id } = this.props.band
+        const { name, foundation_year } = this.state;
+        const band_id = this.props.match.params.id
         if (this.inputFileRef.current?.files) {
             const formData = new FormData();
             const token = localStorage.getItem("token");
@@ -74,10 +74,6 @@ class EditBand extends React.PureComponent<TProps, IState> {
                 }
             );
             this.inputFileRef.current.value = "";
-            iziToast.show({
-                title: '¡banda actualizada!',
-                theme: 'light'
-            })
             this.props.history.push('/');
         }
     }

@@ -9,6 +9,7 @@ let myKey = "rocknpediakey";
 var bandsRouter = require('./routes/bands');
 var usersRouter = require('./routes/users.js');
 var albumsRouter = require('./routes/albums.js');
+var reviewsRouter = require('./routes/reviews.js');
 const connection = require("./config/db.js");
 
 
@@ -21,6 +22,7 @@ server.use(cors());
 
 server.use('/users', usersRouter)
 server.use('/bands', bandsRouter, albumsRouter);
+server.use('/reviews', reviewsRouter);
 
 
 server.listen(3003);
