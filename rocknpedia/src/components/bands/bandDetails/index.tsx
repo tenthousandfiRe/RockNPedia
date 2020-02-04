@@ -9,6 +9,7 @@ import "./style.css";
 import EditBand from '../editBand'
 import { API_URL } from '../../../constants'
 import { defaultBandImage } from '../../../constants'
+import Album from '../../albumes';
 const URL_bandupdate = `${API_URL}/avatars/`
 
 
@@ -17,6 +18,7 @@ interface IProps {
   account: IAccount
   band: IBand
   history: any
+  match: any
 }
 
 interface IGlobalActionProps {
@@ -53,6 +55,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
         <div className="container bandDivsInfo">
           <h1 >{name}</h1>
           <p>{foundation_year}</p>
+          
           {/* ternary to show the button to edit the band */}
           {token ? (
             <button
@@ -66,6 +69,77 @@ class BandDetails extends React.PureComponent<TProps, IState> {
               ""
             )}
         </div>
+        </div>
+        <div className="container">
+          <div className="accordion" id="accordionExample">
+            <div className="card collapseColor">
+              <div
+                className="card-header d-flex justify-content-center"
+                id="headingOne"
+              >
+                <h2 className="mb-0">
+                  <button
+                    className="btn btn-outline-dark mr-5"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
+                  >
+                    <h2>Albumes</h2>
+                  </button>
+                  <button
+                    className="btn btn-outline-dark ml-5 mr-5"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseTwo"
+                    aria-expanded="true"
+                    aria-controls="collapseTwo"
+                  >
+                    <h2></h2>
+                  </button>
+                  <button
+                    className="btn btn-outline-dark ml-5"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseThree"
+                    aria-expanded="true"
+                    aria-controls="collapseThree"
+                  >
+                    <h2></h2>
+                  </button>
+                </h2>
+              </div>
+
+              <div
+                id="collapseOne"
+                className="collapse"
+                aria-labelledby="headingOne"
+                data-parent="#accordionExample"
+              >
+                <div className="card-body">
+                  <p>hola</p>
+                 <Album match={this.props.match} />
+                </div>
+              </div>
+              <div
+                id="collapseTwo"
+                className="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionExample"
+              >
+                <div className="card-body">Lista de amigos</div>
+              </div>
+              <div
+                id="collapseThree"
+                className="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionExample"
+              >
+                <div className="card-body">Lista de grupos favoritos</div>
+              </div>
+            </div>
+          </div>
         </div>
         </>
         )

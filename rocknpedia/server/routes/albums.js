@@ -15,8 +15,8 @@ const albumsController = require('../controllers/albumsController.js');
 //   });
 //   const upload = multer({ storage }).single("band_image");
 
-router.get('/:band_id/albums', albumsController.list);
-router.post('/:band_id/albums', albumsController.save);
+router.get('/:band_id/albumes', albumsController.list);
+router.post('/:band_id/albumes', albumsController.save);
 
 
 

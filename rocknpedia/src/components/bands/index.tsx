@@ -53,7 +53,7 @@ class Bands extends React.PureComponent<TProps> {
     return (
       <>
         <div className="container">
-          {bands.map(({ band_id, name, foundation_year, band_image }) => (
+           {bands.map(({ band_id, name, foundation_year, band_image }) => (
             <div className="card mb-3 bandDivs mx-auto">
               <div className="row no-gutters">
                 <div className="col-md-3 d-flex justify-content-center mt-4">
@@ -80,7 +80,7 @@ class Bands extends React.PureComponent<TProps> {
                 </div>
               </div>
             </div>
-          ))}
+          ))} 
 
           {/* <div
             id="carouselExampleSlidesOnly"
