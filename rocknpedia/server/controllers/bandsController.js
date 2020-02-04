@@ -47,11 +47,25 @@ bandsController.save = ((req, res) => {
 //Listing one band details 
 bandsController.getBand = (req, res) => {
   const { band_id } = req.params;
-  let sql = `SELECT name, foundation_year, band_image, history from band inner join history WHERE band.band_id = ${band_id}`;
+  let sql = `SELECT name, foundation_year, band_image, history FROM band, history WHERE history.band_id = ${band_id} AND band.band_id = ${band_id}`;
+  let sqlNoHistory = `SELECT name, foundation_year, band_image from band WHERE band_id = ${band_id}`
   try {
     connection.query(sql, (error, results) => {
       if (error) throw error;
-      res.send(results[0]);
+      if (results.length == 0) {
+        connection.query(sqlNoHistory, (__, results2) => {
+          res.send(results2[0])
+          console.log(results2[0])
+          console.log("aaaaaaaaaaaaaaaaaaaaaaa")
+        })
+      }
+      else {
+        console.log("eeeeeeeeeeeeeeeeeeeeeee")
+
+       res.send(results[0])
+       console.log(results[0])
+
+      }
     });
 
   } catch {

@@ -57,7 +57,7 @@ componentDidMount(){
         <div className="container bandDivsInfo">
           <h1 >{name}</h1>
           <p>{foundation_year}</p>
-          <div className="historyBackgroundEditBand">
+          {history ? <div className="historyBackgroundEditBand">
             <p>{history}</p>
             {/* ternary to show the button to edit the band */}
           {token ? (
@@ -71,7 +71,7 @@ componentDidMount(){
           ) : (
               ""
             )}
-            </div>
+            </div> : ""}
           
         </div>
         </div>
