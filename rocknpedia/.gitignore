@@ -10,6 +10,7 @@ node_modules/
 
 # production
 /build
+\rocknpedia\server\public\avatars
 
 # misc
 .DS_Store
