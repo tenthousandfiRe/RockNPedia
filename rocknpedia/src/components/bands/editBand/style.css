@@ -6,30 +6,21 @@
   width: 500px;
   text-align: center;
   border-radius: 40px;
-  position: relative;
-}
-.backform .bandDivsEditImage {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  left: -150px;
-  top: -50px;
-}
-.backform .bandDivsEditImage img {
-  border-radius: 100%;
-  height: auto;
-}
-
-h2 {
-  color: white;
-}
+  position: relative; }
+  .backform .bandDivsEditImage {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    left: -150px;
+    top: -50px; }
+    .backform .bandDivsEditImage img {
+      border-radius: 100%;
+      height: auto; }
 
 .buttonsEditBand {
   color: black !important;
-  border-color: black !important;
-}
+  border-color: black !important; }
 
 .buttonsEditBand:hover {
   color: white !important;
-  border-color: white !important;
-}
+  border-color: white !important; }

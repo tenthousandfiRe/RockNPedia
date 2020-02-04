@@ -54,7 +54,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
     }
 
     updateBand() {
-        const { name, foundation_year, band_image } = this.state;
+        const { name, foundation_year } = this.state;
         const { band_id } = this.props.band
         if (this.inputFileRef.current?.files) {
             const formData = new FormData();

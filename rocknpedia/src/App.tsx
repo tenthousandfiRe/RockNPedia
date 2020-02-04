@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from "react-redux";
-import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { SetAccountAction } from "./redux/actions";
 import { IStore } from "./interfaces/IStore";
 import { IAccount } from "./interfaces/IAccount";

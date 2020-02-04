@@ -13,11 +13,7 @@ const albumsController = {};
 //GET query for listing all the band albums info
 albumsController.list = ((req, res) => {
   const { band_id } = req.params
-  let sql = `SELECT album.album_id, album.name, record_label, album_image
-  FROM album 
-  JOIN band_album 
-  ON band_album.album_id = album.album_id
-  WHERE band_id = ${band_id}`
+  let sql = `SELECT name ,album_id, record_label, album_image FROM album where band_id = ${band_id}`
   try {
     connection.query(sql, (error, results) => {
       if (error) console.log(error);

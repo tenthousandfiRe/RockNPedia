@@ -1,3 +1,4 @@
+import { IUser } from './../interfaces/IUsers';
 import { IAccount } from './../interfaces/IAccount';
 import { IBand, IBands } from './../interfaces/IBand'
 
@@ -20,6 +21,10 @@ interface IBandAction {
   type: "SET_BAND";
   payload: IBand;
 }
+interface ISetUsersAction {
+  type: "SET_USERS";
+  payload: IUser[];
+}
 
 
 export type TAction =
@@ -27,3 +32,4 @@ export type TAction =
   | ILogoutAction
   | IBandsAction
   | IBandAction
+  | ISetUsersAction

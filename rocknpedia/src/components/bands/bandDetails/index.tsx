@@ -44,6 +44,8 @@ class BandDetails extends React.PureComponent<TProps, IState> {
     const { band_id, name, foundation_year, band_image } = band
     var token = localStorage.getItem("token")
     return (
+      <>
+      
       <div className="container">
         <div className="container bandDivsImage">
           <img src={band_image ? URL_bandupdate + band_image : defaultBandImage} className="card-img" alt="..."></img>
@@ -65,6 +67,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
             )}
         </div>
         </div>
+        </>
         )
       }
     }

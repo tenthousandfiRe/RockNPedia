@@ -2,15 +2,17 @@ import React from "react";
 import Login from "../login/index";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
-import { LogoutAction } from "../../redux/actions";
+import { LogoutAction, SetAccountAction } from "../../redux/actions";
 import { IAccount } from "../../interfaces/IAccount";
 import Register from "../register/index";
 import "./style.css";
+import { generateAccountFromToken } from "../../utils";
 interface IGlobalStateProps {
   account: IAccount | null;
 }
 
 interface IGlobalActionProps {
+  setAccount(account: IAccount): void;
   logout(): void;
   history: any;
 }
@@ -22,6 +24,14 @@ interface IState {
 type TProps = IGlobalStateProps & IGlobalActionProps;
 
 class Navbar extends React.PureComponent<TProps, IState> {
+  componentDidMount() {
+    const { setAccount } = this.props;
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAccount(generateAccountFromToken(token));
+    }
+  }
+
   constructor(props: TProps) {
     super(props);
 
@@ -51,8 +61,10 @@ class Navbar extends React.PureComponent<TProps, IState> {
   render() {
     const { account } = this.props;
     const { isLogged } = this.state;
+    
     const token = localStorage.getItem("token");
     console.log(token);
+    console.log(account);
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light navie">
@@ -172,7 +184,19 @@ class Navbar extends React.PureComponent<TProps, IState> {
             </div>
           </a>
           {token ? (
-            <div className="nav-item dropdown dropleft">
+          <div className="float-left ">{account?.user_image ? 
+              <img className="d-flex logoUser marcoNav mx-auto" src={`http://localhost:3003/avatars/${account.user_image}`}></img>
+             : 
+              <img
+                className="d-flex logoUser marcoNav mx-auto"
+                src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
+              ></img>
+            }</div>
+            ) : (
+              ""
+            )}
+          {token ? (           
+            <div className="nav-item dropdown dropleft ml-3">             
               <a
                 className="nav-link dropdown-toggle btn btn-outline-dark"
                 href="#"
@@ -182,7 +206,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {" "}
+                
                 {account?.username}
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -225,7 +249,8 @@ const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
 });
 
 const mapDispatchToProps = {
-  logout: LogoutAction
+  logout: LogoutAction,
+  setAccount: SetAccountAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

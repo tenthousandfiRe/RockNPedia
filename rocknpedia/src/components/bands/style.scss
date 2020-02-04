@@ -14,7 +14,7 @@
       object-fit: cover;
       position: absolute;
     }
-
+}
 .bandDivs {
     background-color: rgba(245, 245, 245, 0.89);
     margin-top: 40px;
@@ -41,3 +41,6 @@
     
 }
 
+
+.carousel-inner:first-child ,div :active{
+  }

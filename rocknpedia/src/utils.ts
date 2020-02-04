@@ -36,7 +36,9 @@ export const myFetch = async ({
       body
     });
     try {
-      const json = await response.json();
+      const json =  await response.json();
+      console.log("entroooooooo")
+      console.log(json)
       return json;
     } catch {
       return null;
@@ -44,7 +46,7 @@ export const myFetch = async ({
   };
   
   export const generateAccountFromToken = (token: string): IAccount => {
-    const { user_id, username, is_admin, user_image, rol } = decode(token) as ITokenPayload;
+    const { user_id, username, is_admin, user_image, rol } = decode(token) as IAccount;
     return { token, user_id, username, is_admin, user_image, rol };
   };
   

@@ -5,15 +5,15 @@ const usersController = require('../controllers/usersController.js');
 
 const storage = multer.diskStorage({
     destination: "public/avatars",
-    originalname: (_req, file, cb) => {
+    filename: (_req, file, cb) => {
       const extension = file.originalname.slice(
         file.originalname.lastIndexOf(".")
       );
-      cb(null, file.originalname, extension);
+      cb(null, new Date().valueOf() + extension);
     }
   });
   
-  const upload = multer({ storage }).single("avatar");
+  const upload = multer({ storage }).single("user_image");
 
 
 

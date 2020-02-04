@@ -4,15 +4,18 @@ import { IStore } from "../../interfaces/IStore";
 import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction } from "../../redux/actions";
+import  jwt from "jsonwebtoken";
 import "./style.css";
 
 interface IGlobalStateProps {
   account: IAccount | any;
+  
 }
 
 interface IGlobalActionProps {
   uploadAvatar(id: number): void;
   setAccount(account: any): void;
+  history: any;
 }
 type TProps = IGlobalStateProps & IGlobalActionProps;
 
@@ -25,13 +28,15 @@ interface IState {
 }
 
 class UserProfile extends React.PureComponent<TProps, IState> {
-  componentWillMount() {
+  componentDidMount() {
     const { setAccount } = this.props;
     const token = localStorage.getItem("token");
     if (token) {
       setAccount(generateAccountFromToken(token));
     }
+    this.getUser();
   }
+
   inputFileRef: React.RefObject<HTMLInputElement>;
   constructor(props: TProps) {
     super(props);
@@ -64,6 +69,20 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     console.log(event.target.selectedOptions[0].value);
     this.setState({ rol, error: "  " });
   }
+  getUser() {
+    const token = localStorage.getItem("token");
+    const { user_id } = this.props.account;
+    myFetch({
+      path: `/users/${user_id}`,
+      token
+    }).then(json => {
+      if (json) {
+        console.log(json);
+        // const { username, rol, user_image } = json;
+        this.props.setAccount(json);
+      }
+    });
+  }
 
   updateUser() {
     const { username, rol, is_admin } = this.state;
@@ -71,27 +90,31 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       const { user_id } = this.props.account;
       const formData = new FormData();
       const token = localStorage.getItem("token");
-      const user_image = this.inputFileRef.current.files[0];
-      console.log(token);
-      formData.append("user_image", user_image);
+      const avatar = this.inputFileRef.current.files[0];   
+      formData.append("user_image", avatar);
       formData.append("username", username);
       formData.append("rol", rol);
 
       myFetch({
         path: `/users/${user_id}`,
         method: "POST",
-        json: { username, rol, is_admin, user_image },
+        // json: { username, rol, is_admin, user_image },
         token,
         formData
       }).then(json => {
         if (json) {
           console.log(json);
-          const { username, rol, user_image } = json;
+          
 
-          this.props.setAccount({ username, rol });
+           console.log(token);
+          // const { username, rol, user_image } = token;         
+          const { username, rol, user_image, user_id } = generateAccountFromToken(json.token);
+          this.props.setAccount({username, rol, user_image, user_id });
+          localStorage.setItem("token", json.token);
+          this.props.history.push("/")
         }
       });
-      this.inputFileRef.current.value = "";
+      // this.inputFileRef.current.value = "";
     }
   }
 
@@ -115,16 +138,22 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     const { account } = this.props;
 
     const { username, rol, user_image } = this.state;
+    
     return (
       <>
+        <div className="separationDiv"></div>
         <div className="container backform d-flex justify-content-center mt-5">
-          <div className="col-10 mt-5">                       
-              {!user_image?  <img className="d-flex  logoUser mx-auto" src={user_image}></img> : <img
-              className="d-flex  logoUser mx-auto" src="https://img.icons8.com/pastel-glyph/2x/user-male.png" ></img>}
-              
-              
-            
-            <label className="label">
+          <div className="col-10 mt-3">
+            {user_image ? (
+              <img className="d-flex logoUser mx-auto" src={`http://localhost:3003/avatars/${user_image}`}></img>
+            ) : (
+              <img
+                className="d-flex logoUser mx-auto"
+                src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
+              ></img>
+            )}
+
+            <label className="label mt-4">
               <strong>Nombre de Usuario</strong>
             </label>
             <div className="control">
@@ -192,13 +221,16 @@ class UserProfile extends React.PureComponent<TProps, IState> {
         <br />
         <br />
         <br />
-        <div className="container ">
+        <div className="container">
           <div className="accordion" id="accordionExample">
-            <div className="card  collapseColor">
-              <div className="card-header d-flex justify-content-center" id="headingOne">
+            <div className="card collapseColor">
+              <div
+                className="card-header d-flex justify-content-center"
+                id="headingOne"
+              >
                 <h2 className="mb-0">
                   <button
-                    className="btn btn btn-outline-dark  mr-5"
+                    className="btn btn-outline-dark mr-5"
                     type="button"
                     data-toggle="collapse"
                     data-target="#collapseOne"
@@ -208,7 +240,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     <h2>Reviews</h2>
                   </button>
                   <button
-                    className="btn btn-outline-dark  ml-5 mr-5"
+                    className="btn btn-outline-dark ml-5 mr-5"
                     type="button"
                     data-toggle="collapse"
                     data-target="#collapseTwo"
@@ -218,7 +250,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     <h2>Amigos</h2>
                   </button>
                   <button
-                    className="btn btn btn-outline-dark  ml-5"
+                    className="btn btn-outline-dark ml-5"
                     type="button"
                     data-toggle="collapse"
                     data-target="#collapseThree"
@@ -246,9 +278,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">
-                  Lista de amigos
-                </div>
+                <div className="card-body">Lista de amigos</div>
               </div>
               <div
                 id="collapseThree"
@@ -256,15 +286,12 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">
-                  Lista de grupos favoritos
-                </div>
+                <div className="card-body">Lista de grupos favoritos</div>
               </div>
             </div>
-            
-            
           </div>
         </div>
+        <div className="col-12 separationDiv"></div>
       </>
     );
   }

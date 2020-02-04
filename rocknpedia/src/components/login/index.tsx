@@ -15,7 +15,9 @@ interface IGlobalActionProps {
 interface IState {
     username: string;
     password: string;
+    user_image: string;
     confirmation: string;
+    rol: string;
     error: string;
 }
 
@@ -35,6 +37,8 @@ class Login extends React.PureComponent<TProps, IState> {
         this.state = {
             username: "",
             password: "",
+            user_image: "",
+            rol: "",
             confirmation: "",
             error: ""
         }
@@ -56,11 +60,11 @@ class Login extends React.PureComponent<TProps, IState> {
 
     login() {
         const { setAccount } = this.props;
-        const { username, password } = this.state;
+        const { username, password, user_image, rol } = this.state;
         myFetch({
           path: "/users/auth",
           method: "POST",
-          json: { username, password }
+          json: { username, password, user_image, rol }
         }).then(json => {
           if (json) {
             const { token } = json;
