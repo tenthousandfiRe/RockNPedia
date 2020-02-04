@@ -55,16 +55,11 @@ bandsController.getBand = (req, res) => {
       if (results.length == 0) {
         connection.query(sqlNoHistory, (__, results2) => {
           res.send(results2[0])
-          console.log(results2[0])
-          console.log("aaaaaaaaaaaaaaaaaaaaaaa")
         })
       }
       else {
-        console.log("eeeeeeeeeeeeeeeeeeeeeee")
-
        res.send(results[0])
        console.log(results[0])
-
       }
     });
 

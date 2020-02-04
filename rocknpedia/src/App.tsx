@@ -7,6 +7,7 @@ import { SetAccountAction } from "./redux/actions";
 import { IStore } from "./interfaces/IStore";
 import { IAccount } from "./interfaces/IAccount";
 import { generateAccountFromToken } from "./utils";
+import Reviews from './components/reviews'
 import Login from './components/login/index'
 import Register from "./components/register";
 import Navbar from "./components/navbar";
@@ -46,6 +47,7 @@ class App extends React.PureComponent<TProps> {
      <Route path='/' component={Navbar} />
      {/* <Route path='/' component={Login} /> */}
      {/* <Route path='/' component={Register} /> */}
+     <Route path='/' exact component={Reviews} />
      <Route path='/insertBand' exact component={InsertBand} />
      <Route path='/' exact component={Bands} />
      <Route path='/bands/:id' exact component={BandDetails} />
