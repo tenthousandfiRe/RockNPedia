@@ -1,44 +1,63 @@
 .bandDivsImage {
   margin-top: 40px;
   width: 900px;
-  text-align: center; }
-  .bandDivsImage img {
-    border-radius: 50%;
-    height: 50%;
-    width: 50%; }
+  text-align: center;
+}
+.bandDivsImage img {
+  border-radius: 50%;
+  height: 50%;
+  width: 50%;
+}
 
 .bandDivsInfo {
   color: whitesmoke !important;
   height: 150px;
   width: 900px;
-  text-align: center; }
+  text-align: center;
+}
 
-.buttons {
-  color: white !important;
-  border-color: white !important; }
-
-.buttons:hover {
+.buttonBandDetails {
+  background-color: rgba(245, 245, 245, 0.904);
   color: black !important;
-  border-color: white !important; }
+  border-radius: 150%;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  bottom: -30px;
+  left: -35px;
+}
+
+.buttonBandDetails:hover {
+  background-color: rgba(68, 68, 68, 0.904);
+  color: white !important;
+}
 
 .bandDivs {
   background-color: rgba(245, 245, 245, 0.89);
   height: 150px;
   width: 900px;
-  text-align: center; }
-  .bandDivs img {
-    margin: 0px auto; }
+  text-align: center;
+}
+.bandDivs img {
+  margin: 0px auto;
+}
 
 .bandDivsInfo {
   margin-top: 40px;
   color: whitesmoke;
   height: 150px;
   width: 900px;
-  text-align: center; }
+  text-align: center;
+}
 
 .boton {
   color: black !important;
-  border-color: black !important; }
+  border-color: black !important;
+}
 
-.separator {
-  height: 400px; }
+.historyBackgroundEditBand {
+  color: black;
+  background-color: rgba(245, 245, 245, 0.767);
+  padding: 20px;
+  position: relative;
+}

@@ -14,6 +14,7 @@ interface IProps {
     account?: IAccount
     band: IBand
     history: any
+    match: any
 }
 
 interface IGlobalActionProps {
@@ -23,6 +24,7 @@ interface IGlobalActionProps {
 }
 
 interface IState {
+    band_id: number | null,
     name?: string,
     foundation_year?: number,
     band_image: string,
@@ -41,6 +43,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
         this.inputFileRef = createRef();
 
         this.state = {
+            band_id: null,
             name: this.props.band.name,
             foundation_year: this.props.band.foundation_year,
             band_image: "",
@@ -60,7 +63,6 @@ class EditBand extends React.PureComponent<TProps, IState> {
             const formData = new FormData();
             const token = localStorage.getItem("token");
             const band_image = this.inputFileRef.current.files[0];
-            // this.setState({band_image});
             formData.append("band_image", band_image);
             formData.append("name", name as any);
             formData.append("foundation_year", foundation_year as any);
@@ -76,51 +78,49 @@ class EditBand extends React.PureComponent<TProps, IState> {
                 title: '¡banda actualizada!',
                 theme: 'light'
             })
-            setTimeout(() => {this.props.history.push('/')}, 2000);
+            this.props.history.push('/');
         }
     }
 
-    getBand() {
-        const { band_id } = this.props.band
-        myFetch({ path: `/bands/${band_id}` }).then(json => {
-            this.props.setBand(json)
-        })
-    }
 
-    deleteBand(band_id: number){
+    deleteBand(band_id: number) {
         const token = localStorage.getItem("token")
         myFetch({ method: "DELETE", path: `/bands/delete/${band_id}`, token }).
-        then(this.props.history.push(`/`)
+            then(this.props.history.push(`/`)
+            )
+    }
+
+    componentDidMount() {
+        const band_id = this.props.match.params.id
+        console.log(band_id)
+        myFetch({ path: `/bands/${band_id}` }).then(json =>
+            this.props.setBand(json)
         )
     }
 
-    componentShouldMount() {
-        this.getBand()
-    }
-
     render() {
-        const { band } = this.props
-        const { band_id, name, band_image } = band
+        const { band } = this.props;
+        const { band_image, history } = band
+        let { name = band?.name, band_id } = this.state
+        let { foundation_year = band?.foundation_year } = this.state
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col-12" style={{ textAlign: "center" }}>
-                        <h1 style={{ color: "white" }}>{name}</h1>
+                <div className="container titleContainer">
+                    <div className="row">
+                        <div className="col-12">
+                            <h1>{name}</h1>
+                        </div>
                     </div>
                 </div>
-            <div className="container-fluid">
                 <div className="row">
-                    <div className="col-5 align-items-center">
-                        <h2>Mira a vé qué vá a poné</h2>
-                        <h2>Mira a vé qué vá a poné</h2>
-                        <h2>Mira a vé qué vá a poné</h2>
-                        <h2>Mira a vé qué vá a poné</h2>
+                    <div className="col-4 align-items-center d-flex">
+                    <div className="historyBackground"><p>{history}</p></div>
                     </div>
-                    <div className="col-1"></div>
+                    <div className="col-2"></div>
                     <div className="col-5 backform d-flex justify-content-center align-items-center">
-                    <div className="bandDivsEditImage">
-                        <img src={band_image ? URL_bandupdate + band_image : defaultBandImage} className="card-img" alt="..."></img>
-                    </div>
+                        <div className="bandDivsEditImage">
+                            <img src={band_image ? URL_bandupdate + band_image : defaultBandImage} className="card-img" alt="..."></img>
+                        </div>
                         <div className="card-content">
                             <div className="form">
                                 <label className="label">
@@ -131,7 +131,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
                                         className="form-control"
                                         style={{ backgroundColor: "transparent" }}
                                         type="text"
-                                        value={this.state.name}
+                                        value={name ? name : band.name}
                                         onChange={(e) => this.setState({ name: e.target.value })}
                                     />
                                 </div>
@@ -146,7 +146,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
                                         type="number"
                                         style={{ backgroundColor: "transparent" }}
                                         maxLength={4}
-                                        value={this.state.foundation_year}
+                                        value={foundation_year ? foundation_year : band.foundation_year}
                                         onChange={(e: any) => this.setState({ foundation_year: e.target.value })}
                                     ></input>
                                 </div>
@@ -172,7 +172,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
                                         <button className="btn btn-outline-dark mt-3 buttonsEditBand" onClick={this.updateBand}>
                                             Enviar
                                         </button>
-                                        <button className="btn btn-outline-dark mt-3 buttonsEditBand" style={{marginLeft: 10}} onClick={() => this.deleteBand(band_id as any)}>
+                                        <button className="btn btn-outline-dark mt-3 buttonsEditBand" style={{ marginLeft: 10 }} onClick={() => this.deleteBand(band_id as any)}>
                                             Borrar banda
                                         </button>
                                         {this.state.error}
@@ -181,7 +181,6 @@ class EditBand extends React.PureComponent<TProps, IState> {
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         )

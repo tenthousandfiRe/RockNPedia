@@ -17,14 +17,20 @@
     text-align:center;
 }
 
-.buttons {
-    color: white !important;
-    border-color: white !important;   
+.buttonBandDetails {
+    background-color: rgba(245, 245, 245, 0.904);
+    color: black !important;
+    border-radius: 150%;
+    height: 80px;
+    width: 80px;
+    position: absolute; 
+    bottom: -30px; 
+    left: -35px;
 }
 
-.buttons:hover {
-    color: black !important;
-    border-color: white !important;   
+.buttonBandDetails:hover {
+    background-color: rgba(68, 68, 68, 0.904);
+    color: white !important;
 }
 
 
@@ -53,6 +59,9 @@
     border-color: black !important;   
 }
 
-.separator {
-    height: 400px;
+.historyBackgroundEditBand {
+    color: black;
+    background-color: rgba(245, 245, 245, 0.767);
+    padding: 20px;   
+    position: relative; 
 }

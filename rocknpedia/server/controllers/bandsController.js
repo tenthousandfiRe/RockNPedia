@@ -47,11 +47,20 @@ bandsController.save = ((req, res) => {
 //Listing one band details 
 bandsController.getBand = (req, res) => {
   const { band_id } = req.params;
-  let sql = `SELECT band_id, name, foundation_year, band_image FROM band WHERE band_id = ${band_id}`;
+  let sql = `SELECT name, foundation_year, band_image, history FROM band, history WHERE history.band_id = ${band_id} AND band.band_id = ${band_id}`;
+  let sqlNoHistory = `SELECT name, foundation_year, band_image from band WHERE band_id = ${band_id}`
   try {
     connection.query(sql, (error, results) => {
       if (error) throw error;
-      res.send(results);
+      if (results.length == 0) {
+        connection.query(sqlNoHistory, (__, results2) => {
+          res.send(results2[0])
+        })
+      }
+      else {
+       res.send(results[0])
+       console.log(results[0])
+      }
     });
 
   } catch {
@@ -83,6 +92,7 @@ bandsController.update = (req, res) => {
   let name = req.body.name;
   let foundation_year = req.body.foundation_year;
   let band_image = req.file.filename;
+  console.log(req.body)
   let sql = `UPDATE band SET ${name ? `name='${name}',` : ""} ${foundation_year ? `foundation_year='${foundation_year}',` : ""}${band_image ? `band_image='${band_image}'` : ""} WHERE band_id=${band_id}`;
   console.log(sql)
   if (token) {
