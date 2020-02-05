@@ -47,8 +47,9 @@ bandsController.save = ((req, res) => {
 //Listing one band details 
 bandsController.getBand = (req, res) => {
   const { band_id } = req.params;
-  let sql = `SELECT name, foundation_year, band_image, history FROM band, history WHERE history.band_id = ${band_id} AND band.band_id = ${band_id}`;
+  let sql = `SELECT name, foundation_year, band_image, band_history FROM band, history WHERE history.band_id = ${band_id} AND band.band_id = ${band_id}`;
   let sqlNoHistory = `SELECT name, foundation_year, band_image from band WHERE band_id = ${band_id}`
+  console.log(sql)
   try {
     connection.query(sql, (error, results) => {
       if (error) throw error;
@@ -58,7 +59,7 @@ bandsController.getBand = (req, res) => {
         })
       }
       else {
-       res.send(results[0])
+       res.send(results[0]) 
        console.log(results[0])
       }
     });

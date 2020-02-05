@@ -47,7 +47,7 @@ class App extends React.PureComponent<TProps> {
      <Route path='/' component={Navbar} />
      {/* <Route path='/' component={Login} /> */}
      {/* <Route path='/' component={Register} /> */}
-     <Route path='/' exact component={Reviews} />
+     {/* <Route path='/' exact component={Reviews} /> */}
      <Route path='/insertBand' exact component={InsertBand} />
      <Route path='/' exact component={Bands} />
      <Route path='/bands/:id' exact component={BandDetails} />

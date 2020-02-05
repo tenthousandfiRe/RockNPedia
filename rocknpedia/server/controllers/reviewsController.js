@@ -25,10 +25,10 @@ reviewsController.list = ((req, res) => {
 reviewsController.save = ((req, res) => {
   const token = req.headers.authorization.replace("Bearer ", "");
   let review = req.body.review;
-  let review_date = req.body.review_date;
   let user_id = req.params.user_id;
   let album_id = req.params.album_id;
-  let sql = `INSERT INTO review (review, review_date, user_id, album_id) values ('${review}', '${review_date}', ${user_id}, ${album_id});`;
+  let sql = `INSERT INTO review (review, user_id, album_id) values ('${review}', ${user_id}, ${album_id});`;
+  console.log(sql)
   connection.query
   if (token) {
     connection.query(
@@ -38,7 +38,7 @@ reviewsController.save = ((req, res) => {
       }
     );
   } else {
-    res.status(401).send("no puedes subir imágenes");
+    res.status(401).send("no puedes subir review");
   }
 });
 

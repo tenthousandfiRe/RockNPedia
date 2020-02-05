@@ -19,10 +19,12 @@ class Reviews extends React.Component {
       }
 
       submitReview(review){
+        const token = localStorage.getItem("token");
         myFetch({ 
-        method: "POST", 
         path: `/reviews/`, 
-        json:  review
+        method: "POST", 
+        json: {review}, 
+        token
         }).then(json => {
             console.log(json)
           })

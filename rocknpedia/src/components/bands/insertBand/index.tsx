@@ -153,7 +153,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
               <div className="field is-grouped">
                 <div className="control">
                   <button
-                    className="btn btn-outline-dark mt-3 boton"
+                    className="btn btn-outline-dark mt-3 boton2"
                     disabled={name.length === 0}
                     onClick={this.insertBand}
                     data-dismiss="modal"
