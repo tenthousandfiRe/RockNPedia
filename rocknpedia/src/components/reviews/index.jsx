@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CKEditor from 'ckeditor4-react';
+// import CKEditor from 'ckeditor4-react';
 
 
 
@@ -17,7 +17,7 @@ class Reviews extends Component {
                 <div className="row">
                     <div className="col-6">
                 <h2 style={{color: "white"}}>Review</h2>
-                <CKEditor
+                {/* <CKEditor
                     data="<p>Añade tu review</p>"
                     type="inline"
                     config={ {
@@ -25,7 +25,7 @@ class Reviews extends Component {
                     } }
                     style={{color: "white"}}
                     onChange={e => console.log( e )}
-                />
+                /> */}
                 </div>
                 </div>
             </div>

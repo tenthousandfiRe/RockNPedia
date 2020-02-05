@@ -41,7 +41,6 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   constructor(props: TProps) {
     super(props);
     this.inputFileRef = React.createRef();
-    // this.uploadAvatar = this.uploadAvatar.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
 
     this.onRolChange = this.onRolChange.bind(this);
@@ -96,7 +95,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       formData.append("rol", rol);
 
       myFetch({
-        path: `/users/caca/${user_id}`,
+        path: `/users/${user_id}`,
         method: "POST",
         // json: { username, rol, is_admin, user_image },
         token,

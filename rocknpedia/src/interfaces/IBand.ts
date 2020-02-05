@@ -3,7 +3,7 @@ export interface IBand {
     name?: string,
     foundation_year?: number,
     band_image?: string,
-    history?: string
+    band_history?: string
 }
 
 export interface IBands {

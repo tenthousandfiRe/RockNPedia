@@ -84,7 +84,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
       backgroundColor: "grey",
       position: "topLeft"
       })
-      setTimeout(this.props.history.push('/'), 2000);
+      setTimeout(() => {this.props.history.push('/')}, 2000);
   }
 
   render() {
