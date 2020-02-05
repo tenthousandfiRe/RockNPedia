@@ -41,7 +41,6 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   constructor(props: TProps) {
     super(props);
     this.inputFileRef = React.createRef();
-    // this.uploadAvatar = this.uploadAvatar.bind(this);
     this.onUsernameChange = this.onUsernameChange.bind(this);
 
     this.onRolChange = this.onRolChange.bind(this);

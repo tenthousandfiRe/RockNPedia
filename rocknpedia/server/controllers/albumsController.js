@@ -13,7 +13,7 @@ const albumsController = {};
 //GET query for listing all the band albums info
 albumsController.list = ((req, res) => {
   const { band_id } = req.params
-  let sql = `SELECT name ,album_id, record_label, album_image FROM album where band_id = ${band_id}`
+  let sql = `SELECT album_name ,album_id, record_label, album_image FROM album where band_id = ${band_id}`
   try {
     connection.query(sql, (error, results) => {
       if (error) console.log(error);
@@ -30,11 +30,12 @@ albumsController.list = ((req, res) => {
 //POST query for inserting a new album
 albumsController.save = ((req, res) => {
   const token = req.headers.authorization.replace("Bearer ", "");
-  let name = req.body.name;
+  let album_name = req.body.album_name;
   let record_label = req.body.record_label;
   let album_image = req.file.filename;
-  let sql = `INSERT INTO album (name, record_label, album_image) VALUES ('${name}', '${record_label}', '${album_image}');
-  `;
+  let band_id = req.params.band_id;
+  let sql = `INSERT INTO album (album_name, record_label, album_image, band_id) VALUES ('${album_name}', '${record_label}', '${album_image}', ${band_id} )`;
+  console.log(sql)
   connection.query
   if (token) {
     connection.query(
@@ -79,21 +80,23 @@ albumsController.save = ((req, res) => {
 // };
 
 
-// //Deleting one band
-// bandsController.delete = ((req, res) => {
-//   const { band_id } = req.params;
-//   try {
-//     const token = req.headers.authorization.replace("Bearer ", "");
-//     let sql = `DELETE from band WHERE band_id = ${band_id}`;
-//     if (token) {
-//       connection.query(sql, (error, results) => {
-//         if (error) console.log(error);
-//         res.send('/bands');
-//       });
-//     }
-//   } catch {
-//     res.sendStatus(401);
-//   }
-// });
+//Deleting one band
+albumsController.delete = ((req, res) => {
+  const { album_id } = req.params;
+  console.log("aaaaaaaaaaaaaaaaaaaaaaa");
+  try {
+    const token = req.headers.authorization.replace("Bearer ", "");
+    let sql = `DELETE from album WHERE album_id = ${album_id}`;
+    console.log(sql);
+    if (token) {
+      connection.query(sql, (error, results) => {
+        if (error) console.log(error);
+        res.send('/bands');
+      });
+    }
+  } catch {
+    res.sendStatus(401);
+  }
+});
 
 module.exports = albumsController;
