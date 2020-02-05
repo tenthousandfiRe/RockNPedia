@@ -7,7 +7,6 @@ import { IAccount } from '../../../interfaces/IAccount'
 import { API_URL, defaultBandImage } from '../../../constants'
 import { SetBandAction, SetBandsAction } from '../../../redux/actions'
 import { myFetch } from '../../../utils'
-import iziToast from 'izitoast'
 const URL_bandupdate = `${API_URL}/avatars/`
 
 interface IProps {
@@ -30,7 +29,7 @@ interface IState {
     band_image: string,
     created_by: 0,
     error: string,
-    history: string
+    band_history: string
 }
 
 type TProps = IProps & IGlobalActionProps;
@@ -49,7 +48,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
             band_image: "",
             created_by: 0,
             error: "",
-            history: ""
+            band_history: ""
         };
 
         this.updateBand = this.updateBand.bind(this);
@@ -58,7 +57,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
 
     updateBand() {
         const { name, foundation_year } = this.state;
-        const { band_id } = this.props.band
+        const band_id = this.props.match.params.id
         if (this.inputFileRef.current?.files) {
             const formData = new FormData();
             const token = localStorage.getItem("token");
@@ -74,10 +73,6 @@ class EditBand extends React.PureComponent<TProps, IState> {
                 }
             );
             this.inputFileRef.current.value = "";
-            iziToast.show({
-                title: '¡banda actualizada!',
-                theme: 'light'
-            })
             this.props.history.push('/');
         }
     }
@@ -100,7 +95,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
 
     render() {
         const { band } = this.props;
-        const { band_image, history } = band
+        const { band_image, band_history } = band
         let { name = band?.name, band_id } = this.state
         let { foundation_year = band?.foundation_year } = this.state
         return (
@@ -114,7 +109,7 @@ class EditBand extends React.PureComponent<TProps, IState> {
                 </div>
                 <div className="row">
                     <div className="col-4 align-items-center d-flex">
-                    <div className="historyBackground"><p>{history}</p></div>
+                    <div className="historyBackground"><p>{band_history}</p></div>
                     </div>
                     <div className="col-2"></div>
                     <div className="col-5 backform d-flex justify-content-center align-items-center">

@@ -21,7 +21,7 @@ router.post('/', usersController.save);
 router.get('/', usersController.list);
 router.post('/auth', usersController.auth);
 router.get('/:id', usersController.listId);
-router.post('/caca/:id', upload, usersController.update);
+router.post('/:id', upload, usersController.update);
 router.delete('/:id', usersController.delete);
 // router.post('/avatar', upload, usersController.updateAvatar);
 

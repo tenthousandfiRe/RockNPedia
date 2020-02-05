@@ -96,7 +96,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       formData.append("rol", rol);
 
       myFetch({
-        path: `/users/caca/${user_id}`,
+        path: `/users/${user_id}`,
         method: "POST",
         // json: { username, rol, is_admin, user_image },
         token,

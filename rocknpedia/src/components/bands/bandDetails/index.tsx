@@ -47,7 +47,7 @@ componentDidMount(){
 }
 
   render() {
-    const { name, foundation_year, band_image, history } = this.props.band;
+    const { name, foundation_year, band_image, band_history } = this.props.band;
     const band_id = this.props.match.params.id
     var token = localStorage.getItem("token")
     return (
@@ -60,8 +60,8 @@ componentDidMount(){
         <div className="container bandDivsInfo">
           <h1 >{name}</h1>
           <p>{foundation_year}</p>
-          {history ? <div className="historyBackgroundEditBand">
-            <p>{history}</p>
+          {band_history ? <div className="historyBackgroundEditBand">
+            <p>{band_history}</p>
             {/* ternary to show the button to edit the band */}
           {token ? (
             <button
