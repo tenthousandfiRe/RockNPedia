@@ -147,6 +147,17 @@ class BandDetails extends React.PureComponent<TProps, IState> {
               className="card-img"
               alt="..."
             ></img>
+             {token ? (
+                  <button
+                    type="button"
+                    className="btn mt-3 buttonBandDetails"
+                    onClick={() => this.bandEdit(band_id)}
+                  >
+                    Editar
+                  </button>
+                ) : (
+                  ""
+                )}
           </div>
           <div className="container bandDivsInfo">
             <h1>{name}</h1>
@@ -158,17 +169,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
               >
                 <p>{band_history}</p>
                 {/* ternary to show the button to edit the band */}
-                {token ? (
-                  <button
-                    type="button"
-                    className="btn mt-3 buttonBandDetails"
-                    onClick={() => this.bandEdit(band_id)}
-                  >
-                    Editar
-                  </button>
-                ) : (
-                  ""
-                )}
+               
               </div>
             ) : (
               ""

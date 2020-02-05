@@ -2,6 +2,8 @@
     margin-top: 40px;
     width: 900px;
     text-align: center;
+    position: relative; 
+
 
     img{
         border-radius: 50%;
@@ -23,9 +25,9 @@
     border-radius: 150%;
     height: 80px;
     width: 80px;
-    position: absolute; 
-    bottom: -30px; 
-    left: -35px;
+    position: relative; 
+    bottom: -130px; 
+    left: -80px;
 }
 
 .buttonBandDetails:hover {
@@ -63,7 +65,6 @@
     color: black;
     background-color: rgba(245, 245, 245, 0.767);
     padding: 20px;   
-    position: relative; 
 }
 .cuerpoCardAlbum{
     width: 18rem;
