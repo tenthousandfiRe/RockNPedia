@@ -155,7 +155,8 @@ class BandDetails extends React.PureComponent<TProps, IState> {
       console.log(json);
     });
     myFetch({ path: `/bands/user_likes/${band_id}/${user_id}/`, token }).then(json => {
-      if (json.length === 0) {
+      if (json.length === 0 || json === null) {
+        console.log(json)
         this.setState(({ iconColor: "" }));
       } else {
         this.setState(({ iconColor: "red" }));
