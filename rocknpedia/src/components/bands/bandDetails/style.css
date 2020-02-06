@@ -69,3 +69,21 @@
 .backgroundCollapse {
   background-color: none !important;
 }
+
+.heartIcon {
+  margin-right: 15px;
+  font-size: 50px;
+}
+
+.trashIcon {
+  font-size: 20px;
+}
+
+#backie {
+  background-color: unset !important;
+}
+
+.backAlb {
+  background-color: rgba(245, 245, 245, 0.767);
+  border-radius: 10px;
+}

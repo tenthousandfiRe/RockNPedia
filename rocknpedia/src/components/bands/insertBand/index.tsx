@@ -8,7 +8,7 @@ import './style.css'
 
 interface IProps {
   account: IAccount;
-  history: any
+  history: any;
 }
 
 interface IGlobalActionProps {}
@@ -17,7 +17,7 @@ interface IState {
   name: string;
   foundation_year: any;
   band_image: string;
-  created_by: number;
+  created_by: any;
   error: string;
   history: string;
 }
@@ -29,7 +29,6 @@ class InsertBand extends React.PureComponent<TProps, IState> {
   constructor(props: any) {
     super(props);
 
-    this.inputFileRef = createRef();
 
     this.state = {
       name: "",
@@ -40,6 +39,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
       history: ""
     };
 
+    this.inputFileRef = createRef();
     this.insertBand = this.insertBand.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
     this.onFoundationYearChange = this.onFoundationYearChange.bind(this);
@@ -130,7 +130,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
                   className="form-control"
                   style={{ visibility: "hidden", backgroundColor: "transparent" }}
                   type="number"
-                  value={created_by}
+                  value={created_by as any}
                 ></input>
               </div>
             </div>
