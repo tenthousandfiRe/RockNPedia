@@ -25,6 +25,7 @@ interface IState {
   rol: string;
   error: string;
   is_admin: number;
+  bandsLikes: []
 }
 
 class UserProfile extends React.PureComponent<TProps, IState> {
@@ -35,6 +36,16 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       setAccount(generateAccountFromToken(token));
     }
     this.getUser();
+    const { user_id } = this.props.account;
+    myFetch ({
+      path: `/bands/user_likes/${user_id}`,
+      token
+    }).then(json => {
+      if (json) {
+        const bandsLikes = json
+        console.log(bandsLikes)
+        this.setState(bandsLikes)}
+    });
   }
 
   inputFileRef: React.RefObject<HTMLInputElement>;
@@ -50,7 +61,8 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       user_image: this.props.account?.user_image,
       rol: this.props.account?.rol,
       is_admin: 0,
-      error: ""
+      error: "",
+      bandsLikes: []
     };
   }
   onUsernameChange(event: any) {
@@ -82,6 +94,8 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       }
     });
   }
+
+
 
   updateUser() {
     const { username, rol, is_admin } = this.state;
@@ -135,7 +149,8 @@ class UserProfile extends React.PureComponent<TProps, IState> {
 
   render() {
     const { account } = this.props;
-
+    const bandsLikes = this.state;
+    console.log(bandsLikes)
     const { username, rol, user_image } = this.state;
     
     return (
@@ -278,6 +293,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 data-parent="#accordionExample"
               >
                 <div className="card-body">Lista de amigos</div>
+                <p>Hola qué tal</p>
               </div>
               <div
                 id="collapseThree"

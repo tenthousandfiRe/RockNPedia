@@ -10,6 +10,7 @@ import { API_URL } from "../../../constants";
 import { defaultBandImage } from "../../../constants";
 import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactHtmlParser from 'react-html-parser';
 const URL_bandupdate = `${API_URL}/avatars/`;
 
 interface IProps {
@@ -201,7 +202,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                 className="historyBackgroundEditBand"
                 style={{ borderRadius: 20 }}
               >
-                <p>{band_history}</p>
+                <p>{ReactHtmlParser(`${band_history}`)}</p>
                 {/* ternary to show the button to edit the band */}
                
               </div>
