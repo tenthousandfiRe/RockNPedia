@@ -1,37 +1,89 @@
-.video-container {
-  width: 100%;
-  height: calc(100% + 60px);
-  position: absolute;
-  top: -60px;
-  left: 0;
-  z-index: -1;
-  overflow: hidden;
-  color: #e3e3e3; }
-  .video-container video {
-    height: 100%;
-    width: 100%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    position: absolute; }
+.bandDivsImage {
+  margin-top: 40px;
+  width: 900px;
+  text-align: center;
+  position: relative;
+}
+.bandDivsImage img {
+  border-radius: 50%;
+  height: 50%;
+  width: 50%;
+}
+
+.bandDivsInfo {
+  color: whitesmoke !important;
+  height: 150px;
+  width: 900px;
+  text-align: center;
+}
+
+.buttonBandDetails {
+  background-color: rgba(245, 245, 245, 0.904);
+  color: black !important;
+  border-radius: 150%;
+  height: 80px;
+  width: 80px;
+  position: relative;
+  bottom: -130px;
+  left: -80px;
+}
+
+.buttonBandDetails:hover {
+  background-color: rgba(68, 68, 68, 0.904);
+  color: white !important;
+}
 
 .bandDivs {
   background-color: rgba(245, 245, 245, 0.89);
-  margin-top: 40px;
-  height: 150px; }
+  height: 150px;
+  width: 900px;
+  text-align: center;
+}
+.bandDivs img {
+  margin: 0px auto;
+}
 
-.imageAdjust {
-  -webkit-box-pack: left;
-  -ms-flex-pack: left;
-  justify-content: left; }
+.bandDivsInfo {
+  margin-top: 40px;
+  color: whitesmoke;
+  height: 150px;
+  width: 900px;
+  text-align: center;
+}
 
 .boton {
   color: black !important;
-  border-color: black !important; }
+  border-color: black !important;
+}
 
-.boton:hover {
-  color: white !important;
-  border-color: white !important; }
+.historyBackgroundEditBand {
+  color: black;
+  background-color: rgba(245, 245, 245, 0.767);
+  padding: 20px;
+}
 
+.cuerpoCardAlbum {
+  width: 18rem;
+}
+
+.backgroundCollapse {
+  background-color: none !important;
+}
+
+.heartIcon {
+  margin-right: 15px;
+  font-size: 50px;
+}
+
+.trashIcon {
+  font-size: 20px;
+}
+
+#backie {
+  background-color: unset !important;
+}
+
+<<<<<<< Updated upstream
 .cuerpo {
   height: 400px !important; }
 
@@ -41,3 +93,9 @@
 .backAlb {
   background-color: rgba(245, 245, 245, 0.767);
   border-radius: 10px; }
+=======
+.backAlb {
+  background-color: rgba(245, 245, 245, 0.767);
+  border-radius: 10px;
+}
+>>>>>>> Stashed changes

@@ -6,10 +6,11 @@ const sha1 = require("sha1");
 const cors = require("cors");
 let myKey = "rocknpediakey";
 
-var bandsRouter = require('./routes/bands');
-var usersRouter = require('./routes/users.js');
-var albumsRouter = require('./routes/albums.js');
-var reviewsRouter = require('./routes/reviews.js');
+let bandsRouter = require('./routes/bands');
+let usersRouter = require('./routes/users.js');
+let albumsRouter = require('./routes/albums.js');
+let reviewsRouter = require('./routes/reviews.js');
+let likesRouter = require('./routes/likes.js'); 
 const connection = require("./config/db.js");
 
 
@@ -21,8 +22,9 @@ server.use(cors());
 
 
 server.use('/users', usersRouter)
-server.use('/bands', bandsRouter, albumsRouter);
+server.use('/bands', bandsRouter, albumsRouter, likesRouter);
 server.use('/reviews', reviewsRouter);
+
 
 
 server.listen(3003);

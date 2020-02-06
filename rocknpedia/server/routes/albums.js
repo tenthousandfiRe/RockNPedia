@@ -18,5 +18,6 @@ const upload = multer({ storage }).single("album_image");
 router.get("/:band_id/albumes", albumsController.list);
 router.post("/:band_id/albumes", upload , albumsController.save);
 router.delete('/:band_id/albumes/delete/:album_id', albumsController.delete);
+router.post('/:band_id/albumes/update/:album_id', upload, albumsController.updt);
 
 module.exports = router;
