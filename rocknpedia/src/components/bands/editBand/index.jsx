@@ -50,7 +50,7 @@ class EditBand extends React.PureComponent {
             );
             this.inputFileRef.current.value = "";
             window.alert("banda editada correctamente")
-            this.props.history.push('/');
+            this.props.history.push(`/`);
         }
     }
 

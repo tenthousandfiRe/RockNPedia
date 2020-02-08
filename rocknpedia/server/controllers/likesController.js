@@ -45,10 +45,10 @@ likesController.get = ((req, res) => {
 });
 
 //query for getting the bands that an user clicked like;
-likesController.    getBands = ((req, res) => {
+likesController.getBands = ((req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
     let user_id = req.params.user_id;
-    let sql = `SELECT band_image, name FROM band join user_likes WHERE band.band_id = user_likes.band_id and user_likes.user_id = ${user_id};`;
+    let sql = `SELECT band.band_id, band_image, name FROM band join user_likes WHERE band.band_id = user_likes.band_id and user_likes.user_id = ${user_id};`;
     console.log(sql)
     connection.query
     if (token) {

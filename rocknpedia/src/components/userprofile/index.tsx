@@ -1,18 +1,32 @@
 import React from "react";
+import "./style.css";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
 import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
-import { SetAccountAction } from "../../redux/actions";
-import  jwt from "jsonwebtoken";
-import "./style.css";
+import { SetAccountAction, SetBandAction } from "../../redux/actions";
+import jwt from "jsonwebtoken";
+import { API_URL } from '../../constants'
+import { defaultBandImage } from '../../constants'
+import { Link } from 'react-router-dom';
+import { IBand } from "../../interfaces/IBand";
+const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {
+  bands: IBand[]
+  band: IBand
   account: IAccount | any;
-  
+
+}
+
+interface IBandsLikeBD {
+  band_id: number
+  band_image: string
+  name: string
 }
 
 interface IGlobalActionProps {
+  setBand(band: IBand): void;
   uploadAvatar(id: number): void;
   setAccount(account: any): void;
   history: any;
@@ -25,28 +39,11 @@ interface IState {
   rol: string;
   error: string;
   is_admin: number;
-  bandsLikes: []
+  bandsLikes: IBandsLikeBD[]
 }
 
 class UserProfile extends React.PureComponent<TProps, IState> {
-  componentDidMount() {
-    const { setAccount } = this.props;
-    const token = localStorage.getItem("token");
-    if (token) {
-      setAccount(generateAccountFromToken(token));
-    }
-    this.getUser();
-    const { user_id } = this.props.account;
-    myFetch ({
-      path: `/bands/user_likes/${user_id}`,
-      token
-    }).then(json => {
-      if (json) {
-        const bandsLikes = json
-        console.log(bandsLikes)
-        this.setState(bandsLikes)}
-    });
-  }
+
 
   inputFileRef: React.RefObject<HTMLInputElement>;
   constructor(props: TProps) {
@@ -65,6 +62,27 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       bandsLikes: []
     };
   }
+
+  componentDidMount() {
+    const { setAccount } = this.props;
+    const { user_id } = this.props.account;
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAccount(generateAccountFromToken(token));
+    }
+    this.getUser();
+    myFetch({
+      path: `/bands/user_likes/${user_id}`,
+      token
+    }).then(response => {
+      if (response) {
+
+        this.setState({ bandsLikes: response })
+      }
+      console.log(this.state.bandsLikes)
+    });
+  }
+
   onUsernameChange(event: any) {
     const username = event.target.value;
     this.setState({ username, error: "" });
@@ -98,12 +116,12 @@ class UserProfile extends React.PureComponent<TProps, IState> {
 
 
   updateUser() {
-    const { username, rol, is_admin } = this.state;
+    const { username, rol } = this.state;
     if (this.inputFileRef.current?.files) {
       const { user_id } = this.props.account;
       const formData = new FormData();
       const token = localStorage.getItem("token");
-      const avatar = this.inputFileRef.current.files[0];   
+      const avatar = this.inputFileRef.current.files[0];
       formData.append("user_image", avatar);
       formData.append("username", username);
       formData.append("rol", rol);
@@ -117,42 +135,32 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       }).then(json => {
         if (json) {
           console.log(json);
-          
 
-           console.log(token);
-          // const { username, rol, user_image } = token;         
+
+          console.log(token);
           const { username, rol, user_image, user_id } = generateAccountFromToken(json.token);
-          this.props.setAccount({username, rol, user_image, user_id });
+          this.props.setAccount({ username, rol, user_image, user_id });
           localStorage.setItem("token", json.token);
           this.props.history.push("/")
         }
       });
-      // this.inputFileRef.current.value = "";
+      this.inputFileRef.current.value = "";
     }
   }
 
-  // uploadAvatar() {
-  //   if (this.inputFileRef.current?.files) {
-  //     let token = localStorage.getItem("token");
-  //     const avatar = this.inputFileRef.current.files[0];
-  //     const formData = new FormData();
-  //     formData.append("avatar", avatar);
-  //     fetch("http://localhost:3003/users/avatar", {
-  //       method: "POST",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       },
-  //       body: formData
-  //     });
-  //   }
-  // }
+  bandView(band_id?: number) {
+    myFetch({ path: `/bands/${band_id}` }).then(json => {
+      this.props.setBand(json)
+    })
+    this.props.history.push(`/bands/${band_id}`)
+  }
+
+
 
   render() {
     const { account } = this.props;
-    const bandsLikes = this.state;
-    console.log(bandsLikes)
+    const { bandsLikes } = this.state
     const { username, rol, user_image } = this.state;
-    
     return (
       <>
         <div className="separationDiv"></div>
@@ -161,11 +169,11 @@ class UserProfile extends React.PureComponent<TProps, IState> {
             {user_image ? (
               <img className="d-flex logoUser mx-auto" src={`http://localhost:3003/avatars/${user_image}`}></img>
             ) : (
-              <img
-                className="d-flex logoUser mx-auto"
-                src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
-              ></img>
-            )}
+                <img
+                  className="d-flex logoUser mx-auto"
+                  src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
+                ></img>
+              )}
 
             <label className="label mt-4">
               <strong>Nombre de Usuario</strong>
@@ -235,11 +243,11 @@ class UserProfile extends React.PureComponent<TProps, IState> {
         <br />
         <br />
         <br />
-        <div className="container">
-          <div className="accordion" id="accordionExample">
+        <div className="container" id="accordionExample">
+          <div className="accordion" id="backie">
             <div className="card collapseColor">
               <div
-                className="card-header d-flex justify-content-center"
+                 className="card-header d-flex justify-content-center backAlb"
                 id="headingOne"
               >
                 <h2 className="mb-0">
@@ -251,7 +259,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
-                    <h2>Reviews</h2>
+                    <h5>Reviews</h5>
                   </button>
                   <button
                     className="btn btn-outline-dark ml-5 mr-5"
@@ -261,7 +269,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     aria-expanded="true"
                     aria-controls="collapseTwo"
                   >
-                    <h2>Amigos</h2>
+                    <h5>Amigos</h5>
                   </button>
                   <button
                     className="btn btn-outline-dark ml-5"
@@ -271,7 +279,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     aria-expanded="true"
                     aria-controls="collapseThree"
                   >
-                    <h2>Mis Grupos Favoritos</h2>
+                    <h5>Mis Grupos Favoritos</h5>
                   </button>
                 </h2>
               </div>
@@ -293,7 +301,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 data-parent="#accordionExample"
               >
                 <div className="card-body">Lista de amigos</div>
-                <p>Hola qué tal</p>
+
               </div>
               <div
                 id="collapseThree"
@@ -301,7 +309,16 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">Lista de grupos favoritos</div>
+                <div className="card-body container"></div>
+                {bandsLikes.map(({ band_id, name, band_image }) => (
+                  <div className="col-md-6 d-flex justify-content-center mt-2 mb-5 float-left">
+                    <div className="row">
+                      <img style={{ width: 100, height: 100, borderRadius: 50 }} src={band_image ? URL_images + band_image : defaultBandImage} className="card-img" alt="..."></img>
+                      <a onClick={() => this.bandView(band_id)} style={{ height: 40, width: 200 }} className="btn btn-outline-dark boton ml-4 mt-5">{name}</a>
+                    </div>
+
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -311,12 +328,15 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     );
   }
 }
-const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
-  account
+const mapStateToProps = ({ account, band, bands }: IStore): IGlobalStateProps => ({
+  account,
+  band,
+  bands
 });
 
 const mapDispatchToProps = {
-  setAccount: SetAccountAction
+  setAccount: SetAccountAction,
+  setBand: SetBandAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

@@ -1,0 +1,15 @@
+.reviewCard {
+  position: relative;
+  height: auto;
+  background-color: rgba(245, 245, 245, 0.89);
+  margin-bottom: 50px;
+}
+.reviewCard p {
+  margin-top: 10;
+}
+.reviewCard .userInfo {
+  margin-bottom: 0;
+  float: right;
+  font-size: 12px;
+  margin-bottom: 0;
+}
