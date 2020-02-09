@@ -48,7 +48,7 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
     const album_id = this.props.match.params.id;
     myFetch({ path: `/reviews/${album_id}` }).then(json => {
       this.setState({ reviews: json })
-      if (json[0].album_image) {
+      if (json) {
         this.setState({ album_selected_image: json[0].album_image })
         this.setState({album_selected_name: json[0].album_name })
       }
@@ -70,7 +70,7 @@ render() {
               className="albumImage"
             ></img>
             <div><h2>{album_selected_name}</h2></div>
-                {reviews.map(({ review, review_date, username, user_image }) => (
+                {reviews.map(({ review, review_date, username, user_image }) => ( review ? 
                    <div className="container-fluid">
                      <div className="row">
                        <div className="col-2"></div>
@@ -87,7 +87,7 @@ render() {
                        </div></div>
                    </div>
                    </div>
-                ))}
+                : <div><h5 style={{color: "white"}}>No hay reviews todavía</h5></div> ))}
             </ div>
 
         )

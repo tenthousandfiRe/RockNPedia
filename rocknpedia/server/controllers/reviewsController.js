@@ -13,10 +13,18 @@ reviewsController.list = ((req, res) => {
     album.album_image, album.album_name, user.username, user.user_image from review 
     INNER JOIN album ON review.album_id = album.album_id and album.album_id = ${album_id}
     INNER JOIN user ON review.user_id = user.user_id`;
-    console.log(sql)
+    let sqlNoReview = `SELECT album_id, album_name, record_label, album_image FROM album WHERE album_id = ${album_id}`
     connection.query(sql, (error, results) => {
       if (error) throw error;
-      res.send(results);
+      else if (results.length === 0) {
+        connection.query(sqlNoReview, (__, results2) => {
+         console.log(results2)
+          res.send(results2);
+        })
+      } else {
+        res.send(results);
+      }
+      
     });
 
   } catch {
