@@ -5,6 +5,7 @@ import "./style.css";
 import { defaultBandImage, API_URL } from '../../../constants'
 import ReactHtmlParser from 'react-html-parser'
 const URL_images = `${API_URL}/avatars/`
+const defaultUserImage = "https://img.icons8.com/pastel-glyph/2x/user-male.png"
 
 
 
@@ -27,8 +28,8 @@ interface reviewsBD {
 
 interface IState {
   reviews: reviewsBD[]
-  album_image: string | null;
-  album_name: string
+  album_selected_image: string | null;
+  album_selected_name: string
 }
 
 class AlbumDetails extends React.PureComponent<IProps, IState> {
@@ -37,20 +38,20 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
 
     this.state = {
       reviews: [],
-      album_image: "",
-      album_name: ""
+      album_selected_image: "",
+      album_selected_name: ""
     };
 
   }
 
   getReviews() {
     const album_id = this.props.match.params.id;
-    const album_image = this.state
     myFetch({ path: `/reviews/${album_id}` }).then(json => {
       this.setState({ reviews: json })
-      console.log(json)
-      this.setState({album_image: json[0]})
-      console.log(album_image)
+      if (json[0].album_image) {
+        this.setState({ album_selected_image: json[0].album_image })
+        this.setState({album_selected_name: json[0].album_name })
+      }
     });
   }
 
@@ -61,45 +62,33 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
 
 render() {
   const { reviews } = this.state;
+  const { album_selected_image, album_selected_name } = this.state
         return (
             <div className="container">
-              <h1 style={{color: "white"}}>Aquí van las reviews</h1>
-                {reviews.map(({ review_id, review, review_date, album_image, album_name, username, user_image  }) => (
+              <img
+              src={album_selected_image ? URL_images + album_selected_image : defaultBandImage}
+              className="albumImage"
+            ></img>
+            <div><h2>{album_selected_name}</h2></div>
+                {reviews.map(({ review, review_date, username, user_image }) => (
                    <div className="container-fluid">
                      <div className="row">
                        <div className="col-2"></div>
-                   <div className="container-fluid col-8 reviewCard">
+                   <div className="col-8 reviewCard">
                      <p>{ReactHtmlParser(`${review}`)}</p>
                     
-                     <div className="userInfo">
-                       <div><img className="d-flex logoUser mx-auto" src={`http://localhost:3003/avatars/${user_image}`}></img>
+                     
+                   </div>
+                   <div className="col-2 d-flex justify-content-center"><div className="userInfo">
+                       <div><img src={user_image ? URL_images + user_image : defaultUserImage}></img>
                        </div>
                        <p>{username}</p>
                        <p>{review_date}</p>
-                       </div>
-                   </div>
-                   <div className="col-2"></div>
+                       </div></div>
                    </div>
                    </div>
                 ))}
             </ div>
-
-          //    {/* <div
-          //   id="carouselExampleSlidesOnly"
-          //   className="carousel slide mt-5"
-          //   data-ride="carousel"
-          // >
-          //   <div className="carousel-inner" style={{height: 500}}>
-          //   {bands.map(({ name, foundation_year, band_image }, index) => (
-          //     <div className="carousel-item active">             
-          //         <img className="d-block w-100" src={
-          //           band_image ? URL_images + band_image : defaultBandImage
-          //         }/>
-                
-          //     </div>
-          //     ))}
-          //   </div>
-          // </div> */}
 
         )
     }

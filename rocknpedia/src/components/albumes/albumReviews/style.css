@@ -1,15 +1,58 @@
-.reviewCard {
+.container {
+  text-align: center;
+}
+.container h2 {
+  color: white;
+}
+.container .albumImage {
+  width: 300px;
+  height: 300px;
+  margin: 50px;
+  border-radius: 5px;
+}
+.container .reviewCard {
   position: relative;
-  height: auto;
+  text-align: left;
+  height: 150px;
   background-color: rgba(245, 245, 245, 0.89);
-  margin-bottom: 50px;
+  padding: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  height: 161px;
+  line-height: 1.6;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.reviewCard p {
+.container .reviewCard p {
   margin-top: 10;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 15px;
 }
-.reviewCard .userInfo {
-  margin-bottom: 0;
+.container .reviewCard:hover {
+  width: auto;
+  height: auto;
+  white-space: initial;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.userInfo {
+  vertical-align: middle;
+  margin-top: 85px;
   float: right;
   font-size: 12px;
   margin-bottom: 0;
+  text-align: center;
+  justify-content: center;
+}
+.userInfo img {
+  width: 50px;
+  height: 50px;
+}
+.userInfo p {
+  color: white !important;
 }

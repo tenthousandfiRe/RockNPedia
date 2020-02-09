@@ -9,7 +9,11 @@ const reviewsController = {};
 reviewsController.list = ((req, res) => {
   try {
   let album_id = req.params.album_id;
-    let sql = `SELECT review_id, review, review_date, review.user_id, review.album_id, album_image, username, user_image from review JOIN album JOIN user where review.album_id = ${album_id} and album.album_id = ${album_id}`;
+    let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, 
+    album.album_image, album.album_name, user.username, user.user_image from review 
+    INNER JOIN album ON review.album_id = album.album_id and album.album_id = ${album_id}
+    INNER JOIN user ON review.user_id = user.user_id`;
+    console.log(sql)
     connection.query(sql, (error, results) => {
       if (error) throw error;
       res.send(results);

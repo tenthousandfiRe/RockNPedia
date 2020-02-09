@@ -1,21 +1,72 @@
-.reviewCard {
-    position: relative;
-    height: auto;
-    background-color: rgba(245, 245, 245, 0.89);
-    margin-bottom: 50px;
+.container {
 
-    p{
-        margin-top: 10;
+    text-align: center;
+
+    h2{
+        color: white;
     }
 
-    .userInfo{
-        margin-bottom: 0;
-        float: right;
-        font-size: 12px;
-        margin-bottom: 0;
+    .albumImage{
+        width: 300px;
+        height: 300px;
+        margin: 50px;
+        border-radius: 5px;
     }
     
+    .reviewCard {
+        position: relative;
+        text-align: left;
+        height: 150px;
+        background-color: rgba(245, 245, 245, 0.89);
+        padding: 10px;
+        margin-top: 50px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        height: 161px; 
+  line-height: 1.6;
+  text-overflow: ellipsis; 
+  -webkit-line-clamp: 10    ;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+        
+    
+        p{
+            margin-top: 10;
+            text-overflow: ellipsis;
+            overflow: hidden;  
+            font-size: 15px;    
+        }
+        
+    }    
+
+    .reviewCard:hover {
+        width: auto;
+        height: auto;
+  white-space: initial;
+  overflow:visible;
+  cursor: pointer;
+    }
 }
+
+.userInfo{
+    vertical-align: middle;
+    margin-top: 85px;
+    float: right;
+    font-size: 12px;
+    margin-bottom: 0;
+    text-align: center;
+    justify-content: center;
+
+    img {
+        width: 50px;
+        height: 50px;
+    }
+
+    p{
+        color: white !important
+    }
+}
+
 
 
 
