@@ -5,6 +5,7 @@ import { API_URL, defaultBandImage } from '../../../constants'
 import { SetBandAction, SetBandsAction } from '../../../redux/actions'
 import { myFetch } from '../../../utils'
 import CKEditor from 'ckeditor4-react';
+import ReactHtmlParser from 'react-html-parser';
 const URL_bandupdate = `${API_URL}/avatars/`
 
 
@@ -48,7 +49,8 @@ class EditBand extends React.PureComponent {
                 }
             );
             this.inputFileRef.current.value = "";
-            this.props.history.push('/');
+            window.alert("banda editada correctamente")
+            this.props.history.push(`/`);
         }
     }
 
@@ -92,7 +94,7 @@ class EditBand extends React.PureComponent {
                 </div>
                 <div className="row">
                     <div className="col-4 align-items-center d-flex">
-                        <div className="historyBackground"><p>{band_history}</p></div>
+                        {band_history ? <div className="historyBackground"><p>{ReactHtmlParser(`${band_history}`)}</p></div> : ""}
                     </div>
                     <div className="col-2"></div>
                     <div className="col-5 backform d-flex justify-content-center align-items-center">

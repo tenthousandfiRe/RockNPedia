@@ -8,7 +8,7 @@ import Register from "../register/index";
 import "./style.css";
 import { generateAccountFromToken } from "../../utils";
 interface IGlobalStateProps {
-  account: IAccount | null;
+  account: IAccount;
 }
 
 interface IGlobalActionProps {
@@ -89,7 +89,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
           </ul>
           <a className="nav-item">
             {/* ternary to show the button to login */}
-            {!account ? (
+            {!token ? (
               <button
                 type="button"
                 className="btn btn-outline-dark my-2 my-sm-0"
@@ -137,7 +137,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
           </a>
           <a className="nav-item">
             {/* ternary to show or not the button register */}
-            {!account ? (
+            {!token ? (
               <button
                 type="button"
                 className="btn btn-outline-dark my-2 my-sm-0 ml-3"
