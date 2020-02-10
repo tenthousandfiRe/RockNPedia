@@ -320,7 +320,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 <div className="card-body reviews">
                   <div className="col-12">
                   {reviews.map(({ review, review_date, album_name, album_image }) => (reviews ?
-                  <div className="col-6 float-right">
+                  <div className="col-6 float-left">
                     <div className="col-md-6 d-block justify-content-center mt-2 mb-5"> <img 
                       src={album_image ? URL_images + album_image : defaultBandImage}
                     ></img>

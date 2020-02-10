@@ -110,7 +110,7 @@ class BandDetails extends React.PureComponent {
     const { review } = this.state;
     const { user_id } = this.props.account
     const token = localStorage.getItem("token")
-    myFetch({ method: "POST", path: `/reviews/${user_id}/${album_id}`, token, json: {review} }).then(
+    myFetch({ method: "POST", path: `/reviews/${user_id}/${album_id}`, token, json: { review } }).then(
       json => {
         if (json) {
           console.log(json);
@@ -188,10 +188,12 @@ class BandDetails extends React.PureComponent {
           <div className="container bandDivsImage">
             <img
               src={band_image ? URL_bandupdate + band_image : defaultBandImage}
-              className="card-img"
+              className="img"
               alt="..."
             ></img>
             {token ? (
+              <>
+              <FontAwesomeIcon className="heartIcon d-flex float-left" style={{ color: iconColor }} icon={faHeart} onClick={() => this.likesBand()} />
               <button
                 type="button"
                 className="btn mt-3 buttonBandDetails"
@@ -199,9 +201,8 @@ class BandDetails extends React.PureComponent {
               >
                 Editar
                   </button>
-            ) : (
-                ""
-              )}
+              </>
+            ) : ("")}
           </div>
           <div className="container bandDivsInfo">
             <h1>{name}</h1>
@@ -234,9 +235,6 @@ class BandDetails extends React.PureComponent {
                 className="card-header d-flex justify-content-center backAlb"
                 id="headingOne"
               >
-                <div className="d-flex">
-                  <FontAwesomeIcon className="heartIcon d-flex float-left" style={{ color: iconColor }} icon={faHeart} onClick={() => this.likesBand()} />
-                </div>
                 <h2 className="mb-0">
                   <button
                     className="btn btn-outline-dark mr-5"
@@ -387,7 +385,7 @@ class BandDetails extends React.PureComponent {
                           <h5 className="card-title">{album_name}</h5>
                           <FontAwesomeIcon className="trashIcon d-flex float-right" icon={faTrashAlt} onClick={() => this.deleteAlbum(...albumes, album_id)} />
                           <p className="card-text">{record_label}</p>
-                          <a href="#" data-toggle="modal" onClick={() => this.setState({selectedAlbum: album_id}) } data-target="#Review" className="btn btn-outline-dark mr-2">
+                          <a href="#" data-toggle="modal" onClick={() => this.setState({ selectedAlbum: album_id })} data-target="#Review" className="btn btn-outline-dark mr-2">
                             Añadir review
                           </a>
                           <Link to={`/reviews/${album_id}`} className="btn btn-outline-dark">
@@ -418,8 +416,8 @@ class BandDetails extends React.PureComponent {
                           />
                         </div>
                         <div class="modal-footer">
-                        <button type="button" className="btn btn-outline-dark mt-3 buttonsEditBand" 
-                        data-dismiss="modal" onClick={() => this.insertReview(selectedAlbum)}>Guardar</button>
+                          <button type="button" className="btn btn-outline-dark mt-3 buttonsEditBand"
+                            data-dismiss="modal" onClick={() => this.insertReview(selectedAlbum)}>Guardar</button>
                         </div>
                       </div>
                     </div>
