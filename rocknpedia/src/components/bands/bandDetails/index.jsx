@@ -216,7 +216,7 @@ class BandDetails extends React.PureComponent {
               </>
             ) : ("")}
           </div>
-          <div className="container bandDivsInfo">
+          <div className="container bandDivsInfo mt-5 mb-5">
             <h1>{name}</h1>
             <p>{foundation_year}</p>
             {band_history ? (
@@ -231,13 +231,10 @@ class BandDetails extends React.PureComponent {
                 ""
               )}
           </div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+          <div className="separationDiv"></div>
+          <div className="separationDiv"></div>
+          
+          
 
 
           <div className="accordion" id="accordionExample">

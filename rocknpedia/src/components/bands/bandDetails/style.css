@@ -33,8 +33,7 @@
   font-size: 50px;
   position: relative;
   bottom: -350px;
-  left: 220px;
-}
+  left: 220px; }
 
 .bandDivs {
   background-color: rgba(245, 245, 245, 0.89);
@@ -84,3 +83,6 @@
 .backModal {
   background-color: rgba(0, 0, 0, 0.904);
   color: white; }
+
+.separationDiv {
+  height: 190px; }
