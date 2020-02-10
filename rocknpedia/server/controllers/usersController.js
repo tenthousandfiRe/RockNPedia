@@ -143,7 +143,7 @@ usersController.update = (req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
     console.log(token)
 
-    const{ user_id } = jwt.verify(token, myKey)
+    const { user_id } = jwt.verify(token, myKey)
     console.log(user_id)
     connection.query(
       `UPDATE user SET? WHERE user_id = ${user_id};`,

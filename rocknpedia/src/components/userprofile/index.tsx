@@ -6,9 +6,8 @@ import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction, SetBandAction } from "../../redux/actions";
 import jwt from "jsonwebtoken";
-import { API_URL } from '../../constants'
-import { defaultBandImage } from '../../constants'
-import { Link } from 'react-router-dom';
+import { API_URL, defaultBandImage } from '../../constants'
+import ReactHtmlParser from 'react-html-parser'
 import { IBand } from "../../interfaces/IBand";
 const URL_images = `${API_URL}/avatars/`;
 
@@ -17,6 +16,18 @@ interface IGlobalStateProps {
   band: IBand
   account: IAccount | any;
 
+}
+
+interface IreviewsBD {
+  review_id: number;
+  review: string;
+  review_date: string;
+  user_id: number;
+  album_name: string;
+  album_id: number;
+  album_image: string | null;
+  username: string;
+  user_image: string;
 }
 
 interface IBandsLikeBD {
@@ -39,7 +50,8 @@ interface IState {
   rol: string;
   error: string;
   is_admin: number;
-  bandsLikes: IBandsLikeBD[]
+  bandsLikes: IBandsLikeBD[];
+  reviews: IreviewsBD[]
 }
 
 class UserProfile extends React.PureComponent<TProps, IState> {
@@ -59,7 +71,8 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       rol: this.props.account?.rol,
       is_admin: 0,
       error: "",
-      bandsLikes: []
+      bandsLikes: [],
+      reviews: [],
     };
   }
 
@@ -71,6 +84,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       setAccount(generateAccountFromToken(token));
     }
     this.getUser();
+    this.getReviews();
     myFetch({
       path: `/bands/user_likes/${user_id}`,
       token
@@ -79,7 +93,18 @@ class UserProfile extends React.PureComponent<TProps, IState> {
 
         this.setState({ bandsLikes: response })
       }
-      console.log(this.state.bandsLikes)
+    });
+  }
+
+  getReviews() {
+    const { user_id } = this.props.account;
+    myFetch({
+      path: `/reviews/user_reviews/${user_id}`,
+    }).then(response => {
+      if (response) {
+        console.log(response)
+        this.setState({ reviews: response })
+      }
     });
   }
 
@@ -159,6 +184,8 @@ class UserProfile extends React.PureComponent<TProps, IState> {
 
   render() {
     const { account } = this.props;
+    const { reviews } = this.state;
+    console.log(reviews)
     const { bandsLikes } = this.state
     const { username, rol, user_image } = this.state;
     return (
@@ -247,7 +274,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
           <div className="accordion" id="backie">
             <div className="card collapseColor">
               <div
-                 className="card-header d-flex justify-content-center backAlb"
+                className="card-header d-flex justify-content-center backAlb"
                 id="headingOne"
               >
                 <h2 className="mb-0">
@@ -290,8 +317,23 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingOne"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">
-                  Aqui mostrará las Reviews de este usuario
+                <div className="card-body reviews">
+                  <div className="col-12">
+                  {reviews.map(({ review, review_date, album_name, album_image }) => (reviews ?
+                  <div className="col-6 float-right">
+                    <div className="col-md-6 d-block justify-content-center mt-2 mb-5"> <img 
+                      src={album_image ? URL_images + album_image : defaultBandImage}
+                    ></img>
+                      <div className="col-md-6 d-block justify-content-left mt-2 mb-3 p-0">
+                        <div><h5>{album_name}</h5></div>
+                        <span>{new Date(review_date).toLocaleString()}</span></div>
+                      <div className="d-block justify-content-left reviewDiv"><p>{ReactHtmlParser(`${review}`)}</p>
+                      
+                     </div>
+                    </div>
+                    </div>
+                    : <p>No has hecho ninguna review aún</p>))}
+                    </div>
                 </div>
               </div>
               <div

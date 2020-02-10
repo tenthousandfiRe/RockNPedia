@@ -1,38 +1,37 @@
-.container {
+.ReviewsContainer {
   text-align: center;
 }
-.container h2 {
+.ReviewsContainer h2 {
   color: white;
 }
-.container .albumImage {
+.ReviewsContainer .albumImage {
   width: 300px;
   height: 300px;
   margin: 50px;
   border-radius: 5px;
 }
-.container .reviewCard {
+.ReviewsContainer .reviewCard {
   position: relative;
   text-align: left;
   height: 150px;
   background-color: rgba(245, 245, 245, 0.89);
-  padding: 10px;
+  padding: 6px;
   margin-top: 50px;
   margin-bottom: 20px;
   border-radius: 5px;
-  height: 161px;
+  height: 133px;
   line-height: 1.6;
-  text-overflow: ellipsis;
   -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.container .reviewCard p {
+.ReviewsContainer .reviewCard p {
   margin-top: 10;
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: 15px;
 }
-.container .reviewCard:hover {
+.ReviewsContainer .reviewCard:hover {
   width: auto;
   height: auto;
   white-space: initial;

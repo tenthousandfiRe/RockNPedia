@@ -1,6 +1,5 @@
 const express = require("express");
 
-
 const connection = require("../config/db.js");
 
 const reviewsController = {};
@@ -18,11 +17,35 @@ reviewsController.list = ((req, res) => {
       if (error) throw error;
       else if (results.length === 0) {
         connection.query(sqlNoReview, (__, results2) => {
-         console.log(results2)
           res.send(results2);
         })
       } else {
         res.send(results);
+
+      }
+      
+    });
+
+  } catch {
+    res.sendStatus(400);
+  }
+});
+
+//GET query for listing all the reviews for a single user
+reviewsController.list2 = ((req, res) => {
+  try {
+  let user_id = req.params.user_id;
+    let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, 
+    album.album_image, album.album_name, user.username, user.user_image from review 
+    INNER JOIN album ON review.album_id = album.album_id
+    INNER JOIN user ON review.user_id = ${user_id} and user.user_id = ${user_id}`;
+    // let sqlNoReview = `SELECT album_id, album_name, record_label, album_image FROM album WHERE album_id = ${album_id}`
+    connection.query(sql, (error, results) => {
+      console.log(sql)
+      if (error) throw error;
+      else {
+        res.send(results);
+        console.log(results)
       }
       
     });
@@ -58,7 +81,7 @@ reviewsController.save = ((req, res) => {
 
 
 
-//Update the review 
+//Update the review TODO if possible
 reviewsController.update = (req, res) => {
 const token = req.headers.authorization.replace("Bearer ", "");
   let review = req.body.review;

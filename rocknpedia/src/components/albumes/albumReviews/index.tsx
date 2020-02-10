@@ -14,7 +14,7 @@ interface IProps {
   match: any
 };
 
-interface reviewsBD {
+interface IreviewsBD {
   review_id: number;
   review: string;
   review_date: string;
@@ -27,7 +27,7 @@ interface reviewsBD {
 }
 
 interface IState {
-  reviews: reviewsBD[]
+  reviews: IreviewsBD[]
   album_selected_image: string | null;
   album_selected_name: string
 }
@@ -64,7 +64,7 @@ render() {
   const { reviews } = this.state;
   const { album_selected_image, album_selected_name } = this.state
         return (
-            <div className="container">
+            <div className="container ReviewsContainer">
               <img
               src={album_selected_image ? URL_images + album_selected_image : defaultBandImage}
               className="albumImage"
@@ -83,7 +83,7 @@ render() {
                        <div><img src={user_image ? URL_images + user_image : defaultUserImage}></img>
                        </div>
                        <p>{username}</p>
-                       <p>{review_date}</p>
+                       <p>{new Date(review_date).toLocaleString()}</p>
                        </div></div>
                    </div>
                    </div>
