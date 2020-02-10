@@ -56,4 +56,27 @@
   width: 18rem; }
 
 .backgroundCollapse {
-  background-color: none !important; }
+  background-color: none !important;
+  border: none !important; }
+
+.heartIcon {
+  margin-right: 15px;
+  font-size: 50px; }
+
+.trashIcon {
+  font-size: 20px; }
+
+#backie {
+  background-color: unset !important;
+  border: none !important; }
+
+.backAlb {
+  background-color: rgba(245, 245, 245, 0.767); }
+
+.imgSize {
+  max-width: 290px;
+  max-height: 250px; }
+
+.backModal {
+  background-color: rgba(0, 0, 0, 0.904);
+  color: white; }

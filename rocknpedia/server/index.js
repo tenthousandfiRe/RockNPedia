@@ -10,7 +10,8 @@ let bandsRouter = require('./routes/bands');
 let usersRouter = require('./routes/users.js');
 let albumsRouter = require('./routes/albums.js');
 let reviewsRouter = require('./routes/reviews.js');
-let likesRouter = require('./routes/likes.js'); 
+let likesRouter = require('./routes/likes.js');
+let followRouter = require('./routes/followers.js');
 const connection = require("./config/db.js");
 
 
@@ -21,10 +22,9 @@ server.use(cors());
 
 
 
-server.use('/users', usersRouter)
+server.use('/users', usersRouter, followRouter)
 server.use('/bands', bandsRouter, albumsRouter, likesRouter);
 server.use('/reviews', reviewsRouter);
-
 
 
 server.listen(3003);

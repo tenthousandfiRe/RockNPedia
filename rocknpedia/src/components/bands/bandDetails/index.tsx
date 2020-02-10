@@ -1,14 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { IBand, IBands } from "../../../interfaces/IBand";
+import { IBand } from "../../../interfaces/IBand";
 import { IStore } from "../../../interfaces/IStore";
+import { IAccount } from "../../../interfaces/IAccount";
 import { myFetch } from "../../../utils";
 import { SetBandAction } from "../../../redux/actions";
 import "./style.css";
 import { API_URL } from "../../../constants";
 import { defaultBandImage } from "../../../constants";
+import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const URL_bandupdate = `${API_URL}/avatars/`;
+
 interface IProps {
+  account: IAccount;
   band: IBand;
   history: any;
   match: any;
@@ -29,6 +34,7 @@ interface IState {
   album_image: string;
   album_id: number | null;
   error: string;
+  iconColor: string;
 }
 
 type TProps = IProps & IGlobalActionProps;
@@ -43,7 +49,8 @@ class BandDetails extends React.PureComponent<TProps, IState> {
       record_label: "",
       album_image: "",
       album_id: null,
-      error: ""
+      error: "",
+      iconColor: ""
     };
     this.inputFileRef = React.createRef();
     this.onAlbumNameChange = this.onAlbumNameChange.bind(this);
@@ -122,19 +129,56 @@ class BandDetails extends React.PureComponent<TProps, IState> {
     });
   }
 
+  likesBand() {
+    const token = localStorage.getItem("token");
+    const { iconColor } = this.state;
+    const band_id = this.props.match.params.id;
+    const { user_id } = this.props.account;
+    if (iconColor === iconColor) {
+      this.setState({ iconColor: "red" });
+      myFetch({
+        method: "POST",
+        path: `/bands/user_likes/${band_id}/${user_id}/`,
+        token
+      });
+      if (iconColor === "red") {
+        this.setState({ iconColor: "" });
+        myFetch({
+          method: "DELETE",
+          path: `/bands/user_unlikes/${band_id}/${user_id}/`,
+          token
+        });
+      }
+    }
+  }
+
   componentDidMount() {
+    const token = localStorage.getItem("token");
     const band_id = this.props.match.params.id;
     console.log(band_id);
+    const { user_id } = this.props.account;
     myFetch({ path: `/bands/${band_id}` }).then(json => {
       this.props.setBand(json);
       console.log(json);
     });
+    myFetch({ path: `/bands/user_likes/${band_id}/${user_id}/`, token }).then(
+      json => {
+        if (json) {
+          if (json.length === 0) {
+            this.setState({ iconColor: "" });
+          } else {
+            this.setState({ iconColor: "red" });
+          }
+        }
+        console.log(json);
+      }
+    );
     this.getAlbum(band_id);
   }
-  render() {
-    const { album_name, record_label } = this.state;
-    const { albumes } = this.state;
 
+  render() {
+    const { album_name, record_label, iconColor } = this.state;
+    const { albumes } = this.state;
     const { name, foundation_year, band_image, band_history } = this.props.band;
     const band_id = this.props.match.params.id;
     var token = localStorage.getItem("token");
@@ -147,17 +191,17 @@ class BandDetails extends React.PureComponent<TProps, IState> {
               className="card-img"
               alt="..."
             ></img>
-             {token ? (
-                  <button
-                    type="button"
-                    className="btn mt-3 buttonBandDetails"
-                    onClick={() => this.bandEdit(band_id)}
-                  >
-                    Editar
-                  </button>
-                ) : (
-                  ""
-                )}
+            {token ? (
+              <button
+                type="button"
+                className="btn mt-3 buttonBandDetails"
+                onClick={() => this.bandEdit(band_id)}
+              >
+                Editar
+              </button>
+            ) : (
+              ""
+            )}
           </div>
           <div className="container bandDivsInfo">
             <h1>{name}</h1>
@@ -169,7 +213,6 @@ class BandDetails extends React.PureComponent<TProps, IState> {
               >
                 <p>{band_history}</p>
                 {/* ternary to show the button to edit the band */}
-               
               </div>
             ) : (
               ""
@@ -184,11 +227,19 @@ class BandDetails extends React.PureComponent<TProps, IState> {
           <br />
 
           <div className="accordion" id="accordionExample">
-            <div className="card collapseColor">
+            <div id="backie" className="card collapseColor">
               <div
-                className="card-header d-flex justify-content-center"
+                className="card-header d-flex justify-content-center backAlb"
                 id="headingOne"
               >
+                <div className="d-flex">
+                  <FontAwesomeIcon
+                    className="heartIcon d-flex float-left"
+                    style={{ color: iconColor }}
+                    icon={faHeart}
+                    onClick={() => this.likesBand()}
+                  />
+                </div>
                 <h2 className="mb-0">
                   <button
                     className="btn btn-outline-dark mr-5"
@@ -219,10 +270,10 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingOne"
                 data-parent="#accordionExample"
               >
-                <div className="card-body col-12 backgroundCollapse">
+                <div className="card-body col-12 backgroundCollapse ">
                   <div className="  d-flex justify-content-end">
                     <button
-                      className=" btn btn-outline-dark"
+                      className=" btn btn-outline-light"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
                     >
@@ -240,10 +291,10 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                       className="modal-dialog modal-dialog-centered"
                       role="document"
                     >
-                      <div className="modal-content">
+                      <div className="modal-content backModal">
                         <div className="modal-header">
                           <h5
-                            className="modal-title"
+                            className="modal-title offset-4"
                             id="exampleModalLongTitle"
                           >
                             Añade un Album!
@@ -261,7 +312,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                           <div className="">
                             <div className="card-content">
                               <div className="form">
-                                <label className="label">
+                                <label className="label mb-3">
                                   <strong>Nombre</strong>
                                 </label>
                                 <div className="control">
@@ -274,7 +325,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                                 </div>
                               </div>
                               <div className="form-group">
-                                <label className="label">
+                                <label className="label mt-4 mb-4">
                                   <strong>Sello Discografico</strong>
                                 </label>
                                 <div className="control">
@@ -302,7 +353,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                               <div className="field is-grouped">
                                 <div className="control">
                                   <button
-                                    className="btn btn-outline-info mt-3 boton "
+                                    className="btn btn-outline-light mt-3 offset-5"
                                     disabled={
                                       album_name.length === 0 ||
                                       record_label.length === 0
@@ -321,58 +372,38 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                       </div>
                     </div>
                   </div>
+                  <div className="row ">
                   {albumes.map(
                     ({ album_name, record_label, album_image, album_id }) => (
-                      <div className="card cuerpoCardAlbum mt-4 ">
+                      <div className="card cuerpoCardAlbum mt-4 ml-5 mr-1 backAlb row ">
                         <img
-                          className="card-img-top"
+                          className="card-img-top imgSize"
                           src={
                             album_image
                               ? URL_bandupdate + album_image
                               : defaultBandImage
                           }
                         />
+
                         <div className="card-body">
-                          <div className="dropdown show d-flex justify-content-end">
-                            <a
-                              className="dropdown-toggle"
-                              href="#"
-                              role="button"
-                              id="dropdownMenuLink"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            ></a>
-
-                            <div
-                              className="dropdown-menu"
-                              aria-labelledby="dropdownMenuLink"
-                            >
-                              <button
-                                className="dropdown-item"
-                                data-toggle="modal"
-                                data-target="#EditModalAlbum"
-                              >
-                                Editar
-                              </button>
-
-                              <button
-                                className="dropdown-item"
-                                onClick={() => this.deleteAlbum(album_id)}
-                              >
-                                Eliminar
-                              </button>
-                            </div>
-                          </div>
                           <h5 className="card-title">{album_name}</h5>
+                          <FontAwesomeIcon
+                            className="trashIcon d-flex float-right"
+                            icon={faTrashAlt}
+                            onClick={() => this.deleteAlbum(album_id)}
+                          />
                           <p className="card-text">{record_label}</p>
-                          <a href="#" className="btn btn-outline-dark">
+                          <a href="#" className="btn btn-outline-dark mr-2">
                             Go Spotify
+                          </a>
+                          <a href="#" className="btn btn-outline-dark">
+                            Reviews
                           </a>
                         </div>
                       </div>
                     )
                   )}
+                  </div>
                 </div>
               </div>
               <div

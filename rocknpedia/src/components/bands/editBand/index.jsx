@@ -77,8 +77,9 @@ class EditBand extends React.PureComponent {
 
     render() {
         const { band } = this.props;
-        const { band_image, band_history } = band
-        let { name = band?.name, band_id } = this.state
+        const { band_image, band_history } = band;
+        const band_id = this.props.match.params.id;
+        let { name = band?.name } = this.state
         let { foundation_year = band?.foundation_year } = this.state
         return (
             <div className="container">

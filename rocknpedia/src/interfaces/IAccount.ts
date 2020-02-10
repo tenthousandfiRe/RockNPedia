@@ -7,4 +7,5 @@ export interface IAccount  {
   is_admin?: boolean;
   rol?: string;
   user_image?: string;
+  followers?: [];
 }
