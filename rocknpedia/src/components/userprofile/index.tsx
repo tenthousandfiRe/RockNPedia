@@ -130,6 +130,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     const { account } = this.props;
     const { followers } = this.state;
     console.log(followers)
+    console.log(followers)
     const { username, rol, user_image } = this.state;
 
     return (
