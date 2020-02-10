@@ -7,7 +7,6 @@ import { SetAccountAction } from "./redux/actions";
 import { IStore } from "./interfaces/IStore";
 import { IAccount } from "./interfaces/IAccount";
 import { generateAccountFromToken } from "./utils";
-import Reviews from './components/reviews'
 import Login from './components/login/index'
 import Register from "./components/register";
 import Navbar from "./components/navbar";

@@ -7,9 +7,9 @@ import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction, SetBandAction } from "../../redux/actions";
 import jwt from "jsonwebtoken";
 import ReactHtmlParser from 'react-html-parser'
-
-import { IBand } from "../../interfaces/IBand";
 import { API_URL, defaultBandImage } from "../../constants";
+import { IBand } from "../../interfaces/IBand";
+import Swal from 'sweetalert2';
 const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {
@@ -184,6 +184,22 @@ class UserProfile extends React.PureComponent<TProps, IState> {
           } = generateAccountFromToken(json.token);
           this.props.setAccount({ username, rol, user_image, user_id });
           localStorage.setItem("token", json.token);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'Usuario actualizado!'
+          })
           this.props.history.push("/");
         }
       });
