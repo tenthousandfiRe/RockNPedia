@@ -108,7 +108,7 @@ class Register extends React.PureComponent<IProps, IState> {
           <div className="field is-grouped">
             <div className="control">
               <button
-                className="btn btn-outline-info mt-3 boton "
+                className="btn btn-outline-light mt-3"
                 disabled={username.length === 0 || password.length === 0}
                 onClick={this.register}
                 data-dismiss="modal"

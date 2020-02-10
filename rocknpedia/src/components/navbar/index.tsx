@@ -57,19 +57,22 @@ class Navbar extends React.PureComponent<TProps, IState> {
   vistaInsertBand() {
     this.props.history.push("/insertBand");
   }
+  vistaUserList() {
+    this.props.history.push("/users");
+  }
 
   render() {
     const { account } = this.props;
     const { isLogged } = this.state;
-    
+
     const token = localStorage.getItem("token");
     console.log(token);
     console.log(account);
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light navie">
-        <a className="navbar-brand" href="/">
-          Rock 'N' Pedia
+        <a className="navbar-brand" href="/" ><img className="logo ml-2" src="https://i.imgur.com/G9tkJoa.png"/>
+          
         </a>
         <button
           className="navbar-toggler"
@@ -84,9 +87,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            
-          </ul>
+          <ul className="navbar-nav mr-auto"></ul>
           <a className="nav-item">
             {/* ternary to show the button to login */}
             {!token ? (
@@ -184,19 +185,24 @@ class Navbar extends React.PureComponent<TProps, IState> {
             </div>
           </a>
           {token ? (
-          <div className="float-left ">{account?.user_image ? 
-              <img className="d-flex logoUser marcoNav mx-auto" src={`http://localhost:3003/avatars/${account.user_image}`}></img>
-             : 
-              <img
-                className="d-flex logoUser marcoNav mx-auto"
-                src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
-              ></img>
-            }</div>
-            ) : (
-              ""
-            )}
-          {token ? (           
-            <div className="nav-item dropdown dropleft ml-3">             
+            <div className="float-left ">
+              {account?.user_image ? (
+                <img
+                  className="d-flex logoUser marcoNav mx-auto"
+                  src={`http://localhost:3003/avatars/${account.user_image}`}
+                ></img>
+              ) : (
+                <img
+                  className="d-flex logoUser marcoNav mx-auto"
+                  src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
+                ></img>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+          {token ? (
+            <div className="nav-item dropdown dropleft ml-3">
               <a
                 className="nav-link dropdown-toggle btn btn-outline-dark"
                 href="#"
@@ -206,22 +212,25 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                
                 {account?.username}
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" onClick={this.vistaProfile} href="">
+                <a
+                  className="dropdown-item"
+                  onClick={this.vistaProfile}
+                  href=""
+                >
                   Perfil
                 </a>
-                <a className="dropdown-item" onClick={this.vistaInsertBand} href="">
+                <a
+                  className="dropdown-item"
+                  onClick={this.vistaInsertBand}
+                  href=""
+                >
                   Añadir banda
                 </a>
-                <a className="dropdown-item" href="#">
-                  Reviews
-                </a>
-
-                <a className="dropdown-item" href="#">
-                  Lists
+                <a className="dropdown-item" href="/users">
+                  Usuarios
                 </a>
                 <div className="dropdown-divider"></div>
                 <div className="">

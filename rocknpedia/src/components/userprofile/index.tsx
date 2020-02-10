@@ -51,7 +51,14 @@ interface IState {
   error: string;
   is_admin: number;
   bandsLikes: IBandsLikeBD[];
-  reviews: IreviewsBD[]
+  reviews: IreviewsBD[];
+  followers: IFollowersBD[]
+}
+
+interface IFollowersBD {
+  user_image: string;
+  user_id: number;
+  username: string;
 }
 
 class UserProfile extends React.PureComponent<TProps, IState> {
@@ -73,6 +80,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       error: "",
       bandsLikes: [],
       reviews: [],
+      followers: []
     };
   }
 
@@ -94,6 +102,15 @@ class UserProfile extends React.PureComponent<TProps, IState> {
         this.setState({ bandsLikes: response })
       }
     });
+    myFetch({
+      path: `/users/followers/${user_id}`,
+      token
+    }).then(response => {
+      if (response) {
+        this.setState({ followers: response });
+        // const { username, rol, user_image } = json;
+      }
+    });
   }
 
   getReviews() {
@@ -112,11 +129,6 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     const username = event.target.value;
     this.setState({ username, error: "" });
   }
-
-  // onPasswordChange(event: any) {
-  //   const password = event.target.value;
-  //   this.setState({ password, error: "" });
-  // }
 
   onRolChange(event: any) {
     const rol = event.target.selectedOptions[0].value;
@@ -161,12 +173,17 @@ class UserProfile extends React.PureComponent<TProps, IState> {
         if (json) {
           console.log(json);
 
-
           console.log(token);
-          const { username, rol, user_image, user_id } = generateAccountFromToken(json.token);
+          // const { username, rol, user_image } = token;
+          const {
+            username,
+            rol,
+            user_image,
+            user_id
+          } = generateAccountFromToken(json.token);
           this.props.setAccount({ username, rol, user_image, user_id });
           localStorage.setItem("token", json.token);
-          this.props.history.push("/")
+          this.props.history.push("/");
         }
       });
       this.inputFileRef.current.value = "";
@@ -183,10 +200,12 @@ class UserProfile extends React.PureComponent<TProps, IState> {
 
 
   render() {
-    const { account } = this.props;
+    const { followers } = this.state;
+    console.log(followers)
     const { reviews } = this.state;
     console.log(reviews)
     const { bandsLikes } = this.state
+    console.log(bandsLikes)
     const { username, rol, user_image } = this.state;
     return (
       <>
@@ -194,7 +213,10 @@ class UserProfile extends React.PureComponent<TProps, IState> {
         <div className="container backform d-flex justify-content-center mt-5">
           <div className="col-10 mt-3">
             {user_image ? (
-              <img className="d-flex logoUser mx-auto" src={`http://localhost:3003/avatars/${user_image}`}></img>
+              <img
+                className="d-flex logoUser mx-auto"
+                src={`http://localhost:3003/avatars/${user_image}`}
+              ></img>
             ) : (
                 <img
                   className="d-flex logoUser mx-auto"
@@ -289,12 +311,12 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     <h5>Reviews</h5>
                   </button>
                   <button
-                    className="btn btn-outline-dark ml-5 mr-5"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseTwo"
-                    aria-expanded="true"
-                    aria-controls="collapseTwo"
+                        className="btn btn-outline-dark ml-5 mr-4"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseTwo"
+                        aria-expanded="true"
+                        aria-controls="collapseTwo"
                   >
                     <h5>Amigos</h5>
                   </button>
@@ -319,31 +341,23 @@ class UserProfile extends React.PureComponent<TProps, IState> {
               >
                 <div className="card-body reviews">
                   <div className="col-12">
-                  {reviews.map(({ review, review_date, album_name, album_image }) => (reviews ?
-                  <div className="col-6 float-left">
-                    <div className="col-md-6 d-block justify-content-center mt-2 mb-5"> <img 
-                      src={album_image ? URL_images + album_image : defaultBandImage}
-                    ></img>
-                      <div className="col-md-6 d-block justify-content-left mt-2 mb-3 p-0">
-                        <div><h5>{album_name}</h5></div>
-                        <span>{new Date(review_date).toLocaleString()}</span></div>
-                      <div className="d-block justify-content-left reviewDiv"><p>{ReactHtmlParser(`${review}`)}</p>
-                      
-                     </div>
-                    </div>
-                    </div>
-                    : <p>No has hecho ninguna review aún</p>))}
-                    </div>
-                </div>
-              </div>
-              <div
-                id="collapseTwo"
-                className="collapse"
-                aria-labelledby="headingTwo"
-                data-parent="#accordionExample"
-              >
-                <div className="card-body">Lista de amigos</div>
+                    {reviews.map(({ review, review_date, album_name, album_image }) => (reviews ?
+                      <div className="col-6 float-left">
+                        <div className="col-md-6 d-block justify-content-center mt-2 mb-5"> <img
+                          src={album_image ? URL_images + album_image : defaultBandImage}
+                        ></img>
+                          <div className="col-md-6 d-block justify-content-left mt-2 mb-3 p-0">
+                            <div><h5>{album_name}</h5></div>
+                            <span>{new Date(review_date).toLocaleString()}</span></div>
+                          <div className="d-block justify-content-left reviewDiv"><p>{ReactHtmlParser(`${review}`)}</p>
 
+                          </div>
+                        </div>
+                      </div>
+                      : <p>No has hecho ninguna review aún</p>))}
+
+                  </div>
+                </div>
               </div>
               <div
                 id="collapseThree"
@@ -351,7 +365,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body container"></div>
+                <div className="card-body container">
                 {bandsLikes.map(({ band_id, name, band_image }) => (
                   <div className="col-md-6 d-flex justify-content-center mt-2 mb-5 float-left">
                     <div className="row">
@@ -361,11 +375,43 @@ class UserProfile extends React.PureComponent<TProps, IState> {
 
                   </div>
                 ))}
+                </div>
+              </div>
+              <div
+                id="collapseTwo"
+                className="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionExample"
+              >            
+                {followers.map(({ user_id, username, user_image }) => (
+                    <div className="col-md-6 d-inline-flex justify-content-center mt-4  float-left">
+                      <div>
+                        <img
+                          style={{ width: 50, height: 50, borderRadius: 100 }}
+                          src={
+                            user_image
+                              ? URL_images + user_image
+                              : defaultBandImage
+                          }
+                          className="card-img "
+                          alt="..."
+                        ></img>
+                      </div>
+                      <div>
+                        <p className="mt-3 ml-3" style={{ fontSize: 20 }}>
+                          {username}
+                          {console.log(username)}
+                        </p>
+                      </div>
+                    </div>
+                    ))}                                      
               </div>
             </div>
           </div>
         </div>
         <div className="col-12 separationDiv"></div>
+
+        
       </>
     );
   }
