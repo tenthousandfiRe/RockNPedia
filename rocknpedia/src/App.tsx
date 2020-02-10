@@ -17,6 +17,7 @@ import EditBand from "./components//bands/editBand"
 import InsertBand from "./components/bands/insertBand/";
 import { IBand } from "./interfaces/IBand";
 import userProfile from "./components/userprofile/index"
+import usersList from "./components/usersList";
 
 
 interface IGlobalStateProps {
@@ -53,6 +54,7 @@ class App extends React.PureComponent<TProps> {
      <Route path='/bands/:id' exact component={BandDetails} />
      <Route path='/bands/update/:id' exact component={EditBand} />
     <Route path='/userProfile' exact component={userProfile} />
+    <Route path='/users' exact component={usersList} />
      </BrowserRouter>
      </>;
   }

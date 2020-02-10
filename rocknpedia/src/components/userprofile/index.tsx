@@ -1,15 +1,17 @@
 import React from "react";
+import "./style.css";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
 import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction } from "../../redux/actions";
-import  jwt from "jsonwebtoken";
-import "./style.css";
+import jwt from "jsonwebtoken";
+import { API_URL } from "../../constants";
+import { defaultBandImage } from "../../constants";
+const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {
   account: IAccount | any;
-  
 }
 
 interface IGlobalActionProps {
@@ -25,16 +27,33 @@ interface IState {
   rol: string;
   error: string;
   is_admin: number;
+  followers: IFollowersBD[];
+}
+
+interface IFollowersBD {
+  user_image: string;
+  user_id: number;
+  username: string;
 }
 
 class UserProfile extends React.PureComponent<TProps, IState> {
   componentDidMount() {
     const { setAccount } = this.props;
+    const { user_id } = this.props.account;
     const token = localStorage.getItem("token");
     if (token) {
       setAccount(generateAccountFromToken(token));
     }
     this.getUser();
+    myFetch({
+      path: `/users/followers/${user_id}`,
+      token
+    }).then(response => {
+      if (response) {
+        this.setState({ followers: response });
+        // const { username, rol, user_image } = json;
+      }
+    });
   }
 
   inputFileRef: React.RefObject<HTMLInputElement>;
@@ -50,18 +69,14 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       user_image: this.props.account?.user_image,
       rol: this.props.account?.rol,
       is_admin: 0,
-      error: ""
+      error: "",
+      followers: []
     };
   }
   onUsernameChange(event: any) {
     const username = event.target.value;
     this.setState({ username, error: "" });
   }
-
-  // onPasswordChange(event: any) {
-  //   const password = event.target.value;
-  //   this.setState({ password, error: "" });
-  // }
 
   onRolChange(event: any) {
     const rol = event.target.selectedOptions[0].value;
@@ -71,16 +86,6 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   getUser() {
     const token = localStorage.getItem("token");
     const { user_id } = this.props.account;
-    myFetch({
-      path: `/users/${user_id}`,
-      token
-    }).then(json => {
-      if (json) {
-        console.log(json);
-        // const { username, rol, user_image } = json;
-        this.props.setAccount(json);
-      }
-    });
   }
 
   updateUser() {
@@ -89,7 +94,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       const { user_id } = this.props.account;
       const formData = new FormData();
       const token = localStorage.getItem("token");
-      const avatar = this.inputFileRef.current.files[0];   
+      const avatar = this.inputFileRef.current.files[0];
       formData.append("user_image", avatar);
       formData.append("username", username);
       formData.append("rol", rol);
@@ -103,48 +108,40 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       }).then(json => {
         if (json) {
           console.log(json);
-          
 
-           console.log(token);
-          // const { username, rol, user_image } = token;         
-          const { username, rol, user_image, user_id } = generateAccountFromToken(json.token);
-          this.props.setAccount({username, rol, user_image, user_id });
+          console.log(token);
+          // const { username, rol, user_image } = token;
+          const {
+            username,
+            rol,
+            user_image,
+            user_id
+          } = generateAccountFromToken(json.token);
+          this.props.setAccount({ username, rol, user_image, user_id });
           localStorage.setItem("token", json.token);
-          this.props.history.push("/")
+          this.props.history.push("/");
         }
       });
       // this.inputFileRef.current.value = "";
     }
   }
 
-  // uploadAvatar() {
-  //   if (this.inputFileRef.current?.files) {
-  //     let token = localStorage.getItem("token");
-  //     const avatar = this.inputFileRef.current.files[0];
-  //     const formData = new FormData();
-  //     formData.append("avatar", avatar);
-  //     fetch("http://localhost:3003/users/avatar", {
-  //       method: "POST",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       },
-  //       body: formData
-  //     });
-  //   }
-  // }
-
   render() {
     const { account } = this.props;
-
+    const { followers } = this.state;
+    console.log(followers)
     const { username, rol, user_image } = this.state;
-    
+
     return (
       <>
         <div className="separationDiv"></div>
         <div className="container backform d-flex justify-content-center mt-5">
           <div className="col-10 mt-3">
             {user_image ? (
-              <img className="d-flex logoUser mx-auto" src={`http://localhost:3003/avatars/${user_image}`}></img>
+              <img
+                className="d-flex logoUser mx-auto"
+                src={`http://localhost:3003/avatars/${user_image}`}
+              ></img>
             ) : (
               <img
                 className="d-flex logoUser mx-auto"
@@ -252,7 +249,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     className="btn btn-outline-dark ml-5"
                     type="button"
                     data-toggle="collapse"
-                    data-target="#collapseThree"
+                    data-target="#collapseTwo"
                     aria-expanded="true"
                     aria-controls="collapseThree"
                   >
@@ -277,7 +274,13 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">Lista de amigos</div>
+                <div className="card-body">
+                  <div className="col-12">
+                    {/* {account.map(({ username }) => (
+
+))} */}
+                  </div>
+                </div>
               </div>
               <div
                 id="collapseThree"
@@ -286,6 +289,36 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 data-parent="#accordionExample"
               >
                 <div className="card-body">Lista de grupos favoritos</div>
+              </div>
+              <div
+                id="collapseTwo"
+                className="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionExample"
+              >
+                {followers.map(({ user_id, username, user_image }) => (
+                  <div className=" col-12 ">
+                    <div className="col-md-6 d-inline-flex justify-content-center mt-4  float-left">
+                      <div>
+                        <img
+                          style={{ width: 50, height: 50, borderRadius: 100 }}
+                          src={
+                            user_image
+                              ? URL_images + user_image
+                              : defaultBandImage
+                          }
+                          className="card-img "
+                          alt="..."
+                        ></img>
+                      </div>
+                      <div>
+                        <p className="mt-3 ml-3" style={{ fontSize: 20 }}>
+                          {username}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

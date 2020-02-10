@@ -6,10 +6,12 @@ import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction, SetUsersAction } from "../../redux/actions";
 import "./style.css";
 import { IUser } from "../../interfaces/IUsers";
+import { API_URL } from "../../constants";
+import { defaultBandImage } from "../../constants";
+const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {
   account: IAccount | any;
-  users: IUser [];
 }
 
 interface IGlobalActionProps {
@@ -19,7 +21,14 @@ interface IGlobalActionProps {
 type TProps = IGlobalStateProps & IGlobalActionProps;
 
 interface IState {
- 
+  users: IUserDB[];
+}
+
+interface IUserDB {
+  user_id: number;
+  user_image: string;
+  username: string;
+  rol: string;
 }
 
 class userList extends React.PureComponent<TProps, IState> {
@@ -29,42 +38,65 @@ class userList extends React.PureComponent<TProps, IState> {
     if (token) {
       setAccount(generateAccountFromToken(token));
     }
+    myFetch({
+      path: `/users/`,
+      token
+    }).then(response => {
+      if (response) {
+        console.log(response);
+        this.setState({ users: response });
+      }
+    });
   }
   constructor(props: TProps) {
     super(props);
     this.state = {
-      username: "",
-      user_image:"",
-      rol: "",
-      is_admin: 0,
-      
+      users: []
     };
   }
- userList() {
-    myFetch({
-        path: `/users/`,
-      }).then(json => {
-        if (json) {
-          console.log(json);
-        
 
-          this.props.setUsers(json);
-        }
-      });
+followUser(follow_id: number) {
+const token = localStorage.getItem("token");
+const account_id = this.props.account.user_id
+  myFetch({
+    path: `/users/followers/${account_id}/${follow_id}/`,
+    method: "POST",
+    token
+  });
 
- }
+}
 
-  render() { 
-    return (
+
+  render() {
+    const { users } = this.state;
+    return ( 
       <>
-      
+        <div className="offset-2">
+          <div className="col-12 mt-5">
+            {users.map(({ user_id, username, user_image, rol }) => (
+              
+              
+              <div className="card d-flex justify-content-center float-left mr-5 ml-5" style={{width: 180, minHeight: 100}}>
+              <img src={
+                      user_image ? URL_images + user_image : defaultBandImage
+                    } className="card-img-top"style={{minHeight: 100, minWidth:60, maxHeight: 180, maxWidth: 180}} ></img>
+              <div className="card-body " style={{width: 200, height: 170}}>
+                <h5 className="card-title">{username}</h5>
+                <p className="card-text">{rol}</p>
+                <a  className="btn btn-outline-dark" onClick={() => {
+                  console.log(user_id);
+                  this.followUser(user_id)}}>FOLLOW</a>
+              </div>
+            </div>             
+            ))}
+          </div>
+        </div>
       </>
     );
   }
 }
-const mapStateToProps = ({ account, users }: IStore): IGlobalStateProps => ({
-  account,
-  users
+const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
+  account
 });
 
 const mapDispatchToProps = {

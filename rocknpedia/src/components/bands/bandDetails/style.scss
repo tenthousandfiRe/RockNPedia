@@ -72,6 +72,7 @@
 
 .backgroundCollapse {
     background-color: none !important;
+    border: none !important;
 }
 
 .heartIcon{
@@ -87,11 +88,25 @@
 
 #backie{
     background-color: unset !important;
+    border: none !important;
+    
     
 }
 .backAlb{
     background-color: rgba(245, 245, 245, 0.767);
-    border-radius: 10px;
+    
+}
+
+.imgSize {
+    max-width: 290px;
+    max-height: 250px;
+}
+
+
+.backModal {
+    background-color: rgba(0, 0, 0, 0.904);
+    color: white;
+    
 }
 
 
