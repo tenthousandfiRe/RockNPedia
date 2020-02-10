@@ -20,3 +20,26 @@
 .separationDiv {
   height: 100px;
 }
+
+#backie {
+  background-color: unset !important;
+}
+
+.backAlb {
+  background-color: rgba(245, 245, 245, 0.767);
+  border-radius: 10px;
+}
+
+.reviews img {
+  width: 100px;
+  height: 100px;
+}
+.reviews .reviewDiv {
+  height: 60px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.3;
+}
+.reviews .p {
+  white-space: nowrap;
+}

@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { IBand } from "../../../interfaces/IBand";
 import { IStore } from "../../../interfaces/IStore";
-import { IAccount } from "../../../interfaces/IAccount";
+import { IAccount } from "../../../interfaces/IAccount"
+import { Link } from "react-router-dom";
+import CKEditor from 'ckeditor4-react';
 import { myFetch } from "../../../utils";
 import { SetBandAction } from "../../../redux/actions";
 import "./style.css";
@@ -10,37 +12,11 @@ import { API_URL } from "../../../constants";
 import { defaultBandImage } from "../../../constants";
 import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactHtmlParser from 'react-html-parser';
 const URL_bandupdate = `${API_URL}/avatars/`;
 
-interface IProps {
-  account: IAccount;
-  band: IBand;
-  history: any;
-  match: any;
-}
-interface IGlobalActionProps {
-  setBand(band: IBand): void;
-}
-interface IAlbum {
-  album_name: string;
-  record_label: string;
-  album_image: string;
-  album_id: number;
-}
-interface IState {
-  albumes: IAlbum[];
-  album_name: string;
-  record_label: string;
-  album_image: string;
-  album_id: number | null;
-  error: string;
-  iconColor: string;
-}
-
-type TProps = IProps & IGlobalActionProps;
-class BandDetails extends React.PureComponent<TProps, IState> {
-  inputFileRef: React.RefObject<HTMLInputElement>;
-  constructor(props: TProps) {
+class BandDetails extends React.PureComponent {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -50,7 +26,10 @@ class BandDetails extends React.PureComponent<TProps, IState> {
       album_image: "",
       album_id: null,
       error: "",
-      iconColor: ""
+      iconColor: "",
+      review: "",
+      reviews: [],
+      selectedAlbum: 0
     };
     this.inputFileRef = React.createRef();
     this.onAlbumNameChange = this.onAlbumNameChange.bind(this);
@@ -58,24 +37,24 @@ class BandDetails extends React.PureComponent<TProps, IState> {
     this.addAlbum = this.addAlbum.bind(this);
   }
 
-  onAlbumNameChange(event: any) {
+  onAlbumNameChange(event) {
     const album_name = event.target.value;
     this.setState({ album_name, error: "" });
   }
 
-  onRecordLabelChange(event: any) {
+  onRecordLabelChange(event) {
     const record_label = event.target.value;
     this.setState({ record_label, error: "" });
   }
 
-  bandEdit(band_id?: number) {
+  bandEdit(band_id) {
     myFetch({ path: `/update/${band_id}` }).then(json => {
       console.log(json);
     });
     this.props.history.push(`/bands/update/${band_id}`);
   }
 
-  deleteAlbum(album_id: number) {
+  deleteAlbum(album_id) {
     console.log(album_id);
     const band_id = this.props.match.params.id;
     const token = localStorage.getItem("token");
@@ -106,9 +85,6 @@ class BandDetails extends React.PureComponent<TProps, IState> {
         formData
       }).then(json => {
         if (json) {
-          console.log(json);
-          console.log(token);
-
           this.props.history.push(`/bands/${band_id}`);
         }
       });
@@ -116,15 +92,50 @@ class BandDetails extends React.PureComponent<TProps, IState> {
     }
   }
 
-  getAlbum(band_id?: number) {
+  getAlbum(band_id) {
     myFetch({
       path: `/bands/${band_id}/albumes`,
-      method: "GET"
     }).then(json => {
       if (json) {
         console.log(json);
         // const { name, record_label, album_image } = json;
         this.setState({ albumes: json });
+      }
+    });
+  }
+
+
+
+  insertReview(album_id) {
+    const { review } = this.state;
+    const { user_id } = this.props.account
+    const token = localStorage.getItem("token")
+    myFetch({ method: "POST", path: `/reviews/${user_id}/${album_id}`, token, json: { review } }).then(
+      json => {
+        if (json) {
+          console.log(json);
+        }
+      }
+    );
+    window.alert("review añadida!")
+    this.props.history.push(`/`);
+  }
+
+  onReviewChange(e) {
+    this.setState({
+      review: e.editor.getData()
+    });
+    console.log(this.state.review);
+  }
+
+  getReviews(album_id) {
+    myFetch({
+      path: `/reviews/${album_id}`,
+    }).then(json => {
+      if (json) {
+        console.log(json);
+        // const { name, record_label, album_image } = json;
+        this.setState({ reviews: json });
       }
     });
   }
@@ -150,6 +161,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
         });
       }
     }
+
   }
 
   componentDidMount() {
@@ -177,7 +189,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
   }
 
   render() {
-    const { album_name, record_label, iconColor } = this.state;
+    const { album_name, record_label, iconColor, review, selectedAlbum } = this.state;
     const { albumes } = this.state;
     const { name, foundation_year, band_image, band_history } = this.props.band;
     const band_id = this.props.match.params.id;
@@ -188,20 +200,21 @@ class BandDetails extends React.PureComponent<TProps, IState> {
           <div className="container bandDivsImage">
             <img
               src={band_image ? URL_bandupdate + band_image : defaultBandImage}
-              className="card-img"
+              className="img"
               alt="..."
             ></img>
             {token ? (
+              <>
+              <FontAwesomeIcon className="heartIcon d-flex float-left" style={{ color: iconColor }} icon={faHeart} onClick={() => this.likesBand()} />
               <button
                 type="button"
                 className="btn mt-3 buttonBandDetails"
                 onClick={() => this.bandEdit(band_id)}
               >
                 Editar
-              </button>
-            ) : (
-              ""
-            )}
+                  </button>
+              </>
+            ) : ("")}
           </div>
           <div className="container bandDivsInfo">
             <h1>{name}</h1>
@@ -211,12 +224,12 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                 className="historyBackgroundEditBand"
                 style={{ borderRadius: 20 }}
               >
-                <p>{band_history}</p>
+                <p>{ReactHtmlParser(`${band_history}`)}</p>
                 {/* ternary to show the button to edit the band */}
               </div>
             ) : (
-              ""
-            )}
+                ""
+              )}
           </div>
           <br />
           <br />
@@ -225,7 +238,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
           <br />
           <br />
           <br />
-         
+
 
           <div className="accordion" id="accordionExample">
             <div id="backie" className="card collapseColor">
@@ -233,14 +246,6 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                 className="card-header d-flex justify-content-center backAlb"
                 id="headingOne"
               >
-                <div className="d-flex">
-                  <FontAwesomeIcon
-                    className="heartIcon d-flex float-left"
-                    style={{ color: iconColor }}
-                    icon={faHeart}
-                    onClick={() => this.likesBand()}
-                  />
-                </div>
                 <h2 className="mb-0">
                   <button
                     className="btn btn-outline-dark mr-5"
@@ -394,17 +399,45 @@ class BandDetails extends React.PureComponent<TProps, IState> {
                             onClick={() => this.deleteAlbum(album_id)}
                           />
                           <p className="card-text">{record_label}</p>
-                          <a href="#" className="btn btn-outline-dark mr-2">
-                            Go Spotify
+                          <a href="#" data-toggle="modal" onClick={() => this.setState({ selectedAlbum: album_id })} data-target="#Review" className="btn btn-outline-dark mr-2">
+                            Añadir review
                           </a>
-                          <a href="#" className="btn btn-outline-dark">
-                            Reviews
-                          </a>
+                          <Link to={`/reviews/${album_id}`} className="btn btn-outline-dark">
+                            Ver reviews</Link>
                         </div>
                       </div>
                     )
                   )}
                   </div>
+                </div>
+                <div className="control">
+                  <div class="modal fade" id="Review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content modalBackground">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Añade una review</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <CKEditor
+                            type="inline"
+                            config={{
+                              toolbar: [['Bold', 'Italic', 'Cut', 'Copy', 'Paste']]
+                            }}
+                            data={review}
+                            onChange={e => this.onReviewChange(e)}
+                          />
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" className="btn btn-outline-dark mt-3 buttonsEditBand"
+                            data-dismiss="modal" onClick={() => this.insertReview(selectedAlbum)}>Guardar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
               <div
@@ -463,7 +496,7 @@ class BandDetails extends React.PureComponent<TProps, IState> {
   }
 }
 
-const mapStateToProps = ({ band, account }: IStore) => ({ band, account });
+const mapStateToProps = ({ band, account }) => ({ band, account });
 const mapDispatchToProps = {
   setBand: SetBandAction
 };

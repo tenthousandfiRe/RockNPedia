@@ -4,17 +4,40 @@ import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
 import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
-import { SetAccountAction } from "../../redux/actions";
+import { SetAccountAction, SetBandAction } from "../../redux/actions";
 import jwt from "jsonwebtoken";
-import { API_URL } from "../../constants";
-import { defaultBandImage } from "../../constants";
+import { API_URL, defaultBandImage } from '../../constants'
+import ReactHtmlParser from 'react-html-parser'
+import { IBand } from "../../interfaces/IBand";
 const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {
+  bands: IBand[]
+  band: IBand
   account: IAccount | any;
+
+}
+
+interface IreviewsBD {
+  review_id: number;
+  review: string;
+  review_date: string;
+  user_id: number;
+  album_name: string;
+  album_id: number;
+  album_image: string | null;
+  username: string;
+  user_image: string;
+}
+
+interface IBandsLikeBD {
+  band_id: number
+  band_image: string
+  name: string
 }
 
 interface IGlobalActionProps {
+  setBand(band: IBand): void;
   uploadAvatar(id: number): void;
   setAccount(account: any): void;
   history: any;
@@ -27,7 +50,9 @@ interface IState {
   rol: string;
   error: string;
   is_admin: number;
-  followers: IFollowersBD[];
+  bandsLikes: IBandsLikeBD[];
+  reviews: IreviewsBD[];
+  followers: IFollowersBD[]
 }
 
 interface IFollowersBD {
@@ -37,24 +62,7 @@ interface IFollowersBD {
 }
 
 class UserProfile extends React.PureComponent<TProps, IState> {
-  componentDidMount() {
-    const { setAccount } = this.props;
-    const { user_id } = this.props.account;
-    const token = localStorage.getItem("token");
-    if (token) {
-      setAccount(generateAccountFromToken(token));
-    }
-    this.getUser();
-    myFetch({
-      path: `/users/followers/${user_id}`,
-      token
-    }).then(response => {
-      if (response) {
-        this.setState({ followers: response });
-        // const { username, rol, user_image } = json;
-      }
-    });
-  }
+
 
   inputFileRef: React.RefObject<HTMLInputElement>;
   constructor(props: TProps) {
@@ -70,9 +78,53 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       rol: this.props.account?.rol,
       is_admin: 0,
       error: "",
+      bandsLikes: [],
+      reviews: [],
       followers: []
     };
   }
+
+  componentDidMount() {
+    const { setAccount } = this.props;
+    const { user_id } = this.props.account;
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAccount(generateAccountFromToken(token));
+    }
+    this.getUser();
+    this.getReviews();
+    myFetch({
+      path: `/bands/user_likes/${user_id}`,
+      token
+    }).then(response => {
+      if (response) {
+
+        this.setState({ bandsLikes: response })
+      }
+    });
+    myFetch({
+      path: `/users/followers/${user_id}`,
+      token
+    }).then(response => {
+      if (response) {
+        this.setState({ followers: response });
+        // const { username, rol, user_image } = json;
+      }
+    });
+  }
+
+  getReviews() {
+    const { user_id } = this.props.account;
+    myFetch({
+      path: `/reviews/user_reviews/${user_id}`,
+    }).then(response => {
+      if (response) {
+        console.log(response)
+        this.setState({ reviews: response })
+      }
+    });
+  }
+
   onUsernameChange(event: any) {
     const username = event.target.value;
     this.setState({ username, error: "" });
@@ -86,10 +138,22 @@ class UserProfile extends React.PureComponent<TProps, IState> {
   getUser() {
     const token = localStorage.getItem("token");
     const { user_id } = this.props.account;
+    myFetch({
+      path: `/users/${user_id}`,
+      token
+    }).then(json => {
+      if (json) {
+        console.log(json);
+        // const { username, rol, user_image } = json;
+        this.props.setAccount(json);
+      }
+    });
   }
 
+
+
   updateUser() {
-    const { username, rol, is_admin } = this.state;
+    const { username, rol } = this.state;
     if (this.inputFileRef.current?.files) {
       const { user_id } = this.props.account;
       const formData = new FormData();
@@ -122,17 +186,27 @@ class UserProfile extends React.PureComponent<TProps, IState> {
           this.props.history.push("/");
         }
       });
-      // this.inputFileRef.current.value = "";
+      this.inputFileRef.current.value = "";
     }
   }
 
+  bandView(band_id?: number) {
+    myFetch({ path: `/bands/${band_id}` }).then(json => {
+      this.props.setBand(json)
+    })
+    this.props.history.push(`/bands/${band_id}`)
+  }
+
+
+
   render() {
-    const { account } = this.props;
     const { followers } = this.state;
     console.log(followers)
-    console.log(followers)
+    const { reviews } = this.state;
+    console.log(reviews)
+    const { bandsLikes } = this.state
+    console.log(bandsLikes)
     const { username, rol, user_image } = this.state;
-
     return (
       <>
         <div className="separationDiv"></div>
@@ -144,11 +218,11 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 src={`http://localhost:3003/avatars/${user_image}`}
               ></img>
             ) : (
-              <img
-                className="d-flex logoUser mx-auto"
-                src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
-              ></img>
-            )}
+                <img
+                  className="d-flex logoUser mx-auto"
+                  src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
+                ></img>
+              )}
 
             <label className="label mt-4">
               <strong>Nombre de Usuario</strong>
@@ -218,11 +292,11 @@ class UserProfile extends React.PureComponent<TProps, IState> {
         <br />
         <br />
         <br />
-        <div className="container">
-          <div className="accordion" id="accordionExample">
+        <div className="container" id="accordionExample">
+          <div className="accordion" id="backie">
             <div className="card collapseColor">
               <div
-                className="card-header d-flex justify-content-center"
+                className="card-header d-flex justify-content-center backAlb"
                 id="headingOne"
               >
                 <h2 className="mb-0">
@@ -234,27 +308,27 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
-                    <h2>Reviews</h2>
+                    <h5>Reviews</h5>
                   </button>
                   <button
-                    className="btn btn-outline-dark ml-5 mr-5"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseTwo"
-                    aria-expanded="true"
-                    aria-controls="collapseTwo"
+                        className="btn btn-outline-dark ml-5 mr-4"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseTwo"
+                        aria-expanded="true"
+                        aria-controls="collapseTwo"
                   >
-                    <h2>Amigos</h2>
+                    <h5>Amigos</h5>
                   </button>
                   <button
                     className="btn btn-outline-dark ml-5"
                     type="button"
                     data-toggle="collapse"
-                    data-target="#collapseTwo"
+                    data-target="#collapseThree"
                     aria-expanded="true"
                     aria-controls="collapseThree"
                   >
-                    <h2>Mis Grupos Favoritos</h2>
+                    <h5>Mis Grupos Favoritos</h5>
                   </button>
                 </h2>
               </div>
@@ -265,21 +339,23 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingOne"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">
-                  Aqui mostrará las Reviews de este usuario
-                </div>
-              </div>
-              <div
-                id="collapseTwo"
-                className="collapse"
-                aria-labelledby="headingTwo"
-                data-parent="#accordionExample"
-              >
-                <div className="card-body">
+                <div className="card-body reviews">
                   <div className="col-12">
-                    {/* {account.map(({ username }) => (
+                    {reviews.map(({ review, review_date, album_name, album_image }) => (reviews ?
+                      <div className="col-6 float-left">
+                        <div className="col-md-6 d-block justify-content-center mt-2 mb-5"> <img
+                          src={album_image ? URL_images + album_image : defaultBandImage}
+                        ></img>
+                          <div className="col-md-6 d-block justify-content-left mt-2 mb-3 p-0">
+                            <div><h5>{album_name}</h5></div>
+                            <span>{new Date(review_date).toLocaleString()}</span></div>
+                          <div className="d-block justify-content-left reviewDiv"><p>{ReactHtmlParser(`${review}`)}</p>
 
-))} */}
+                          </div>
+                        </div>
+                      </div>
+                      : <p>No has hecho ninguna review aún</p>))}
+
                   </div>
                 </div>
               </div>
@@ -289,16 +365,25 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">Lista de grupos favoritos</div>
+                <div className="card-body container">
+                {bandsLikes.map(({ band_id, name, band_image }) => (
+                  <div className="col-md-6 d-flex justify-content-center mt-2 mb-5 float-left">
+                    <div className="row">
+                      <img style={{ width: 100, height: 100, borderRadius: 50 }} src={band_image ? URL_images + band_image : defaultBandImage} className="card-img" alt="..."></img>
+                      <a onClick={() => this.bandView(band_id)} style={{ height: 40, width: 200 }} className="btn btn-outline-dark boton ml-4 mt-5">{name}</a>
+                    </div>
+
+                  </div>
+                ))}
+                </div>
               </div>
               <div
                 id="collapseTwo"
                 className="collapse"
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
-              >
+              >            
                 {followers.map(({ user_id, username, user_image }) => (
-                  <div className=" col-12 ">
                     <div className="col-md-6 d-inline-flex justify-content-center mt-4  float-left">
                       <div>
                         <img
@@ -315,26 +400,31 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                       <div>
                         <p className="mt-3 ml-3" style={{ fontSize: 20 }}>
                           {username}
+                          {console.log(username)}
                         </p>
                       </div>
                     </div>
-                  </div>
-                ))}
+                    ))}                                      
               </div>
             </div>
           </div>
         </div>
         <div className="col-12 separationDiv"></div>
+
+        
       </>
     );
   }
 }
-const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
-  account
+const mapStateToProps = ({ account, band, bands }: IStore): IGlobalStateProps => ({
+  account,
+  band,
+  bands
 });
 
 const mapDispatchToProps = {
-  setAccount: SetAccountAction
+  setAccount: SetAccountAction,
+  setBand: SetBandAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

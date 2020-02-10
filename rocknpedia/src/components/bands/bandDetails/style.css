@@ -28,6 +28,14 @@
   background-color: rgba(68, 68, 68, 0.904);
   color: white !important; }
 
+.heartIcon {
+  margin-right: 15px;
+  font-size: 50px;
+  position: relative;
+  bottom: -350px;
+  left: 220px;
+}
+
 .bandDivs {
   background-color: rgba(245, 245, 245, 0.89);
   height: 150px;
@@ -58,10 +66,6 @@
 .backgroundCollapse {
   background-color: none !important;
   border: none !important; }
-
-.heartIcon {
-  margin-right: 15px;
-  font-size: 50px; }
 
 .trashIcon {
   font-size: 20px; }

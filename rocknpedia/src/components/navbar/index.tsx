@@ -8,7 +8,7 @@ import Register from "../register/index";
 import "./style.css";
 import { generateAccountFromToken } from "../../utils";
 interface IGlobalStateProps {
-  account: IAccount | null;
+  account: IAccount;
 }
 
 interface IGlobalActionProps {
