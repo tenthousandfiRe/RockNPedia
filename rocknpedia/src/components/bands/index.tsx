@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 import { connect } from "react-redux";
 // import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
+import landingVideo from "../../assets/videos/rocknpedia.mp4"
 import { myFetch } from "../../utils";
 import { SetBandsAction, SetBandAction } from "../../redux/actions";
 import { IBand } from "../../interfaces/IBand";
@@ -53,7 +54,8 @@ class Bands extends React.PureComponent<TProps> {
 render() {
         const { bands } = this.props
         return (
-            <div className="container">
+            <div className="container divPadre">
+              <video className="video" loop autoPlay muted src={landingVideo}></video>
                 {bands.map(({ band_id, name, foundation_year, band_image }) => (
                     <div className="card mb-3 bandDivs mx-auto">
                         <div className="row no-gutters">

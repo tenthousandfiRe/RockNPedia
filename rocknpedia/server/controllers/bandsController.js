@@ -4,7 +4,7 @@ const bandsController = {};
 //GET query for listing all the bands info
 bandsController.list = ((__, res) => {
   try {
-    let sql = "SELECT band_id, name, foundation_year, band_image FROM band";
+    let sql = "SELECT band_id, name, foundation_year, band_image FROM band limit 3";
     connection.query(sql, (error, results) => {
       if (error) throw error;
       res.send(results);
