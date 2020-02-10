@@ -3,7 +3,7 @@ import { myFetch } from "../../../utils";
 import { connect } from "react-redux";
 import { IStore } from "../../../interfaces/IStore";
 import { IAccount } from "../../../interfaces/IAccount";
-import iziToast from 'izitoast'
+import Swal from 'sweetalert2';
 import './style.css'
 
 interface IProps {
@@ -78,12 +78,23 @@ class InsertBand extends React.PureComponent<TProps, IState> {
       );
       this.inputFileRef.current.value = "";
     }
-    iziToast.show({
-          title: 'Hey',
-          message: 'Banda insertada correctamente',
-      backgroundColor: "grey",
-      position: "topLeft"
-      })
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'success',
+      title: 'Banda insertada!'
+    })
+    
       setTimeout(() => {this.props.history.push('/')}, 2000);
   }
 

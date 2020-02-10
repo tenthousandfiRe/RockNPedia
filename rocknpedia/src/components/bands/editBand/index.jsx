@@ -6,6 +6,7 @@ import { SetBandAction, SetBandsAction } from '../../../redux/actions'
 import { myFetch } from '../../../utils'
 import CKEditor from 'ckeditor4-react';
 import ReactHtmlParser from 'react-html-parser';
+import Swal from 'sweetalert2'
 const URL_bandupdate = `${API_URL}/avatars/`
 
 
@@ -49,7 +50,22 @@ class EditBand extends React.PureComponent {
                 }
             );
             this.inputFileRef.current.value = "";
-            window.alert("banda editada correctamente")
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                onOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'Banda actualizada!'
+              })
             this.props.history.push(`/`);
         }
     }

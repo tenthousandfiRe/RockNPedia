@@ -13,6 +13,7 @@ import { defaultBandImage } from "../../../constants";
 import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactHtmlParser from 'react-html-parser';
+import Swal from 'sweetalert2'
 const URL_bandupdate = `${API_URL}/avatars/`;
 
 class BandDetails extends React.PureComponent {
@@ -63,8 +64,51 @@ class BandDetails extends React.PureComponent {
       method: "DELETE",
       token
     });
+    this.props.history.push(`/`);
+  }
 
-    this.props.history.push(`/bands/${band_id}`);
+  removeAlbumAlert(album_id){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
+      },
+      buttonsStyling: true
+    })
+    
+    swalWithBootstrapButtons.fire({
+      background: 'black',
+      title: 'Estás seguro de borrar el álbum?',
+      text: "No podrás volver atrás!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí!',
+      margin: '5px',
+      cancelButtonText: 'No, no!',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.value) {
+        this.deleteAlbum(album_id)
+        swalWithBootstrapButtons.fire({
+          background: 'black',
+          title: 'Borrado!',
+          text: 'El álbum ha sido borrado.',
+          icon: 'success'}
+        )
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire({
+          background: 'black',
+          title: 'Cancelado',
+          text:'Aquí no ha pasao ná',
+          icon: 'error'
+        }
+          
+        )
+      }
+    })
+    
   }
 
   addAlbum() {
@@ -117,7 +161,22 @@ class BandDetails extends React.PureComponent {
         }
       }
     );
-    window.alert("review añadida!")
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-left',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'success',
+      title: 'Review añadida!'
+    })
     this.props.history.push(`/`);
   }
 
@@ -255,7 +314,7 @@ class BandDetails extends React.PureComponent {
                     aria-expanded="true"
                     aria-controls="collapseOne"
                   >
-                    <h2>Albumes</h2>
+                    <h5>Albumes</h5>
                   </button>
                   <button
                     className="btn btn-outline-dark ml-5"
@@ -265,7 +324,7 @@ class BandDetails extends React.PureComponent {
                     aria-expanded="true"
                     aria-controls="collapseThree"
                   >
-                    <h2>Covers</h2>
+                    <h5>Covers</h5>
                   </button>
                 </h2>
               </div>
@@ -396,7 +455,7 @@ class BandDetails extends React.PureComponent {
                           <FontAwesomeIcon
                             className="trashIcon d-flex float-right"
                             icon={faTrashAlt}
-                            onClick={() => this.deleteAlbum(album_id)}
+                            onClick={() => this.removeAlbumAlert(album_id)}
                           />
                           <p className="card-text">{record_label}</p>
                           <a href="#" data-toggle="modal" onClick={() => this.setState({ selectedAlbum: album_id })} data-target="#Review" className="btn btn-outline-dark mr-2">
