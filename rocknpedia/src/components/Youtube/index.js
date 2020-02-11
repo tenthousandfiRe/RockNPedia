@@ -53,7 +53,7 @@ componentDidMount() {
         <div className="row">
           <VideoDetail video={this.state.selectedVideo} className="mt-5" />
 
-          <VideoList
+          <VideoList 
             onVideoSelect={selectedVideo => this.setState({ selectedVideo })}
             videos={this.state.videos}
           />
