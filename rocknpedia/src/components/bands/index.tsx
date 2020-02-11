@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import { connect } from "react-redux";
 // import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
@@ -20,6 +20,11 @@ interface IGlobalStateProps {
   history: any;
 }
 
+interface IState {
+  currentPage: number;
+
+}
+
 interface IGlobalActionProps {
   setBand(band: IBand): void;
   setBands(bands: IBand[]): void;
@@ -27,9 +32,13 @@ interface IGlobalActionProps {
 
 type TProps = IGlobalStateProps & IGlobalActionProps;
 
-class Bands extends React.PureComponent<TProps> {
+class Bands extends React.PureComponent<TProps, IState> {
   constructor(props: TProps) {
     super(props);
+
+    this.state = {
+      currentPage: 0
+    };
 
     this.bandView = this.bandView.bind(this);
   }
