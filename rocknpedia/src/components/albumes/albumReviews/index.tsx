@@ -109,7 +109,7 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
           className="albumImage"
         ></img>
         <div><h2>{album_selected_name}</h2></div>
-        {reviews.slice(reviewToShowPosition, reviewToShowPosition + reviewsPerPage).map(({ review_id, review, review_date, username, user_image }) => (review ?
+        {reviews.slice(reviewToShowPosition + reviewsPerPage).map(({ review_id, review, review_date, username, user_image }) => (review ?
           <div className="container-fluid">
             <div className="row">
               <div className="col-2"></div>
