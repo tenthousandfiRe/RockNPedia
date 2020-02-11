@@ -71,7 +71,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light navie">
-        <a className="navbar-brand" href="/" ><img className="logo ml-2" src="https://i.imgur.com/G9tkJoa.png"/>
+        <a className="navbar-brand" href="/" ><img className="logo ml-2" src="https://i.imgur.com/0MATbvy.png"/>
           
         </a>
         <button
@@ -93,7 +93,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
             {!token ? (
               <button
                 type="button"
-                className="btn btn-outline-dark my-2 my-sm-0"
+                className="btn btn-outline-light my-2 my-sm-0"
                 data-toggle="modal"
                 data-target="#exampleModal"
               >
@@ -141,7 +141,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
             {!token ? (
               <button
                 type="button"
-                className="btn btn-outline-dark my-2 my-sm-0 ml-3"
+                className="btn btn-outline-light my-2 my-sm-0 ml-3"
                 data-toggle="modal"
                 data-target="#exampleModal2"
               >
@@ -204,7 +204,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
           {token ? (
             <div className="nav-item dropdown dropleft ml-3">
               <a
-                className="nav-link dropdown-toggle btn btn-outline-dark"
+                className="nav-link dropdown-toggle btn btn-outline-light"
                 href="#"
                 id="navbarDropdown"
                 role="button"

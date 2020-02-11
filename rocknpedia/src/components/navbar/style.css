@@ -1,5 +1,5 @@
 nav {
-  background-color: whitesmoke !important; }
+  background-color: rgba(245, 245, 245, 0) !important; }
 
 .boton {
   color: white !important;
@@ -16,5 +16,5 @@ nav {
   border-radius: 40%; }
 
 .logo {
-  height: 70px;
-  width: 80px; }
+  height: 90px;
+  width: 170px; }
