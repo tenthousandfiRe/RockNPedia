@@ -63,7 +63,7 @@ class Bands extends React.PureComponent<TProps, IState> {
 render() {
         const { bands } = this.props
         return (
-            <div className="container divPadre">
+            <div className="divPadre">
               <video className="video" loop autoPlay muted src={landingVideo}></video>
                 {bands.map(({ band_id, name, foundation_year, band_image }) => (
                     <div className="card mb-3 bandDivs mx-auto">

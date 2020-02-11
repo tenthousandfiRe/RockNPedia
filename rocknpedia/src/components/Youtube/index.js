@@ -9,7 +9,8 @@ import { connect } from "react-redux";
 
 // const APIYoutube = "AIzaSyBa0GSoND22D8Rht2Op9zB7xjR92JSi0fc"
 // const API_KEY = "AIzaSyBa0GSoND22D8Rht2Op9zB7xjR92JSi0fc";
-const API_KEY = "AIzaSyDrHn1Dq1Rb8n_i9iApNilK87T8MA_463w";
+const API_KEY = "AIzaSyBd0pAc-1ayarsVv9gW2cj0JVAeiW7Oop0";
+// const API_KEY = "AIzaSyDrHn1Dq1Rb8n_i9iApNilK87T8MA_463w";
 // 'https://www.googleapis.com/youtube/v3/search?key=[AIzaSyBa0GSoND22D8Rht2Op9zB7xjR92JSi0fc]'
 
 class Youtube extends PureComponent {
@@ -25,9 +26,9 @@ class Youtube extends PureComponent {
   }
 
 componentDidMount() {
+  setTimeout(() => {this.videoSearch(this.props.band.name + " cover")}, 1000);
+  }
   
-  
-}
 
   videoSearch(term) {
     YTSearch({ key: API_KEY, term: term }, videos => {
@@ -49,10 +50,6 @@ componentDidMount() {
     
     return (
       <div className="container col-12 ">
-        <SearchBar
-          // onSearchTermCHange={term => this.videoSearch(term)}
-          className="mt-5 mb-5"
-        />
         <div className="row">
           <VideoDetail video={this.state.selectedVideo} className="mt-5" />
 
