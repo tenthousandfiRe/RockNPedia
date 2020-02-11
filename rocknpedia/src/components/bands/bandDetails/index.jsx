@@ -14,6 +14,8 @@ import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactHtmlParser from 'react-html-parser';
 import Swal from 'sweetalert2'
+import Youtube from '../../Youtube'
+import Spotify from '../../Spotify/App'
 const URL_bandupdate = `${API_URL}/avatars/`;
 
 class BandDetails extends React.PureComponent {
@@ -248,6 +250,7 @@ class BandDetails extends React.PureComponent {
   }
 
   render() {
+    
     const { album_name, record_label, iconColor, review, selectedAlbum } = this.state;
     const { albumes } = this.state;
     const { name, foundation_year, band_image, band_history } = this.props.band;
@@ -538,7 +541,10 @@ class BandDetails extends React.PureComponent {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">Covers</div>
+                <div className="card-body">
+                  <Youtube/>
+                  
+                </div>
               </div>
             </div>
           </div>

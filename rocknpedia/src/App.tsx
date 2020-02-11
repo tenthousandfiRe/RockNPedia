@@ -21,6 +21,7 @@ import AlbumReviews from './components/albumes/albumReviews/'
 
 
 
+
 interface IGlobalStateProps {
   account: IAccount | null;
   band: IBand
@@ -57,6 +58,8 @@ class App extends React.PureComponent<TProps> {
         <Route path='/userProfile' exact component={userProfile} />
         <Route path='/users' exact component={usersList} />
         <Route path='/reviews/:id/' exact component={AlbumReviews} />
+        
+
       </BrowserRouter>
     </>;
   }
