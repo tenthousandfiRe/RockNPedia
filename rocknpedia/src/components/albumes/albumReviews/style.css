@@ -13,17 +13,17 @@
 .ReviewsContainer .reviewCard {
   position: relative;
   text-align: left;
-  height: 150px;
+  height: 133px;
   background-color: rgba(245, 245, 245, 0.89);
   padding: 6px;
   margin-top: 50px;
   margin-bottom: 20px;
   border-radius: 5px;
-  height: 133px;
   line-height: 1.6;
   -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: height 2s;
 }
 .ReviewsContainer .reviewCard p {
   margin-top: 10;
@@ -31,12 +31,27 @@
   overflow: hidden;
   font-size: 15px;
 }
-.ReviewsContainer .reviewCard:hover {
-  width: auto;
-  height: auto;
+.ReviewsContainer .reviewCardFull {
+  background-color: rgba(245, 245, 245, 0.89);
+  position: relative;
+  text-align: left;
+  height: Auto;
+  transition: height 2s;
   white-space: initial;
-  overflow: visible;
-  cursor: pointer;
+  padding: 6px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  line-height: 1.6;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ReviewsContainer .reviewCardFull p {
+  margin-top: 10;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 15px;
 }
 
 .userInfo {
@@ -54,4 +69,20 @@
 }
 .userInfo p {
   color: white !important;
+}
+
+.paginationButton {
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(245, 245, 245, 0.89);
+  margin: 5px;
+}
+
+.ButtonShowMore {
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(245, 245, 245, 0.89);
+  margin: 5px;
+  display: flex;
+  float: right;
 }

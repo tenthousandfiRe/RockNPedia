@@ -1,19 +1,30 @@
-.video-container {
+.divPadre {
+    text-align: center;
+
+    h1{
+        margin-top: 20px;
+        color: white;
+    }
+
+    .mainVideoDiv{
+    height: 100px;
+    }
+
+    .VideoMainPage{
+        height: 1000px;
+        width: 1000px; 
+    }
+}
+
+.video {
     width: 100%;
-    height: calc(100% + 60px);
-    position: absolute;
-    top: -60px;
+    height: 100%;
     left: 0;
-    z-index: -1;
+    z-index: 1;
     overflow: hidden;
     color: #e3e3e3;
+    margin-top: 10px;
 
-    video {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-      position: absolute;
-    }
 }
 .bandDivs {
     background-color: rgba(245, 245, 245, 0.89);
