@@ -5,11 +5,9 @@ const followController = {};
 
 //query for adding a band to user favourites
 followController.add = ((req, res) => {
-    console.log("entroooo")
     const token = req.headers.authorization.replace("Bearer ", "");
     const user_id = req.params.user_id
-    const follow_id = req.params.follow_id  
-    console.log("entroooo")
+    const follow_id = req.params.follow_id    
     let sql = `INSERT INTO followers (user_id, follow_id) values (${user_id}, ${follow_id});`;
     console.log(sql);
     connection.query
@@ -48,11 +46,12 @@ followController.get = ((req, res) => {
 
 //query for removing a follow 
 followController.unfollow = ((req, res) => {
-    let follower_id = req.params.user_id;
+    let follow_id = req.params.follow_id;
     let user_id = req.params.user_id;
     try {
         const token = req.headers.authorization.replace("Bearer ", "");
-        let sql = `DELETE FROM user_id WHERE follower_id = ${follower_id} and user_id = ${user_id};`;
+        let sql = `DELETE FROM followers WHERE follow_id = ${follow_id} and user_id = ${user_id};`;
+        
         if (token) {
             connection.query(sql, (error, results) => {
                 if (error) console.log(error);

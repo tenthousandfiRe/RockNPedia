@@ -64,7 +64,7 @@ render() {
         const { bands } = this.props
         return (
             <div className="divPadre">
-              <video className="video" style={{width: "100wh"}} loop autoPlay muted src={landingVideo}></video>
+              <video className="video" loop autoPlay muted src={landingVideo}></video>
                 {bands.map(({ band_id, name, foundation_year, band_image }) => (
                     <div className="card mb-3 bandDivs mx-auto">
                         <div className="row no-gutters">
