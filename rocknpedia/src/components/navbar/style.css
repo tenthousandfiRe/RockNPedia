@@ -1,20 +1,35 @@
 nav {
+<<<<<<< Updated upstream
   background-color: whitesmoke !important; }
+=======
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+>>>>>>> Stashed changes
 
 .boton {
   color: white !important;
-  border-color: white !important; }
+  border-color: white !important;
+}
 
 .modalIndex {
   background-color: rgba(0, 0, 0, 0.904);
-  color: white; }
+  color: white;
+}
 
 .light {
-  color: white; }
+  color: white;
+}
 
 .marcoNav {
-  border-radius: 40%; }
+  border-radius: 40%;
+}
 
 .logo {
+<<<<<<< Updated upstream
   height: 70px;
   width: 80px; }
+=======
+  height: 90px;
+  width: 180px;
+}
+>>>>>>> Stashed changes
