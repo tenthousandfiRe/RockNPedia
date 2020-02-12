@@ -1,24 +1,29 @@
 import React from "react";
 import Login from "../login/index";
+import { myFetch } from "../../utils";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
-import { LogoutAction, SetAccountAction } from "../../redux/actions";
+import { LogoutAction, SetAccountAction, SetBandsAction } from "../../redux/actions";
 import { IAccount } from "../../interfaces/IAccount";
 import Register from "../register/index";
 import "./style.css";
 import { generateAccountFromToken } from "../../utils";
+import { IBand } from "../../interfaces/IBand";
 interface IGlobalStateProps {
   account: IAccount;
 }
 
 interface IGlobalActionProps {
   setAccount(account: IAccount): void;
+  setBand(band: IBand): void;
+  setBands(bands: IBand[]): void;
   logout(): void;
   history: any;
 }
 
 interface IState {
   isLogged: boolean;
+  name: string;
 }
 
 type TProps = IGlobalStateProps & IGlobalActionProps;
@@ -36,12 +41,33 @@ class Navbar extends React.PureComponent<TProps, IState> {
     super(props);
 
     this.state = {
-      isLogged: false
+      isLogged: false,
+      name: ""
     };
 
     this.logout = this.logout.bind(this);
     this.vistaProfile = this.vistaProfile.bind(this);
     this.vistaInsertBand = this.vistaInsertBand.bind(this);
+    this.onSearchNameChange = this.onSearchNameChange.bind(this);
+
+  }
+
+  onSearchNameChange(event: any) {
+    const name = event.target.value;
+    this.setState({ name: name });
+    console.log(name)
+  }
+
+
+  searchBand() {
+    const { name } = this.state
+    myFetch({ method: "POST", path: `/bands/searchByNames/`, json: { name } }).then(
+      json => {
+        if (json) {
+          this.props.setBands(json)
+        }
+      }
+    ).then((this.props.history.push(`/searchByNames/`)));
   }
 
   logout() {
@@ -50,6 +76,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
     logout();
     this.props.history.push("/");
   }
+
   vistaProfile() {
     this.props.history.push("/userProfile");
   }
@@ -63,16 +90,12 @@ class Navbar extends React.PureComponent<TProps, IState> {
 
   render() {
     const { account } = this.props;
-    const { isLogged } = this.state;
-
+    const { name } = this.state;
     const token = localStorage.getItem("token");
-    console.log(token);
-    console.log(account);
-
     return (
       <nav className="navbar navbar-expand-lg navbar-light navie">
-        <a className="navbar-brand" href="/" ><img className="logo ml-2" src="https://i.imgur.com/G9tkJoa.png"/>
-          
+        <a className="navbar-brand" href="/" ><img className="logo ml-2" src="https://i.imgur.com/0MATbvy.png" />
+
         </a>
         <button
           className="navbar-toggler"
@@ -86,6 +109,11 @@ class Navbar extends React.PureComponent<TProps, IState> {
           <span className="navbar-toggler-icon"></span>
         </button>
 
+        <input className="form-control mr-sm-2 col-2" type="text" value={name} onChange={this.onSearchNameChange} aria-label="Search">
+        </input>
+        <button className="btn btn-outline-light" type="submit" onClick={() => this.searchBand()}>Buscar banda</button>
+
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto"></ul>
           <a className="nav-item">
@@ -93,7 +121,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
             {!token ? (
               <button
                 type="button"
-                className="btn btn-outline-dark my-2 my-sm-0"
+                className="btn btn-outline-light my-2 my-sm-0"
                 data-toggle="modal"
                 data-target="#exampleModal"
               >
@@ -101,8 +129,8 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 Log In
               </button>
             ) : (
-              ""
-            )}
+                ""
+              )}
 
             <div
               className="modal fade"
@@ -141,7 +169,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
             {!token ? (
               <button
                 type="button"
-                className="btn btn-outline-dark my-2 my-sm-0 ml-3"
+                className="btn btn-outline-light my-2 my-sm-0 ml-3"
                 data-toggle="modal"
                 data-target="#exampleModal2"
               >
@@ -149,8 +177,8 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 Register
               </button>
             ) : (
-              ""
-            )}
+                ""
+              )}
 
             <div
               className="modal fade"
@@ -192,19 +220,19 @@ class Navbar extends React.PureComponent<TProps, IState> {
                   src={`http://localhost:3003/avatars/${account.user_image}`}
                 ></img>
               ) : (
-                <img
-                  className="d-flex logoUser marcoNav mx-auto"
-                  src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
-                ></img>
-              )}
+                  <img
+                    className="d-flex logoUser marcoNav mx-auto"
+                    src="https://img.icons8.com/pastel-glyph/2x/user-male.png"
+                  ></img>
+                )}
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
           {token ? (
             <div className="nav-item dropdown dropleft ml-3">
               <a
-                className="nav-link dropdown-toggle btn btn-outline-dark"
+                className="nav-link dropdown-toggle btn btn-outline-light"
                 href="#"
                 id="navbarDropdown"
                 role="button"
@@ -245,8 +273,8 @@ class Navbar extends React.PureComponent<TProps, IState> {
               </div>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
       </nav>
     );
@@ -259,7 +287,8 @@ const mapStateToProps = ({ account }: IStore): IGlobalStateProps => ({
 
 const mapDispatchToProps = {
   logout: LogoutAction,
-  setAccount: SetAccountAction
+  setAccount: SetAccountAction,
+  setBands: SetBandsAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

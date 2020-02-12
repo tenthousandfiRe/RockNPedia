@@ -14,6 +14,8 @@ import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactHtmlParser from 'react-html-parser';
 import Swal from 'sweetalert2'
+import Youtube from '../../Youtube'
+import Spotify from '../../Spotify/App'
 const URL_bandupdate = `${API_URL}/avatars/`;
 
 class BandDetails extends React.PureComponent {
@@ -232,7 +234,7 @@ class BandDetails extends React.PureComponent {
       this.props.setBand(json);
       console.log(json);
     });
-    myFetch({ path: `/bands/user_likes/${band_id}/${user_id}/`, token }).then(
+    setTimeout(() => {myFetch({ path: `/bands/user_likes/${band_id}/${user_id}/`, token }).then(
       json => {
         if (json) {
           if (json.length === 0) {
@@ -243,11 +245,12 @@ class BandDetails extends React.PureComponent {
         }
         console.log(json);
       }
-    );
+    )}, 1000)
     this.getAlbum(band_id);
   }
 
   render() {
+    
     const { album_name, record_label, iconColor, review, selectedAlbum } = this.state;
     const { albumes } = this.state;
     const { name, foundation_year, band_image, band_history } = this.props.band;
@@ -275,7 +278,7 @@ class BandDetails extends React.PureComponent {
               </>
             ) : ("")}
           </div>
-          <div className="container bandDivsInfo">
+          <div className="container bandDivsInfo mt-5 mb-5">
             <h1>{name}</h1>
             <p>{foundation_year}</p>
             {band_history ? (
@@ -290,13 +293,10 @@ class BandDetails extends React.PureComponent {
                 ""
               )}
           </div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+          <div className="separationDiv"></div>
+          <div className="separationDiv"></div>
+          
+          
 
 
           <div className="accordion" id="accordionExample">
@@ -458,9 +458,9 @@ class BandDetails extends React.PureComponent {
                             onClick={() => this.removeAlbumAlert(album_id)}
                           />
                           <p className="card-text">{record_label}</p>
-                          <a href="#" data-toggle="modal" onClick={() => this.setState({ selectedAlbum: album_id })} data-target="#Review" className="btn btn-outline-dark mr-2">
+                          {token ? <a href="#" data-toggle="modal" onClick={() => this.setState({ selectedAlbum: album_id })} data-target="#Review" className="btn btn-outline-dark mr-2">
                             Añadir review
-                          </a>
+                          </a> : ""}
                           <Link to={`/reviews/${album_id}`} className="btn btn-outline-dark">
                             Ver reviews</Link>
                         </div>
@@ -541,7 +541,10 @@ class BandDetails extends React.PureComponent {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body">Covers</div>
+                <div className="card-body">
+                  <Youtube/>
+                  
+                </div>
               </div>
             </div>
           </div>

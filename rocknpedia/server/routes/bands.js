@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 router.get('/', bandsController.list);
 router.post('/', upload, bandsController.save);
 router.get('/:band_id', bandsController.getBand);
+router.post('/searchByNames/', bandsController.searchBand);
 router.delete('/delete/:band_id', bandsController.delete);
 router.post('/update/:band_id', upload, bandsController.update);
 

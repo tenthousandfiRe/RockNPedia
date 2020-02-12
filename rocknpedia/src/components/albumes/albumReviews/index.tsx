@@ -42,7 +42,7 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
       reviews: [],
       album_selected_image: "",
       album_selected_name: "",
-      currentPage: 0,
+      currentPage: 1,
       showFullReview: "reviewCard",
       reviewsShowed: [],
     };
@@ -98,10 +98,9 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
     const { currentPage, reviewsShowed } = this.state;
     const reviewsPerPage = 3;
     const totalPages = Math.round(reviews.length / reviewsPerPage);
-    if (totalPages > 0 && totalPages < currentPage) {
-      this.setState({ currentPage: 1 });
-    }
+    console.log(totalPages)
     const reviewToShowPosition = reviewsPerPage * (currentPage - 1);
+    console.log(reviewToShowPosition)
     return (
       <div className="container ReviewsContainer">
         <img
@@ -138,7 +137,8 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
               key={num}
               disabled={num + 1 === currentPage}
               onClick={() => this.setState({ currentPage: num + 1 })}
-            >
+              >
+              {console.log(currentPage)}
               {num + 1}
             </button>
           ))}

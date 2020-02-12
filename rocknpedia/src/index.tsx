@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 ReactDOM.render(
+    
     <Provider store={createStore(rootReducer, composeWithDevTools())}>
         <App />
     </Provider>, document.getElementById('root'));

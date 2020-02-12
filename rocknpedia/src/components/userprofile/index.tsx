@@ -6,10 +6,10 @@ import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction, SetBandAction } from "../../redux/actions";
 import jwt from "jsonwebtoken";
-import { API_URL, defaultBandImage } from '../../constants'
 import ReactHtmlParser from 'react-html-parser'
+import { API_URL, defaultBandImage } from "../../constants";
 import { IBand } from "../../interfaces/IBand";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {

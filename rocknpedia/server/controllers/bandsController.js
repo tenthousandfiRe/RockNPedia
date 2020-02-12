@@ -49,6 +49,27 @@ bandsController.getBand = (req, res) => {
     res.sendStatus(401);
   }
 };
+
+//Query for searching a band 
+bandsController.searchBand = (req, res) => {
+  const { name } = req.body;
+  console.log(name)
+  console.log("eeeeeeeeeeeeeeeeeeeee")
+  let sql = `SELECT * FROM band WHERE name LIKE '%${name}%'`;
+  console.log(sql)
+  try {
+    connection.query(sql, (error, results) => {
+      if (error) throw error;
+      else {
+       res.send(results)
+      }
+    });
+  } catch {
+    res.sendStatus(401);
+  }
+};
+
+
 bandsController.delete = ((req, res) => {
   const { band_id } = req.params;
   try {

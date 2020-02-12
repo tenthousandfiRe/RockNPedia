@@ -18,6 +18,8 @@ import { IBand } from "./interfaces/IBand";
 import userProfile from "./components/userprofile/index"
 import usersList from "./components/usersList";
 import AlbumReviews from './components/albumes/albumReviews/'
+import SearchedBand from './components/bands/searchedBand'
+
 
 
 
@@ -57,6 +59,7 @@ class App extends React.PureComponent<TProps> {
         <Route path='/userProfile' exact component={userProfile} />
         <Route path='/users' exact component={usersList} />
         <Route path='/reviews/:id/' exact component={AlbumReviews} />
+        <Route path='/searchByNames/' exact component={SearchedBand} />
       </BrowserRouter>
     </>;
   }

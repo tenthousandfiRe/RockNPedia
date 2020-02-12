@@ -22,6 +22,7 @@ type TProps = IGlobalStateProps & IGlobalActionProps;
 
 interface IState {
   users: IUserDB[];
+  
 }
 
 interface IUserDB {
@@ -29,6 +30,12 @@ interface IUserDB {
   user_image: string;
   username: string;
   rol: string;
+  
+}
+
+interface followedUSers {
+
+
 }
 
 class userList extends React.PureComponent<TProps, IState> {
@@ -51,43 +58,71 @@ class userList extends React.PureComponent<TProps, IState> {
   constructor(props: TProps) {
     super(props);
     this.state = {
-      users: []
+      users: [],
+      
     };
   }
 
-followUser(follow_id: number) {
-const token = localStorage.getItem("token");
-const account_id = this.props.account.user_id
-  myFetch({
-    path: `/users/followers/${account_id}/${follow_id}/`,
-    method: "POST",
-    token
-  });
+  followUser(follow_id: number) {
+    const token = localStorage.getItem("token");
+    const account_id = this.props.account.user_id;
+    myFetch({
+      path: `/users/followers/${account_id}/${follow_id}/`,
+      method: "POST",
+      token
+    });
+    
+  }
 
-}
+  unfollowUser(follow_id: number) {
+    const token = localStorage.getItem("token");
+    const account_id = this.props.account.user_id;
+    myFetch({
+      path: `/users/followers/${account_id}/${follow_id}/`,
+      method: "DELETE",
+      token
+    });
+    
+  }
 
 
   render() {
+    
     const { users } = this.state;
-    return ( 
+    return (
       <>
         <div className="offset-2">
           <div className="col-12 mt-5">
             {users.map(({ user_id, username, user_image, rol }) => (
-              
-              
-              <div className="card d-flex justify-content-center float-left mr-5 ml-5" style={{width: 180, minHeight: 100}}>
-              <img src={
-                      user_image ? URL_images + user_image : defaultBandImage
-                    } className="card-img-top"style={{minHeight: 100, minWidth:60, maxHeight: 180, maxWidth: 180}} ></img>
-              <div className="card-body " style={{width: 200, height: 170}}>
-                <h5 className="card-title">{username}</h5>
-                <p className="card-text">{rol}</p>
-                <a  className="btn btn-outline-dark" onClick={() => {
-                  console.log(user_id);
-                  this.followUser(user_id)}}>FOLLOW</a>
+              <div
+                className="card d-flex justify-content-center float-left mr-5 ml-5"
+                style={{ width: 180, minHeight: 100 }}
+              >
+                <img
+                  src={user_image ? URL_images + user_image : defaultBandImage}
+                  className="card-img-top"
+                  style={{
+                    minHeight: 100,
+                    minWidth: 60,
+                    maxHeight: 180,
+                    maxWidth: 180
+                  }}
+                ></img>
+                <div className="card-body " style={{ width: 200, height: 170 }}>
+                  <h5 className="card-title">{username}</h5>
+                  <p className="card-text">{rol}</p>
+                  
+                  <a
+                    className="btn btn-outline-dark"
+                    onClick={() => {
+                      this.followUser(user_id)
+                    }}
+                  >
+                    FOLLOW
+                  </a>
+                  
+                </div>
               </div>
-            </div>             
             ))}
           </div>
         </div>
