@@ -5,9 +5,12 @@ import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction, SetUsersAction } from "../../redux/actions";
 import "./style.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { IUser } from "../../interfaces/IUsers";
 import { API_URL } from "../../constants";
 import { defaultBandImage } from "../../constants";
+import  FollowIcon   from "../followIcon/index";
 const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {
@@ -22,7 +25,7 @@ type TProps = IGlobalStateProps & IGlobalActionProps;
 
 interface IState {
   users: IUserDB[];
-  
+  iconColor: string;
 }
 
 interface IUserDB {
@@ -30,16 +33,13 @@ interface IUserDB {
   user_image: string;
   username: string;
   rol: string;
-  
 }
 
-interface followedUSers {
-
-
-}
+interface followedUSers {}
 
 class userList extends React.PureComponent<TProps, IState> {
-  componentWillMount() {
+  componentDidMount() {
+    this.getFollowers()
     const { setAccount } = this.props;
     const token = localStorage.getItem("token");
     if (token) {
@@ -54,40 +54,39 @@ class userList extends React.PureComponent<TProps, IState> {
         this.setState({ users: response });
       }
     });
+   
+
   }
+
+
+
+
   constructor(props: TProps) {
     super(props);
     this.state = {
       users: [],
-      
+      iconColor: ""
     };
   }
 
-  followUser(follow_id: number) {
+getFollowers() {
+  const account_id = this.props.account.user_id;
     const token = localStorage.getItem("token");
-    const account_id = this.props.account.user_id;
-    myFetch({
-      path: `/users/followers/${account_id}/${follow_id}/`,
-      method: "POST",
-      token
-    });
-    
-  }
-
-  unfollowUser(follow_id: number) {
-    const token = localStorage.getItem("token");
-    const account_id = this.props.account.user_id;
-    myFetch({
-      path: `/users/followers/${account_id}/${follow_id}/`,
-      method: "DELETE",
-      token
-    });
-    
-  }
-
+  myFetch({ path:`/users/followers/${account_id}`, token }).then(
+    json => {
+      if (json) {
+        if (json.length === 0) {
+          this.setState({ iconColor: "" });
+        } else {
+          this.setState({ iconColor: "#7B68EE" });
+        }
+      }
+      console.log(json);
+    }
+  );
+}
 
   render() {
-    
     const { users } = this.state;
     return (
       <>
@@ -95,7 +94,7 @@ class userList extends React.PureComponent<TProps, IState> {
           <div className="col-12 mt-5">
             {users.map(({ user_id, username, user_image, rol }) => (
               <div
-                className="card d-flex justify-content-center float-left mr-5 ml-5"
+                className="card d-flex justify-content-center float-left mr-5 ml-4 "
                 style={{ width: 180, minHeight: 100 }}
               >
                 <img
@@ -108,19 +107,10 @@ class userList extends React.PureComponent<TProps, IState> {
                     maxWidth: 180
                   }}
                 ></img>
-                <div className="card-body " style={{ width: 200, height: 170 }}>
-                  <h5 className="card-title">{username}</h5>
-                  <p className="card-text">{rol}</p>
-                  
-                  <a
-                    className="btn btn-outline-dark"
-                    onClick={() => {
-                      this.followUser(user_id)
-                    }}
-                  >
-                    FOLLOW
-                  </a>
-                  
+                <div className="card-body" style={{ maxWidth: 200, maxHeight: 170  }}>               
+                  <h5 className="card-title">{username}</h5>               
+                  <p className="card-text">{rol}</p>    
+                  <FollowIcon user_id={user_id}/>             
                 </div>
               </div>
             ))}

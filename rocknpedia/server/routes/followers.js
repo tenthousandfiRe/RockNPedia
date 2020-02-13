@@ -8,7 +8,8 @@ const followController = require('../controllers/followController.js');
 
 router.post('/followers/:user_id/:follow_id', followController.add);
 router.get('/followers/:user_id', followController.get);
-router.delete('/followers/delete/:follow_id', followController.unfollow);
+router.get('/followers/:user_id', followController.getFollows);
+router.delete('/followers/delete/:user_id/:follow_id', followController.unfollow);
 
 
 
