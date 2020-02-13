@@ -25,12 +25,12 @@
 
 
 #backie{
-    background-color: unset !important;
+    background-color: rgba(245, 245, 245, 0.767) !important;
     
 }
 
 .backAlb{
-    background-color: rgba(245, 245, 245, 0.767);
+    background-color: rgba(245, 245, 245, 0.767) !important;
     border-radius: 10px;
 }
 
@@ -53,5 +53,9 @@
     }
 
     
+}
+
+.separationDiv {
+    height: 100px;
 }
 

@@ -689,7 +689,7 @@
 import React, { Component } from 'react';
  
 import { SpotifyApiContext, Artist } from 'react-spotify-api';
- console.log(SpotifyApiContext)
+
  function App(props) {
     let token="BQCiGipRo4CeB6bSyOdEbsITaY0Rz9GVEYcgnYMoZ-ss_ypUG9LeDTtAPQ9jdNbUpuyK1enEZGBlRzbEOwV9x5lycBYJy79c9GDfq_zYZ0y-N9msYx_qXEeQvbLtG-lJwDhwzDtGmy84vjOunRfJ4TQS8a4wPU3cdJ4Awos4RDWwlAsrXiWQRPoUGcCy2uP1AjHgCMAUSkm6-VCWvud_BTsMpdzMRC3AX3RqA8k-A3AaZwL09xKG2U2ZkPyXnY_7Y8VOBgJzDONKGBtXjx6xJmeJpD3dK8CwZF0"
   return (
@@ -700,7 +700,7 @@ import { SpotifyApiContext, Artist } from 'react-spotify-api';
           artist ? (
               <div>
               <h1>{artist.name}        
-                     {console.log(artist)}
+                     
 </h1>
               <ul>
                 {artist.genres.map(genre => (

@@ -17,7 +17,12 @@ interface IGlobalStateProps {
   bands: IBand[]
   band: IBand
   account: IAccount | any;
+  
 
+}
+
+interface IProps {
+  history: any;
 }
 
 interface IreviewsBD {
@@ -44,7 +49,7 @@ interface IGlobalActionProps {
   setAccount(account: any): void;
   history: any;
 }
-type TProps = IGlobalStateProps & IGlobalActionProps;
+type TProps = IGlobalStateProps & IGlobalActionProps & IProps;
 
 interface IState {
   username: string;
@@ -121,7 +126,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       path: `/reviews/user_reviews/${user_id}`,
     }).then(response => {
       if (response) {
-        console.log(response)
+        
         this.setState({ reviews: response })
       }
     });
@@ -228,7 +233,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     return (
       <>
         <div className="separationDiv"></div>
-        <div className="container backform d-flex justify-content-center mt-5">
+        <div className="container backform d-flex justify-content-center">
           <div className="col-10 mt-3">
             {user_image ? (
               <img
@@ -290,10 +295,9 @@ class UserProfile extends React.PureComponent<TProps, IState> {
               <div className="control">
                 <button
                   className="btn btn-outline-dark"
-                  // disabled={username.length === 1}
+                  disabled={username.length === 1}
                   onClick={() => {
                     this.updateUser();
-                    // this.uploadAvatar();
                   }}
                   data-dismiss="modal"
                 >
@@ -305,14 +309,11 @@ class UserProfile extends React.PureComponent<TProps, IState> {
           </div>
         </div>
         <br />
-        <br />
-        <br />
-        <br />
         <div className="container" id="accordionExample">
           <div className="accordion" id="backie">
             <div className="card collapseColor">
               <div
-                className="card-header d-flex justify-content-center backAlb"
+                className="card-header d-flex justify-content-center"
                 id="headingOne"
               >
                 <h2 className="mb-0">
@@ -417,7 +418,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                         </p>
                         
                       </div>
-                      <div className="ml-2 mt-4">
+                      <div className="ml-2 mt-4" onClick={() => this.props.history.push(`/users/`)}>
                       <Unfollow follow_id={user_id} /> 
                       </div>
                     </div>

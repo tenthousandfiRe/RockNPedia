@@ -18,7 +18,7 @@ export const myFetch = async ({
     formData?: FormData;
     token?: string | any;
   }) => {
-      console.log(token)
+     
     let headers = new Headers();
     let body = undefined;
     if (json) {
@@ -37,8 +37,6 @@ export const myFetch = async ({
     });
     try {
       const json =  await response.json();
-      console.log("entroooooooo")
-      console.log(json)
       return json;
     } catch {
       return null;

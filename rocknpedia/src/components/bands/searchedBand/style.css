@@ -1,13 +1,13 @@
 .boton {
   color: black !important;
-  border-color: black !important;
-}
+  border-color: black !important; }
 
 .boton:hover {
   color: white !important;
-  border-color: white !important;
-}
+  border-color: white !important; }
 
 .cuerpo {
-  height: 400px !important;
-}
+  height: 400px !important; }
+
+#backAlb {
+  background-color: rgba(245, 245, 245, 0.808); }

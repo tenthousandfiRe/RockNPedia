@@ -18,10 +18,10 @@
   height: 100px; }
 
 #backie {
-  background-color: unset !important; }
+  background-color: rgba(245, 245, 245, 0.767) !important; }
 
 .backAlb {
-  background-color: rgba(245, 245, 245, 0.767);
+  background-color: rgba(245, 245, 245, 0.767) !important;
   border-radius: 10px; }
 
 .reviews img {
@@ -37,3 +37,6 @@
 
 .reviews .p {
   white-space: nowrap; }
+
+.separationDiv {
+  height: 100px; }
