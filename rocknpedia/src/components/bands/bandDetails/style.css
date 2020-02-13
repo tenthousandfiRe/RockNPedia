@@ -1,13 +1,41 @@
 .bandDivsImage {
+  display: flex;
   margin-top: 40px;
   width: 900px;
-  text-align: center;
+  justify-content: center;
   position: relative;
 }
 .bandDivsImage img {
   border-radius: 50%;
-  height: 50%;
-  width: 50%;
+  width: 40%;
+}
+.bandDivsImage .buttonsDiv {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  align-items: center;
+}
+.bandDivsImage .buttonsDiv .heartIcon {
+  margin-right: 15px;
+  font-size: 50px;
+  position: relative;
+  bottom: -300px;
+  left: -130px;
+}
+.bandDivsImage .buttonsDiv .buttonBandDetails {
+  background-color: rgba(245, 245, 245, 0.904);
+  color: black !important;
+  border-radius: 150%;
+  height: 80px;
+  width: 80px;
+  position: relative;
+  bottom: -300px;
+  right: -160px;
+}
+.bandDivsImage .buttonsDiv .buttonBandDetails:hover {
+  background-color: rgba(68, 68, 68, 0.904);
+  color: white !important;
 }
 
 .bandDivsInfo {
@@ -15,53 +43,6 @@
   height: 150px;
   width: 900px;
   text-align: center;
-}
-
-.buttonBandDetails {
-  background-color: rgba(245, 245, 245, 0.904);
-  color: black !important;
-  border-radius: 150%;
-  height: 80px;
-  width: 80px;
-  position: relative;
-  bottom: -130px;
-  left: -80px;
-}
-
-.buttonBandDetails:hover {
-  background-color: rgba(68, 68, 68, 0.904);
-  color: white !important;
-}
-
-.heartIcon {
-  margin-right: 15px;
-  font-size: 50px;
-  position: relative;
-  bottom: -350px;
-  left: 220px;
-}
-
-.bandDivs {
-  background-color: rgba(245, 245, 245, 0.89);
-  height: 150px;
-  width: 900px;
-  text-align: center;
-}
-.bandDivs img {
-  margin: 0px auto;
-}
-
-.bandDivsInfo {
-  margin-top: 40px;
-  color: whitesmoke;
-  height: 150px;
-  width: 900px;
-  text-align: center;
-}
-
-.boton {
-  color: black !important;
-  border-color: black !important;
 }
 
 .historyBackgroundEditBand {
@@ -154,8 +135,4 @@
   margin: 5px;
   display: flex;
   float: right;
-}
-
-.relativePos {
-  position: relative !important;
 }

@@ -275,15 +275,16 @@ class BandDetails extends React.PureComponent {
     return (
       <>
         <div className="container">
-          <div className="container bandDivsImage">
+          <div className="row d-flex text-align-center">
+          <div className="col-12 bandDivsImage">
             <img
               src={band_image ? URL_bandupdate + band_image : defaultBandImage}
               className="img"
               alt="..."
             ></img>
             {token ? (
-              <>
-              <FontAwesomeIcon className="heartIcon d-flex float-left" style={{ color: iconColor }} icon={faHeart} onClick={() => this.likesBand()} />
+              <div className="buttonsDiv">
+              <FontAwesomeIcon className="heartIcon" style={{ color: iconColor }} icon={faHeart} onClick={() => this.likesBand()} />
               <button
                 type="button"
                 className="btn mt-3 buttonBandDetails"
@@ -291,13 +292,14 @@ class BandDetails extends React.PureComponent {
               >
                 Editar
                   </button>
-              </>
+              </div>
             ) : ("")}
           </div>
-          <div className="container bandDivsInfo mt-5 mb-5">
-            <h1>{name}</h1>
-            <p>{foundation_year}</p>
-            
+          </div>
+          <div className="row d-flex text-align-center"> 
+          <div className="col-12 bandDivsInfo mt-5 mb-5">
+            <div className="col-12"><h1>{name}</h1>
+            <p>{foundation_year}</p></div>
             {band_history ? (
               <>
               <div
@@ -306,15 +308,15 @@ class BandDetails extends React.PureComponent {
               >
                 <p>{ReactHtmlParser(`${band_history}`)}</p>
               </div>
-              <div className="col-2"><button className="ButtonShowMoreHistoryBand" onClick={this.onMenuChange}>Ver {buttonShowMore}</button></div>
+              <div><button className="ButtonShowMoreHistoryBand" onClick={this.onMenuChange}>Ver {buttonShowMore}</button></div>
               </> 
             ) : (
                 ""
               )}
-             
           </div>
-        </div>
-        <div className="container relativePos"><div className="accordion" id="accordionExample">
+          </div>
+            <div className="row d-flex text-align-center">
+            <div className="col-12 accordion" id="accordionExample">
             <div id="backie" className="card collapseColor">
               <div
                 className="card-header d-flex justify-content-center backAlb"
@@ -562,7 +564,11 @@ class BandDetails extends React.PureComponent {
                 </div>
               </div>
             </div>
-          </div></div>
+          </div>
+          </div>
+          
+        </div>
+        
       </>
     );
   }

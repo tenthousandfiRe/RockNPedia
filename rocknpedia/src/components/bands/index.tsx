@@ -61,45 +61,33 @@ class Bands extends React.PureComponent<TProps, IState> {
     }
 
 render() {
-        const { bands } = this.props
+  const { currentPage } = this.state;
+  const { bands } = this.props
+  const bandsPerPage = 2;
+  const totalPages = Math.round(bands.length / bandsPerPage);
+  const bandsToShowPosition = bandsPerPage * (currentPage - 1);
         return (
             <div className="divPadre">
               <video className="video" loop autoPlay muted src={landingVideo}></video>
                 {bands.map(({ band_id, name, foundation_year, band_image }) => (
-                    <div className="card mb-3 bandDivs mx-auto">
-                        <div className="row no-gutters">
-                            <div className="col-md-3 d-flex justify-content-center mt-4">
-                                <img style={{ width: 100, height: 100 }} src={band_image ? URL_images + band_image : defaultBandImage} className="card-img" alt="..."></img>
+                    <div className="container-fluid">
+                        <div className="row">
+                          <div className="col-1"></div>
+                            <div className="col-4 imgDiv" style={{backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})`}}>
+                            <h1>{name}</h1>
                             </div>
-                            <div className="col-md-8">
+                            {/* <div className="col-md-8">
                                 <div className="card-body">
                                     <h5 className="card-title">{name}</h5>
                                     <p className="card-text">{foundation_year}</p>
                                     <a onClick={() => this.bandView(band_id)} className="btn btn-outline-dark boton">Ver historia</a>
                                 </div>
-                            </div>
+                            </div> */}
+                            <div className="col-1"></div>
                         </div>
                     </div>
                 ))}
             </ div>
-
-          //    {/* <div
-          //   id="carouselExampleSlidesOnly"
-          //   className="carousel slide mt-5"
-          //   data-ride="carousel"
-          // >
-          //   <div className="carousel-inner" style={{height: 500}}>
-          //   {bands.map(({ name, foundation_year, band_image }, index) => (
-          //     <div className="carousel-item active">             
-          //         <img className="d-block w-100" src={
-          //           band_image ? URL_images + band_image : defaultBandImage
-          //         }/>
-                
-          //     </div>
-          //     ))}
-          //   </div>
-          // </div> */}
-
         )
     }
 }
