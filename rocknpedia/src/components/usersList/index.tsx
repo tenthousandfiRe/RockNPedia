@@ -15,6 +15,7 @@ const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {
   account: IAccount | any;
+  
 }
 
 interface IGlobalActionProps {
@@ -90,12 +91,14 @@ getFollowers() {
     const { users } = this.state;
     return (
       <>
+      <div className="separationDiv"></div>
         <div className="offset-2">
           <div className="col-12 mt-5">
             {users.map(({ user_id, username, user_image, rol }) => (
               <div
-                className="card d-flex justify-content-center float-left mr-5 ml-4 "
+                className="card d-flex justify-content-center float-left mr-5 ml-4 mb-5 animated zoomIn sombreado"
                 style={{ width: 180, minHeight: 100 }}
+                id="backie"
               >
                 <img
                   src={user_image ? URL_images + user_image : defaultBandImage}
@@ -107,9 +110,9 @@ getFollowers() {
                     maxWidth: 180
                   }}
                 ></img>
-                <div className="card-body" style={{ maxWidth: 200, maxHeight: 170  }}>               
+                <div className="card-body backie" style={{ maxWidth: 200, maxHeight: 170  }} >               
                   <h5 className="card-title">{username}</h5>               
-                  <p className="card-text">{rol}</p>    
+                  <p className="card-text text-uppercase" style={{color: "#7B68EE"}}><strong>{rol}</strong></p>    
                   <FollowIcon user_id={user_id}/>             
                 </div>
               </div>

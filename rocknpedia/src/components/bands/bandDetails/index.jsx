@@ -52,8 +52,6 @@ class BandDetails extends React.PureComponent {
     } if (buttonShowMore === "menos") {
       this.setState({buttonShowMore: "más", bandHistoryDiv: "historyBackgroundEditBand"}) 
     }
-    console.log(buttonShowMore)
-    console.log(bandHistoryDiv)
 
 }
 
@@ -69,13 +67,11 @@ class BandDetails extends React.PureComponent {
 
   bandEdit(band_id) {
     myFetch({ path: `/update/${band_id}` }).then(json => {
-      console.log(json);
     });
     this.props.history.push(`/bands/update/${band_id}`);
   }
 
   deleteAlbum(album_id) {
-    console.log(album_id);
     const band_id = this.props.match.params.id;
     const token = localStorage.getItem("token");
     myFetch({
@@ -160,7 +156,6 @@ class BandDetails extends React.PureComponent {
       path: `/bands/${band_id}/albumes`,
     }).then(json => {
       if (json) {
-        console.log(json);
         // const { name, record_label, album_image } = json;
         this.setState({ albumes: json });
       }
@@ -176,7 +171,6 @@ class BandDetails extends React.PureComponent {
     myFetch({ method: "POST", path: `/reviews/${user_id}/${album_id}`, token, json: { review } }).then(
       json => {
         if (json) {
-          console.log(json);
         }
       }
     );
@@ -203,7 +197,6 @@ class BandDetails extends React.PureComponent {
     this.setState({
       review: e.editor.getData()
     });
-    console.log(this.state.review);
   }
 
   getReviews(album_id) {
@@ -211,7 +204,6 @@ class BandDetails extends React.PureComponent {
       path: `/reviews/${album_id}`,
     }).then(json => {
       if (json) {
-        console.log(json);
         // const { name, record_label, album_image } = json;
         this.setState({ reviews: json });
       }
@@ -245,11 +237,9 @@ class BandDetails extends React.PureComponent {
   componentDidMount() {
     const token = localStorage.getItem("token");
     const band_id = this.props.match.params.id;
-    console.log(band_id);
     const { user_id } = this.props.account;
     myFetch({ path: `/bands/${band_id}` }).then(json => {
       this.props.setBand(json);
-      console.log(json);
     });
     setTimeout(() => {myFetch({ path: `/bands/user_likes/${band_id}/${user_id}/`, token }).then(
       json => {
@@ -260,7 +250,6 @@ class BandDetails extends React.PureComponent {
             this.setState({ iconColor: "red" });
           }
         }
-        console.log(json);
       }
     )}, 1000)
     this.getAlbum(band_id);
@@ -273,7 +262,9 @@ class BandDetails extends React.PureComponent {
     const band_id = this.props.match.params.id;
     var token = localStorage.getItem("token");
     return (
+      
       <>
+      <div className="separationDiv" />
         <div className="container">
           <div className="row d-flex text-align-center">
           <div className="col-12 bandDivsImage">

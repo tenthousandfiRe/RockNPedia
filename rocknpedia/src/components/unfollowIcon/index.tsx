@@ -14,10 +14,13 @@ interface IGlobalStateProps {
 
 interface IState {    
     iconColor: string;
+    
   }
 
   interface IProps {
       follow_id: number;
+      
+      
   } 
 
   type TProps = IGlobalStateProps & IProps;
@@ -43,9 +46,9 @@ interface IState {
           method: "DELETE",
           token
           
-        });
-      
+        }); 
     }
+    
   }
   
     render() {

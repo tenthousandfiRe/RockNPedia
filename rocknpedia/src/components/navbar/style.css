@@ -1,26 +1,26 @@
 nav {
-  background-color: rgba(255, 255, 255, 0) !important;
-}
+  background-color: rgba(0, 0, 0, 0.459) !important; }
 
 .boton {
   color: white !important;
-  border-color: white !important;
-}
+  border-color: white !important; }
 
 .modalIndex {
   background-color: rgba(0, 0, 0, 0.904);
-  color: white;
-}
+  color: white; }
 
 .light {
-  color: white;
-}
+  color: white; }
 
 .marcoNav {
-  border-radius: 40%;
-}
+  border-radius: 40%; }
 
 .logo {
-  height: 90px;
-  width: 180px;
-}
+  height: 50px;
+  width: 100px; }
+
+.searchBar {
+  background: unset;
+  border: unset;
+  border-bottom: solid 1px white;
+  border-bottom-right-radius: 0; }

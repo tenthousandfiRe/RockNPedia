@@ -93,7 +93,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
     const { name } = this.state;
     const token = localStorage.getItem("token");
     return (
-      <nav className="navbar navbar-expand-lg navbar-light navie">
+      <nav className="navbar navbar-expand-lg navbar-light navie container-fluid">
         <a className="navbar-brand" href="/" ><img className="logo ml-2" src="https://i.imgur.com/0MATbvy.png" />
 
         </a>
@@ -106,10 +106,10 @@ class Navbar extends React.PureComponent<TProps, IState> {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          
         </button>
 
-        <input className="form-control mr-sm-2 col-2" type="text" value={name} onChange={this.onSearchNameChange} aria-label="Search">
+        <input className="form-control offset-3 mr-sm-2 col-2 d-flex justify-content-end searchBar" type="text" value={name} onChange={this.onSearchNameChange} aria-label="Search">
         </input>
         <button className="btn btn-outline-light" type="submit" onClick={() => this.searchBand()}>Buscar banda</button>
 
@@ -125,7 +125,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
                 data-toggle="modal"
                 data-target="#exampleModal"
               >
-                {" "}
+                {""}
                 Log In
               </button>
             ) : (
@@ -157,7 +157,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div className="modal-body d-flex justify-content-center mt-5 ">
+                  <div className="modal-body d-flex justify-content-center mt-5 zeta">
                     <Login />
                   </div>
                 </div>
@@ -169,7 +169,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
             {!token ? (
               <button
                 type="button"
-                className="btn btn-outline-light my-2 my-sm-0 ml-3"
+                className="btn btn-outline-light my-2 my-sm-0 ml-3 d-flex justify-content-end"
                 data-toggle="modal"
                 data-target="#exampleModal2"
               >
@@ -213,7 +213,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
             </div>
           </a>
           {token ? (
-            <div className="float-left ">
+            <div className="float-left d-flex justify-content-end">
               {account?.user_image ? (
                 <img
                   className="d-flex logoUser marcoNav mx-auto"

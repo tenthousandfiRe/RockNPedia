@@ -35,15 +35,13 @@
 }
 .bandDivsImage .buttonsDiv .buttonBandDetails:hover {
   background-color: rgba(68, 68, 68, 0.904);
-  color: white !important;
-}
+  color: white !important; }
 
 .bandDivsInfo {
   color: whitesmoke !important;
   height: 150px;
   width: 900px;
-  text-align: center;
-}
+  text-align: center; }
 
 .historyBackgroundEditBand {
   color: black;
@@ -59,14 +57,15 @@
   -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  transition: height 2s;
-}
-.historyBackgroundEditBand p {
-  margin-top: 10;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font-size: 15px;
-}
+  -webkit-transition: height 2s;
+  -o-transition: height 2s;
+  transition: height 2s; }
+  .historyBackgroundEditBand p {
+    margin-top: 10;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 15px; }
 
 .historyBackgroundEditBandFull {
   color: black;
@@ -74,6 +73,8 @@
   position: relative;
   text-align: left;
   height: Auto;
+  -webkit-transition: height 2s;
+  -o-transition: height 2s;
   transition: height 2s;
   white-space: initial;
   padding: 10px;
@@ -83,56 +84,49 @@
   line-height: 1.6;
   -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.historyBackgroundEditBandFull p {
-  margin-top: 10;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font-size: 15px;
-}
+  overflow: hidden; }
+  .historyBackgroundEditBandFull p {
+    margin-top: 10;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 15px; }
 
 .cuerpoCardAlbum {
-  width: 18rem;
-}
+  width: 18rem; }
 
 .backgroundCollapse {
   background-color: none !important;
-  border: none !important;
-}
+  border: none !important; }
 
 .trashIcon {
-  font-size: 20px;
-}
+  font-size: 20px; }
 
-#backie {
+#pruebita {
   background-color: unset !important;
-  border: none !important;
-}
+  border: none !important; }
 
 .backAlb {
-  background-color: rgba(245, 245, 245, 0.767);
-}
+  background-color: rgba(245, 245, 245, 0.767); }
 
 .imgSize {
   max-width: 290px;
-  max-height: 250px;
-}
+  max-height: 250px; }
 
 .backModal {
   background-color: rgba(0, 0, 0, 0.904);
-  color: white;
-}
+  color: white; }
 
 .separationDiv {
-  height: 190px;
-}
+  height: 100px; }
 
 .ButtonShowMoreHistoryBand {
   border-radius: 10px;
   border: none;
   background-color: rgba(245, 245, 245, 0.89);
   margin: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   float: right;
 }

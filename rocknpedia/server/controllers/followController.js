@@ -68,8 +68,7 @@ followController.getFollows = ((req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
     let user_id = req.params.user_id;
     let sql = `SELECT user.user_id FROM user JOIN followers WHERE followers.follow_id = user.user_id and followers.user_id = ${user_id};`;
-    console.log(sql)
-    connection.query
+
     if (token) {
         connection.query(
             sql,

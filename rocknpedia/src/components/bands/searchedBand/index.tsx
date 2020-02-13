@@ -53,7 +53,7 @@ class SearchedBand extends React.PureComponent<TProps, IState> {
 
           <div className="row d-flex justify-content-center">
             {bands.length !== 0 ? bands.map(({ band_id, name, foundation_year, band_image }) => (
-              <div className="card ml-4 mr-4" style={{ width: 180, minHeight: 100 }}>
+              <div className="card ml-4 mr-4 mb-5" style={{ width: 180, minHeight: 100 }} id="backAlb">
                 <img src={band_image ? URL_images + band_image : defaultBandImage} className="card-img-top" style={{
                     minHeight: 100,
                     minWidth: 60,
