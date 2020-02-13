@@ -37,7 +37,7 @@ class Bands extends React.PureComponent<TProps, IState> {
     super(props);
 
     this.state = {
-      currentPage: 0
+      currentPage: 1
     };
 
     this.bandView = this.bandView.bind(this);
@@ -69,24 +69,39 @@ render() {
         return (
             <div className="divPadre">
               <video className="video" loop autoPlay muted src={landingVideo}></video>
-                {bands.map(({ band_id, name, foundation_year, band_image }) => (
+                {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, name, foundation_year, band_image }) => (
                     <div className="container-fluid">
                         <div className="row">
                           <div className="col-1"></div>
-                            <div className="col-4 imgDiv" style={{backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})`}}>
+                            <div className="col-4 imgDiv"onClick={() => this.bandView(band_id)} style={{backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})`}}>
                             <h1>{name}</h1>
                             </div>
-                            {/* <div className="col-md-8">
-                                <div className="card-body">
-                                    <h5 className="card-title">{name}</h5>
-                                    <p className="card-text">{foundation_year}</p>
-                                    <a onClick={() => this.bandView(band_id)} className="btn btn-outline-dark boton">Ver historia</a>
-                                </div>
-                            </div> */}
                             <div className="col-1"></div>
                         </div>
                     </div>
                 ))}
+                <div>
+                <div className="container-fluid">
+                  <div className="row">
+                  <div className="col-1"></div>
+                  <div className="col-4">
+          {[...Array(totalPages)].map((_, num) => (
+            
+            <button
+              className="float-left paginationButton"
+              key={num}
+              disabled={num + 1 === currentPage}
+              onClick={() => this.setState({ currentPage: num + 1 })}
+              >
+              {console.log(currentPage)}
+              {num + 1}
+            </button>
+           
+          ))}
+          </div>
+          </div>
+           </div>
+        </div>
             </ div>
         )
     }
