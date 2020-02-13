@@ -46,11 +46,11 @@ followController.get = ((req, res) => {
 
 //query for removing a follow 
 followController.unfollow = ((req, res) => {
-    let follow_id = req.params.follow_id;
-    let user_id = req.params.user_id;
+    let { follow_id, user_id } = req.params;
     try {
+        console.log("entro en la query del delete")
         const token = req.headers.authorization.replace("Bearer ", "");
-        let sql = `DELETE FROM followers WHERE follow_id = ${follow_id} and user_id = ${user_id};`;
+        let sql = `DELETE FROM followers WHERE user_id = ${user_id} and follow_id = ${follow_id};`;
         
         if (token) {
             connection.query(sql, (error, results) => {
@@ -60,6 +60,26 @@ followController.unfollow = ((req, res) => {
         }
     } catch {
         res.sendStatus(401);
+    }
+});
+
+
+followController.getFollows = ((req, res) => {
+    const token = req.headers.authorization.replace("Bearer ", "");
+    let user_id = req.params.user_id;
+    let sql = `SELECT user.user_id FROM user JOIN followers WHERE followers.follow_id = user.user_id and followers.user_id = ${user_id};`;
+    console.log(sql)
+    connection.query
+    if (token) {
+        connection.query(
+            sql,
+            (__, results) => {
+                res.send(results);
+                console.log(results)
+            }
+        );
+    } else {
+        res.status(401);
     }
 });
 

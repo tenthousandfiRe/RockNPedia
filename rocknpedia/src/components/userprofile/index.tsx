@@ -10,6 +10,7 @@ import ReactHtmlParser from 'react-html-parser'
 import { API_URL, defaultBandImage } from "../../constants";
 import { IBand } from "../../interfaces/IBand";
 import Swal from 'sweetalert2';
+import Unfollow from '../unfollowIcon/'
 const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {
@@ -402,7 +403,8 @@ class UserProfile extends React.PureComponent<TProps, IState> {
               >            
                 {followers.map(({ user_id, username, user_image }) => (
                     <div className="col-md-6 d-inline-flex justify-content-center mt-4  float-left">
-                      <div>
+                      <div className="row">
+                        
                         <img
                           style={{ width: 50, height: 50, borderRadius: 100 }}
                           src={
@@ -417,8 +419,12 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                       <div>
                         <p className="mt-3 ml-3" style={{ fontSize: 20 }}>
                           {username}
-                          {console.log(username)}
+                                         
                         </p>
+                        
+                      </div>
+                      <div className="ml-2 mt-4">
+                      <Unfollow follow_id={user_id} /> 
                       </div>
                     </div>
                     ))}                                      
