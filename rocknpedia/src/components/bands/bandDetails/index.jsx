@@ -32,13 +32,30 @@ class BandDetails extends React.PureComponent {
       iconColor: "",
       review: "",
       reviews: [],
-      selectedAlbum: 0
+      selectedAlbum: 0,
+      bandHistoryDiv: "historyBackgroundEditBand",
+      buttonShowMore: "más",
+      buttonClicked: false
     };
     this.inputFileRef = React.createRef();
     this.onAlbumNameChange = this.onAlbumNameChange.bind(this);
     this.onRecordLabelChange = this.onRecordLabelChange.bind(this);
     this.addAlbum = this.addAlbum.bind(this);
+    this.onMenuChange = this.onMenuChange.bind(this);
+
   }
+
+  onMenuChange() { 
+    const { buttonShowMore, bandHistoryDiv } = this.state 
+    if (buttonShowMore === this.state.buttonShowMore) {
+      this.setState({buttonShowMore: "menos", bandHistoryDiv: "historyBackgroundEditBandFull"}) 
+    } if (buttonShowMore === "menos") {
+      this.setState({buttonShowMore: "más", bandHistoryDiv: "historyBackgroundEditBand"}) 
+    }
+    console.log(buttonShowMore)
+    console.log(bandHistoryDiv)
+
+}
 
   onAlbumNameChange(event) {
     const album_name = event.target.value;
@@ -114,7 +131,7 @@ class BandDetails extends React.PureComponent {
   }
 
   addAlbum() {
-    const { album_name, record_label, album_image } = this.state;
+    const { album_name, record_label } = this.state;
     if (this.inputFileRef.current?.files) {
       const band_id = this.props.match.params.id;
       const formData = new FormData();
@@ -250,8 +267,7 @@ class BandDetails extends React.PureComponent {
   }
 
   render() {
-    
-    const { album_name, record_label, iconColor, review, selectedAlbum } = this.state;
+    const { album_name, record_label, iconColor, review, selectedAlbum, bandHistoryDiv, buttonShowMore } = this.state;
     const { albumes } = this.state;
     const { name, foundation_year, band_image, band_history } = this.props.band;
     const band_id = this.props.match.params.id;
@@ -281,25 +297,24 @@ class BandDetails extends React.PureComponent {
           <div className="container bandDivsInfo mt-5 mb-5">
             <h1>{name}</h1>
             <p>{foundation_year}</p>
+            
             {band_history ? (
+              <>
               <div
-                className="historyBackgroundEditBand"
+                className={bandHistoryDiv}
                 style={{ borderRadius: 20 }}
               >
                 <p>{ReactHtmlParser(`${band_history}`)}</p>
-                {/* ternary to show the button to edit the band */}
               </div>
+              <div className="col-2"><button className="ButtonShowMoreHistoryBand" onClick={this.onMenuChange}>Ver {buttonShowMore}</button></div>
+              </> 
             ) : (
                 ""
               )}
+             
           </div>
-          <div className="separationDiv"></div>
-          <div className="separationDiv"></div>
-          
-          
-
-
-          <div className="accordion" id="accordionExample">
+        </div>
+        <div className="container relativePos"><div className="accordion" id="accordionExample">
             <div id="backie" className="card collapseColor">
               <div
                 className="card-header d-flex justify-content-center backAlb"
@@ -335,7 +350,7 @@ class BandDetails extends React.PureComponent {
                 aria-labelledby="headingOne"
                 data-parent="#accordionExample"
               >
-                <div className="card-body col-12 backgroundCollapse ">
+                <div className="card-body col-12 backgroundCollapse">
                   <div className="  d-flex justify-content-end">
                     <button
                       className=" btn btn-outline-light"
@@ -437,7 +452,7 @@ class BandDetails extends React.PureComponent {
                       </div>
                     </div>
                   </div>
-                  <div className="row ">
+                  <div className="row">
                   {albumes.map(
                     ({ album_name, record_label, album_image, album_id }) => (
                       <div className="card cuerpoCardAlbum mt-4 ml-5 mr-1 backAlb row ">
@@ -547,12 +562,7 @@ class BandDetails extends React.PureComponent {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
+          </div></div>
       </>
     );
   }

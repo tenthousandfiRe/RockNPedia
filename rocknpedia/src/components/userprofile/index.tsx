@@ -308,8 +308,6 @@ class UserProfile extends React.PureComponent<TProps, IState> {
         <br />
         <br />
         <br />
-        <br />
-        <br />
         <div className="container" id="accordionExample">
           <div className="accordion" id="backie">
             <div className="card collapseColor">
@@ -358,23 +356,19 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 data-parent="#accordionExample"
               >
                 <div className="card-body reviews">
-                  <div className="col-12">
                     {reviews.map(({ review, review_date, album_name, album_image }) => (reviews ?
-                      <div className="col-6 float-left">
-                        <div className="col-md-6 d-block justify-content-center mt-2 mb-5"> <img
+                      <div className="col-12 float-left">
+                        <div className="d-block justify-content-center mt-2 mb-5"> <img
                           src={album_image ? URL_images + album_image : defaultBandImage}
                         ></img>
-                          <div className="col-md-6 d-block justify-content-left mt-2 mb-3 p-0">
+                          <div className="d-block justify-content-left mt-2 mb-3 p-0">
                             <div><h5>{album_name}</h5></div>
                             <span>{new Date(review_date).toLocaleString()}</span></div>
-                          <div className="d-block justify-content-left reviewDiv"><p>{ReactHtmlParser(`${review}`)}</p>
-
-                          </div>
                         </div>
+                        <div className="col-8 d-flex justify-content-left reviewDiv"><p>{ReactHtmlParser(`${review}`)}</p>
+                          </div>   
                       </div>
                       : <p>No has hecho ninguna review aún</p>))}
-
-                  </div>
                 </div>
               </div>
               <div
