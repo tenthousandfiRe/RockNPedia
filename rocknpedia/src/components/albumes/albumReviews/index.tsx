@@ -100,6 +100,8 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
     const reviewToShowPosition = reviewsPerPage * (currentPage - 1);
     console.log(reviewToShowPosition)
     return (
+      <>
+      <div className="separationDiv"></div>
       <div className="container ReviewsContainer">
         <img
           src={album_selected_image ? URL_images + album_selected_image : defaultBandImage}
@@ -142,6 +144,7 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
           ))}
         </div>
       </ div>
+      </>
 
     )
   }

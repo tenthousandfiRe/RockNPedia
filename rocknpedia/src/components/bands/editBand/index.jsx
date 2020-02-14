@@ -100,6 +100,8 @@ class EditBand extends React.PureComponent {
         let { name = band?.name } = this.state
         let { foundation_year = band?.foundation_year } = this.state
         return (
+            <>
+            <div className="separationDiv"></div>
             <div className="container">
                 <div className="container titleContainer">
                     <div className="row">
@@ -212,6 +214,7 @@ class EditBand extends React.PureComponent {
                     </div>
                 </div>
             </div>
+            </>
         )
     }
 }

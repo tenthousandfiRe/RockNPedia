@@ -36,7 +36,7 @@ class SearchedBand extends React.PureComponent<TProps, IState> {
     myFetch({ path: `/bands/${band_id}` }).then(json => {
       this.props.setBand(json);
     });
-    this.props.history.push(`/bands/${band_id}`);
+    setTimeout(() => {this.props.history.push(`/bands/${band_id}`)}, 100);
   }
 
 
