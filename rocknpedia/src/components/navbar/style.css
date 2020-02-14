@@ -1,5 +1,7 @@
 nav {
-  background-color: rgba(0, 0, 0, 0.459) !important; }
+  background-color: rgba(0, 0, 0, 0.459) !important;
+  position: fixed !important;
+  z-index: 9999; }
 
 .boton {
   color: white !important;

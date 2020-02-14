@@ -102,12 +102,13 @@ getFollowers() {
               >
                 <img
                   src={user_image ? URL_images + user_image : defaultBandImage}
-                  className="card-img-top"
+                  className="card-img-top imagenescalada"
                   style={{
                     minHeight: 100,
                     minWidth: 60,
                     maxHeight: 180,
-                    maxWidth: 180
+                    maxWidth: 180,
+                    background: "unset"
                   }}
                 ></img>
                 <div className="card-body backie" style={{ maxWidth: 200, maxHeight: 170  }} >               

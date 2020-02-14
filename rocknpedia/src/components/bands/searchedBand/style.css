@@ -1,13 +1,24 @@
-.boton {
-  color: black !important;
-  border-color: black !important; }
-
-.boton:hover {
-  color: white !important;
-  border-color: white !important; }
-
 .cuerpo {
   height: 400px !important; }
 
 #backAlb {
   background-color: rgba(245, 245, 245, 0.808); }
+
+.imgDiv {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background: 50%;
+  height: 200px; }
+
+.cursor {
+  cursor: pointer; }
+
+h1 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: black; }

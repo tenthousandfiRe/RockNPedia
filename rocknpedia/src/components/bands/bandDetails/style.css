@@ -1,41 +1,46 @@
 .bandDivsImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin-top: 40px;
   width: 900px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
-  position: relative;
-}
-.bandDivsImage img {
-  border-radius: 50%;
-  width: 40%;
-}
-.bandDivsImage .buttonsDiv {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  position: absolute;
-  align-items: center;
-}
-.bandDivsImage .buttonsDiv .heartIcon {
-  margin-right: 15px;
-  font-size: 50px;
-  position: relative;
-  bottom: -300px;
-  left: -130px;
-}
-.bandDivsImage .buttonsDiv .buttonBandDetails {
-  background-color: rgba(245, 245, 245, 0.904);
-  color: black !important;
-  border-radius: 150%;
-  height: 80px;
-  width: 80px;
-  position: relative;
-  bottom: -300px;
-  right: -160px;
-}
-.bandDivsImage .buttonsDiv .buttonBandDetails:hover {
-  background-color: rgba(68, 68, 68, 0.904);
-  color: white !important; }
+  position: relative; }
+  .bandDivsImage img {
+    border-radius: 50%;
+    width: 40%; }
+  .bandDivsImage .buttonsDiv {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .bandDivsImage .buttonsDiv .heartIcon {
+      margin-right: 15px;
+      font-size: 50px;
+      position: relative;
+      bottom: -300px;
+      left: -130px; }
+    .bandDivsImage .buttonsDiv .buttonBandDetails {
+      background-color: rgba(245, 245, 245, 0.904);
+      color: black !important;
+      border-radius: 150%;
+      height: 80px;
+      width: 80px;
+      position: relative;
+      bottom: -300px;
+      right: -160px; }
+    .bandDivsImage .buttonsDiv .buttonBandDetails:hover {
+      background-color: rgba(68, 68, 68, 0.904);
+      color: white !important; }
 
 .bandDivsInfo {
   color: whitesmoke !important;
@@ -128,5 +133,4 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  float: right;
-}
+  float: right; }
