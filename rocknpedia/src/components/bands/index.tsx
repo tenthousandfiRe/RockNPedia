@@ -11,6 +11,7 @@ import "./style.css";
 import { API_URL } from '../../constants'
 import { defaultBandImage } from '../../constants'
 import { Link } from 'react-router-dom';
+import ReactHtmlParser from 'react-html-parser'
 const URL_images = `${API_URL}/avatars/`
 
 
@@ -23,6 +24,7 @@ interface IGlobalStateProps {
 interface IState {
   currentPage: number;
   review: {
+    album_id: number
     review: string,
     review_date: string,
     username: string,
@@ -47,6 +49,7 @@ class Bands extends React.PureComponent<TProps, IState> {
     this.state = {
       currentPage: 1,
       review: {
+        album_id: 0,
         review: "",
         review_date: "",
         username: "",
@@ -67,7 +70,7 @@ class Bands extends React.PureComponent<TProps, IState> {
 
   getLatestReview() {
     myFetch({ method: "POST", path: "/reviews/latest_review/" }).then(json => {
-      this.setState({review: json});
+      this.setState({ review: json[0] });
     });
   }
 
@@ -86,8 +89,9 @@ class Bands extends React.PureComponent<TProps, IState> {
 
   render() {
     const { currentPage } = this.state;
-    const { review } = this.state
+    const { review, username, review_date, album_image, album_name, album_id } = this.state.review
     console.log(review)
+    console.log(username)
     const { bands } = this.props
     const bandsPerPage = 3;
     const totalPages = Math.round(bands.length / bandsPerPage);
@@ -122,9 +126,21 @@ class Bands extends React.PureComponent<TProps, IState> {
                 </div>
               </div>
             </div>
-              <div className="col-6"><h1>Aquí va la review</h1>
-              
-              <h1>Aquí va la review</h1></div>
+            <div className="col-5"><h1>Última review añadida por {username}</h1>
+            <p>{new Date(review_date).toLocaleString()}</p>
+              <img
+              style={{width: 200}}
+                src={album_image ? URL_images + album_image : defaultBandImage}
+                className="albumImage"
+              ></img>
+              <p>{album_name}</p>
+              <div className="reviewCard ml-4">
+                <p>{ReactHtmlParser(`${review}`)}</p>
+              </div>
+              <Link to={`/reviews/${album_id}`} className="btn btn-outline-light">
+                  Ver review completa</Link>
+                  </div>
+
           </div>
         </div>
       </ div>
