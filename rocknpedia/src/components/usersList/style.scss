@@ -1,47 +1,49 @@
 
 
-
-.sombreado:hover { 
-   
-    transition: all .2s ease-in-out;
+ .sombreado:hover {
+    transition: transform 0.3s ease-in-out;
     box-shadow: 10px 10px 5px 0px rgba(124, 104, 238, 0.527);
-        -webkit-transform: scale(1.5);
     transform: scale(1.1);
+    
+  }
+
+.imagenescalada:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
 }
 
 
-
 @-webkit-keyframes zoomIn {
-    from {
-      opacity: 0;
-      -webkit-transform: scale3d(0.3, 0.3, 0.3);
-      transform: scale3d(0.3, 0.3, 0.3);
-    }
-  
-    50% {
-      opacity: 1;
-    }
+  from {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
-  
-  @keyframes zoomIn {
-    from {
-      opacity: 0;
-      -webkit-transform: scale3d(0.3, 0.3, 0.3);
-      transform: scale3d(0.3, 0.3, 0.3);
-    }
-  
-    50% {
-      opacity: 1;
-    }
+
+  50% {
+    opacity: 1;
   }
-  
-  .zoomIn {
-    -webkit-animation-name: zoomIn;
-    animation-name: zoomIn;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
   }
-  .animated {
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-  }  
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.zoomIn {
+  -webkit-animation-name: zoomIn;
+  animation-name: zoomIn;
+}
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}

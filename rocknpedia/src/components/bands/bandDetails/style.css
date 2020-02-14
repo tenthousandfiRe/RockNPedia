@@ -1,7 +1,11 @@
 .bandDivsImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin-top: 40px;
   width: 900px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   position: relative;
 }

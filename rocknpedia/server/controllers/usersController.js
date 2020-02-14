@@ -50,8 +50,9 @@ usersController.list = (req, res) => {
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     const { is_admin } = jwt.verify(token, myKey);
+    const { user_id } = jwt.decode(token);
     let sql = "SELECT user_id, username, is_admin, user_image FROM user"; //USER QUERY: IT BRINGS ALL THE FIELDS.
-    let sql2 = "SELECT * FROM user";
+    let sql2 = `SELECT * FROM user WHERE user_id != ${user_id} ORDER BY username asc`;
     if (is_admin) {
       connection.query(sql, (error, results) => {
         if (error) console.log(error);
