@@ -139,7 +139,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
               <div className="control">
                 <input
                   className="form-control"
-                  style={{ visibility: "hidden", backgroundColor: "transparent" }}
+                  style={{ visibility: "hidden" }}
                   type="number"
                   value={created_by as any}
                 ></input>
@@ -153,7 +153,7 @@ class InsertBand extends React.PureComponent<TProps, IState> {
                   <div className="col-12 border d-flex justify-content-center">
                     <input
                       type="file"
-                      className="custom-file-input"
+                      className="inputfile"
                       ref={this.inputFileRef}
                     />
                   </div>

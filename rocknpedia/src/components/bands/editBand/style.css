@@ -1,7 +1,8 @@
 .titleContainer {
   margin-bottom: 30px;
   color: white;
-  text-align: center; }
+  text-align: center;
+}
 
 .backform {
   background-color: rgba(245, 245, 245, 0.356);
@@ -11,27 +12,33 @@
   width: 500px;
   text-align: center;
   border-radius: 40px;
-  position: relative; }
-  .backform .bandDivsEditImage {
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    left: -80px;
-    top: -70px; }
-    .backform .bandDivsEditImage img {
-      border-radius: 100%;
-      height: auto; }
+  position: relative;
+}
+.backform .bandDivsEditImage {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  left: -80px;
+  top: -70px;
+}
+.backform .bandDivsEditImage img {
+  border-radius: 100%;
+  height: auto;
+}
 
 .editBandText {
-  color: white; }
+  color: white;
+}
 
 .buttonsEditBand {
   color: black !important;
-  border-color: black !important; }
+  border-color: black !important;
+}
 
 .buttonsEditBand:hover {
   color: white !important;
-  border-color: white !important; }
+  border-color: white !important;
+}
 
 .historyBackground {
   color: black;
@@ -43,4 +50,8 @@
 .modalBackground {
   background-color: rgba(245, 245, 245, 0.89);
   border-radius: 20px;
+}
+
+.ckEditor {
+  border: 1px solid black;
 }

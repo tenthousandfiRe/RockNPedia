@@ -88,15 +88,13 @@ render() {
           {[...Array(totalPages)].map((_, num) => (
             
             <button
-              className="float-left paginationButton"
+              className="paginationButton"
               key={num}
               disabled={num + 1 === currentPage}
               onClick={() => this.setState({ currentPage: num + 1 })}
               >
-              {console.log(currentPage)}
               {num + 1}
             </button>
-           
           ))}
           </div>
           </div>

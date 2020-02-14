@@ -4,6 +4,8 @@
     h1{
         margin-top: 20px;
         color: white;
+        -webkit-text-stroke-width: 1.5px;
+   -webkit-text-stroke-color: black;
     }
 
     .mainVideoDiv{
@@ -29,16 +31,29 @@
         flex-direction: column;
         background: 50%;
         height: 200px;
+        margin-top: 20px;
         margin-bottom: 20px;
         border-radius: 20px;
+        animation-duration: 3s;
+        animation: appear 1s;        
 
         :hover {
             cursor: hand;
         }
 
+        @keyframes appear {
+            0% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+          
     }
-    
 }
+
+
 
 
 .bandDivs {

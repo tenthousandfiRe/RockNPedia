@@ -307,7 +307,7 @@ class BandDetails extends React.PureComponent {
           </div>
           </div>
             <div className="row d-flex text-align-center">
-            <div className="col-12 accordion" id="accordionExample">
+            <div className="col-12 accordion" style={{marginBottom: "20px"}}id="accordionExample">
             <div id="backie" className="card collapseColor">
               <div
                 className="card-header d-flex justify-content-center backAlb"
@@ -490,6 +490,7 @@ class BandDetails extends React.PureComponent {
                         <div class="modal-body">
                           <CKEditor
                             type="inline"
+                            style={{ borderBottom: "1px solid black"}}
                             config={{
                               toolbar: [['Bold', 'Italic', 'Cut', 'Copy', 'Paste']]
                             }}

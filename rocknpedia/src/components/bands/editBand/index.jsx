@@ -163,6 +163,7 @@ class EditBand extends React.PureComponent {
                                                 <div class="modal-body">
                                                     <CKEditor
                                                         type="inline"
+                                                        style={{ borderBottom: "1px solid black"}}
                                                         config={{
                                                             toolbar: [['Bold', 'Italic', 'Cut', 'Copy', 'Paste']]
                                                         }}
