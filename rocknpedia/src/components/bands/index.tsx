@@ -89,7 +89,7 @@ class Bands extends React.PureComponent<TProps, IState> {
     const { review } = this.state
     console.log(review)
     const { bands } = this.props
-    const bandsPerPage = 2;
+    const bandsPerPage = 3;
     const totalPages = Math.round(bands.length / bandsPerPage);
     const bandsToShowPosition = bandsPerPage * (currentPage - 1);
     return (
