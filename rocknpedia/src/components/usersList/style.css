@@ -4,8 +4,8 @@
   -o-transition: transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(124, 104, 238, 0.527);
-  box-shadow: 10px 10px 5px 0px rgba(124, 104, 238, 0.527);
+  -webkit-box-shadow: 10px 10px 5px 0px #6084AD;
+  box-shadow: 10px 10px 5px 0px #6084AD;
   -webkit-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1); }

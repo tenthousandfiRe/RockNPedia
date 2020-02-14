@@ -37,7 +37,7 @@ interface IState {
       const token = localStorage.getItem("token");
       const account_id = this.props.account.user_id;
       if (iconColor === iconColor) {
-        this.setState({ iconColor: "#7B68EE" });
+        this.setState({ iconColor: "#6084AD" });
         myFetch({
           path: `/users/followers/${account_id}/${follow_id}/`,
           method: "POST",

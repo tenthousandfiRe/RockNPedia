@@ -79,7 +79,7 @@ getFollowers() {
         if (json.length === 0) {
           this.setState({ iconColor: "" });
         } else {
-          this.setState({ iconColor: "#7B68EE" });
+          this.setState({ iconColor: "#6084AD" });
         }
       }
       console.log(json);
@@ -113,7 +113,7 @@ getFollowers() {
                 ></img>
                 <div className="card-body backie" style={{ maxWidth: 200, maxHeight: 170  }} >               
                   <h5 className="card-title">{username}</h5>               
-                  <p className="card-text text-uppercase" style={{color: "#7B68EE"}}><strong>{rol}</strong></p>    
+                  <p className="card-text text-uppercase" style={{color: "#6084AD"}}><strong>{rol}</strong></p>    
                   <FollowIcon user_id={user_id}/>             
                 </div>
               </div>

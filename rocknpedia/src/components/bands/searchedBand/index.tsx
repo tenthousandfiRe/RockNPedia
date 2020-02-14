@@ -40,7 +40,7 @@ class SearchedBand extends React.PureComponent<TProps, IState> {
   }
 
 
-  
+
   render() {
     const { bands } = this.props;
     return (
@@ -53,7 +53,7 @@ class SearchedBand extends React.PureComponent<TProps, IState> {
                 bands.map(({ band_id, name, band_image }) => (
                   
                     <div
-                      className="col-4 imgDiv d-flex justify-content-end float-left mb-5 mr-5 ml-5 cursor"
+                      className="col-4 imgDiv d-flex justify-content-end float-left mb-5 mr-5 ml-5 cursor animated zoomIn"
                       style={{
                         backgroundImage: `url(${
                           band_image

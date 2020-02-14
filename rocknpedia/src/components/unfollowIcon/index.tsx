@@ -31,7 +31,7 @@ interface IState {
     constructor(props: TProps) {
       super(props);
       this.state = { 
-        iconColor: "#7B68EE"
+        iconColor: "#6084AD"
       };
     }
   
