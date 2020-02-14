@@ -22,6 +22,14 @@ interface IGlobalStateProps {
 
 interface IState {
   currentPage: number;
+  review: {
+    review: string,
+    review_date: string,
+    username: string,
+    album_image: string,
+    album_name: string,
+    user_image: string
+  }
 
 }
 
@@ -37,7 +45,15 @@ class Bands extends React.PureComponent<TProps, IState> {
     super(props);
 
     this.state = {
-      currentPage: 1
+      currentPage: 1,
+      review: {
+        review: "",
+        review_date: "",
+        username: "",
+        album_image: "",
+        album_name: "",
+        user_image: ""
+      }
     };
 
     this.bandView = this.bandView.bind(this);
@@ -49,60 +65,71 @@ class Bands extends React.PureComponent<TProps, IState> {
     });
   }
 
-    componentDidMount() {
-        this.getBands()
-    }
-    // function to change the view to the specific band components, getting the info by the ID
-    bandView(band_id?: number) {
-        myFetch({ path: `/bands/${band_id}` }).then(json => {
-            this.props.setBand(json)
-        })
-        this.props.history.push(`/bands/${band_id}`)
-    }
+  getLatestReview() {
+    myFetch({ method: "POST", path: "/reviews/latest_review/" }).then(json => {
+      this.setState({review: json});
+    });
+  }
 
-render() {
-  const { currentPage } = this.state;
-  const { bands } = this.props
-  const bandsPerPage = 2;
-  const totalPages = Math.round(bands.length / bandsPerPage);
-  const bandsToShowPosition = bandsPerPage * (currentPage - 1);
-        return (
-            <div className="divPadre">
-              <video className="video" loop autoPlay muted src={landingVideo}></video>
-                {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, name, foundation_year, band_image }) => (
-                    <div className="container-fluid">
-                        <div className="row">
-                          <div className="col-1"></div>
-                            <div className="col-4 imgDiv"onClick={() => this.bandView(band_id)} style={{backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})`}}>
-                            <h1>{name}</h1>
-                            </div>
-                            <div className="col-1"></div>
-                        </div>
-                    </div>
-                ))}
-                <div>
-                <div className="container-fluid">
-                  <div className="row">
-                  <div className="col-1"></div>
-                  <div className="col-4">
-          {[...Array(totalPages)].map((_, num) => (
-            
-            <button
-              className="paginationButton"
-              key={num}
-              disabled={num + 1 === currentPage}
-              onClick={() => this.setState({ currentPage: num + 1 })}
-              >
-              {num + 1}
-            </button>
-          ))}
+
+  componentDidMount() {
+    this.getBands()
+    this.getLatestReview()
+  }
+  // function to change the view to the specific band components, getting the info by the ID
+  bandView(band_id?: number) {
+    myFetch({ path: `/bands/${band_id}` }).then(json => {
+      this.props.setBand(json)
+    })
+    this.props.history.push(`/bands/${band_id}`)
+  }
+
+  render() {
+    const { currentPage } = this.state;
+    const { review } = this.state
+    console.log(review)
+    const { bands } = this.props
+    const bandsPerPage = 2;
+    const totalPages = Math.round(bands.length / bandsPerPage);
+    const bandsToShowPosition = bandsPerPage * (currentPage - 1);
+    return (
+      <div className="divPadre">
+        <video className="video" loop autoPlay muted src={landingVideo}></video>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-5 caca">
+              {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, name, band_image }) => (
+                <div className="imgDiv" onClick={() => this.bandView(band_id)} style={{ backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})` }}>
+                  <h1>{name}</h1>
+                </div>
+              ))}
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-12">
+                    {[...Array(totalPages)].map((_, num) => (
+
+                      <button
+                        className="paginationButton"
+                        key={num}
+                        disabled={num + 1 === currentPage}
+                        onClick={() => this.setState({ currentPage: num + 1 })}
+                      >
+                        {num + 1}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div className="col-6"><h1>Aquí va la review</h1>
+              
+              <h1>Aquí va la review</h1></div>
           </div>
-          </div>
-           </div>
         </div>
-            </ div>
-        )
-    }
+      </ div>
+    )
+  }
 }
 
 const mapStateToProps = ({ bands }: IStore) => ({ bands });

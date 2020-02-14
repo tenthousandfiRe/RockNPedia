@@ -72,13 +72,11 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
     console.log(flag)
 
     if (flag) {
-      //elimina
       let newState = reviewsShowed;
       newState.pop();
       this.setState({ reviewsShowed: [...newState]})
 
     } else {
-      //añade
       let newState = reviewsShowed;
       newState.push(id_e as number);
       this.setState({ reviewsShowed: [...newState]})

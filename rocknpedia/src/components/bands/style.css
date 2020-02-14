@@ -30,10 +30,12 @@
   margin-bottom: 20px;
   border-radius: 20px;
   animation-duration: 3s;
+  border: solid 1px white;
   animation: appear 1s;
+  cursor: pointer;
 }
 .divPadre .imgDiv :hover {
-  cursor: hand;
+  cursor: pointer;
 }
 @keyframes appear {
   0% {

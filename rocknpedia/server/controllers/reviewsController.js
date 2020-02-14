@@ -1,5 +1,3 @@
-const express = require("express");
-
 const connection = require("../config/db.js");
 
 const reviewsController = {};
@@ -55,6 +53,29 @@ reviewsController.list2 = ((req, res) => {
   }
 });
 
+//GET query for the latest review, to be shown on the landing page (feature added at the very end of the project)
+reviewsController.list3 = ((__, res) => {
+  console.log("list3")
+  try {
+    let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, 
+    album.album_image, album.album_name, user.username, user.user_image from review 
+    INNER JOIN album ON review.album_id = album.album_id and album.album_id = review.album_id
+    INNER JOIN user ON review.user_id = user.user_id order by review_date desc limit 1`;
+    connection.query(sql, (error, results) => {
+      console.log(sql)
+      if (error) throw error;
+      else {
+        res.send(results);
+        console.log(results)
+      }
+      
+    });
+
+  } catch {
+    res.sendStatus(400);
+  }
+});
+
 
 //Post of a new review of an album
 reviewsController.save = ((req, res) => {
@@ -81,7 +102,7 @@ reviewsController.save = ((req, res) => {
 
 
 
-//Update the review TODO if possible
+//Update the review; TODO if possible
 reviewsController.update = (req, res) => {
 const token = req.headers.authorization.replace("Bearer ", "");
   let review = req.body.review;
