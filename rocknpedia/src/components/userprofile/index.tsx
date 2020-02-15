@@ -17,7 +17,7 @@ interface IGlobalStateProps {
   bands: IBand[]
   band: IBand
   account: IAccount | any;
-  
+
 
 }
 
@@ -59,7 +59,10 @@ interface IState {
   is_admin: number;
   bandsLikes: IBandsLikeBD[];
   reviews: IreviewsBD[];
-  followers: IFollowersBD[]
+  followers: IFollowersBD[];
+  showFullReview: string;
+  currentPage: number;
+  reviewsShowed: number[]
 }
 
 interface IFollowersBD {
@@ -87,8 +90,36 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       error: "",
       bandsLikes: [],
       reviews: [],
-      followers: []
+      followers: [],
+      currentPage: 1,
+      showFullReview: "reviewDiv",
+      reviewsShowed: []
     };
+
+    this.changeReviewClassName = this.changeReviewClassName.bind(this)
+
+  }
+
+  changeReviewClassName(e: any) {
+    const { reviewsShowed } = this.state;
+    let id_e = e.target.getAttribute("meta-id");
+
+    const flag = reviewsShowed.find((reviewShowedId) => {
+      return Number(reviewShowedId)  === Number(id_e);
+    });
+    console.log(flag)
+
+    if (flag) {
+      let newState = reviewsShowed;
+      newState.pop();
+      this.setState({ reviewsShowed: [...newState]})
+
+    } else {
+      let newState = reviewsShowed;
+      newState.push(id_e as number);
+      this.setState({ reviewsShowed: [...newState]})
+    }
+
   }
 
   componentDidMount() {
@@ -126,7 +157,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       path: `/reviews/user_reviews/${user_id}`,
     }).then(response => {
       if (response) {
-        
+
         this.setState({ reviews: response })
       }
     });
@@ -201,7 +232,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
-          
+
           Toast.fire({
             icon: 'success',
             title: 'Usuario actualizado!'
@@ -223,7 +254,10 @@ class UserProfile extends React.PureComponent<TProps, IState> {
 
 
   render() {
-    const { followers, reviews, bandsLikes, username, rol, user_image } = this.state;
+    const { currentPage, reviewsShowed, followers, reviews, bandsLikes, username, rol, user_image } = this.state;
+    const reviewsPerPage = 3;
+    const totalPages = Math.round(reviews.length / reviewsPerPage);
+    const reviewToShowPosition = reviewsPerPage * (currentPage - 1);
     return (
       <>
         <div className="separationDiv"></div>
@@ -322,12 +356,12 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     <h5>Reviews</h5>
                   </button>
                   <button
-                        className="btn btn-outline-dark ml-5 mr-4"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#collapseTwo"
-                        aria-expanded="true"
-                        aria-controls="collapseTwo"
+                    className="btn btn-outline-dark ml-5 mr-4"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseTwo"
+                    aria-expanded="true"
+                    aria-controls="collapseTwo"
                   >
                     <h5>Amigos</h5>
                   </button>
@@ -351,20 +385,40 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 data-parent="#accordionExample"
               >
                 <div className="card-body reviews">
-                    {reviews.map(({ review, review_date, album_name, album_image }) => (reviews ?
-                      <div className="row">
-                        <div className="col-2 justify-content-center mt-2 mb-5"> <img
-                          src={album_image ? URL_images + album_image : defaultBandImage}
-                        ></img>
-                          <div className="d-block justify-content-left mt-2 mb-3 p-0">
-                            <div><h5>{album_name}</h5></div>
-                            <span>{new Date(review_date).toLocaleString()}</span></div>
-                        </div>
-                        <div className="col-8 d-flex justify-content-left reviewDiv"><p>{ReactHtmlParser(`${review}`)}</p>
-                          </div>   
+                  {reviews.slice(reviewToShowPosition, reviewToShowPosition + reviewsPerPage).map(({ review_id, review, review_date, album_name, album_image }) => (reviews ?
+                    <div className="row">
+                      <div className="col-2 justify-content-center mt-2 mb-5"> <img
+                        src={album_image ? URL_images + album_image : defaultBandImage}
+                      ></img>
+                        <div className="d-block justify-content-left mt-2 mb-3 p-0">
+                          <div><h5>{album_name}</h5></div>
+                          <span>{new Date(review_date).toLocaleString()}</span></div>
                       </div>
-                      : <p>No has hecho ninguna review aún</p>))}
+                      <div className={`col-8 ${reviewsShowed.find((IdReviewShowed) => Number(IdReviewShowed) === Number(review_id)) ? "reviewDivFull" : "reviewDiv"}`}>
+                        <p>{ReactHtmlParser(`${review}`)}</p>
+                      </div>
+                      <div className="container">
+                        <div className="row">
+                          <div className="col-8"></div>
+                          <div className="col-2"><button className="ButtonShowMoreProfileView" meta-id={review_id} onClick={this.changeReviewClassName}>Ver {`${reviewsShowed.find((IdReviewShowed) => Number(IdReviewShowed) === Number(review_id)) ? "menos" : "más"}`}</button></div>
+                        </div>
+                      </div>
+                    </div>
+                    : <p>No has hecho ninguna review aún</p>))}
                 </div>
+                <div>
+          {[...Array(totalPages)].map((_, num) => (
+            <button
+              className="paginationButtonProfileView"
+              key={num}
+              disabled={num + 1 === currentPage}
+              onClick={() => this.setState({ currentPage: num + 1 })}
+              >
+              {console.log(currentPage)}
+              {num + 1}
+            </button>
+          ))}
+        </div>
               </div>
               <div
                 id="collapseThree"
@@ -373,15 +427,15 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 data-parent="#accordionExample"
               >
                 <div className="card-body container">
-                {bandsLikes.map(({ band_id, name, band_image }) => (
-                  <div className="col-md-6 d-flex justify-content-center mt-2 mb-5 float-left">
-                    <div className="row">
-                      <img style={{ width: 100, height: 100, borderRadius: 50 }} src={band_image ? URL_images + band_image : defaultBandImage} className="card-img" alt="..."></img>
-                      <a onClick={() => this.bandView(band_id)} style={{ height: 40, width: 200 }} className="btn btn-outline-dark boton ml-4 mt-5">{name}</a>
-                    </div>
+                  {bandsLikes.map(({ band_id, name, band_image }) => (
+                    <div className="col-md-6 d-flex justify-content-center mt-2 mb-5 float-left">
+                      <div className="row">
+                        <img style={{ width: 100, height: 100, borderRadius: 50 }} src={band_image ? URL_images + band_image : defaultBandImage} className="card-img" alt="..."></img>
+                        <a onClick={() => this.bandView(band_id)} style={{ height: 40, width: 200 }} className="btn btn-outline-dark boton ml-4 mt-5">{name}</a>
+                      </div>
 
-                  </div>
-                ))}
+                    </div>
+                  ))}
                 </div>
               </div>
               <div
@@ -389,41 +443,41 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 className="collapse"
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
-              >            
+              >
                 {followers.map(({ user_id, username, user_image }) => (
-                    <div className="col-md-6 d-inline-flex justify-content-center mt-4  float-left">
-                      <div className="row">
-                        
-                        <img
-                          style={{ width: 50, height: 50, borderRadius: 100 }}
-                          src={
-                            user_image
-                              ? URL_images + user_image
-                              : defaultBandImage
-                          }
-                          className="card-img "
-                          alt="..."
-                        ></img>
-                      </div>
-                      <div>
-                        <p className="mt-3 ml-3" style={{ fontSize: 20 }}>
-                          {username}
-                                         
-                        </p>
-                        
-                      </div>
-                      <div className="ml-2 mt-4" onClick={() => this.props.history.push(`/users/`)}>
-                      <Unfollow follow_id={user_id} /> 
-                      </div>
+                  <div className="col-md-6 d-inline-flex justify-content-center mt-4  float-left">
+                    <div className="row">
+
+                      <img
+                        style={{ width: 50, height: 50, borderRadius: 100 }}
+                        src={
+                          user_image
+                            ? URL_images + user_image
+                            : defaultBandImage
+                        }
+                        className="card-img "
+                        alt="..."
+                      ></img>
                     </div>
-                    ))}                                      
+                    <div>
+                      <p className="mt-3 ml-3" style={{ fontSize: 20 }}>
+                        {username}
+
+                      </p>
+
+                    </div>
+                    <div className="ml-2 mt-4" onClick={() => this.props.history.push(`/users/`)}>
+                      <Unfollow follow_id={user_id} />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
         <div className="col-12 separationDiv"></div>
 
-        
+
       </>
     );
   }

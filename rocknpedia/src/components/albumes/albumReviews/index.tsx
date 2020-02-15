@@ -96,9 +96,7 @@ class AlbumDetails extends React.PureComponent<IProps, IState> {
     const { currentPage, reviewsShowed } = this.state;
     const reviewsPerPage = 3;
     const totalPages = Math.round(reviews.length / reviewsPerPage);
-    console.log(totalPages)
     const reviewToShowPosition = reviewsPerPage * (currentPage - 1);
-    console.log(reviewToShowPosition)
     return (
       <>
       <div className="separationDiv"></div>

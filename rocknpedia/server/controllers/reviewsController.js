@@ -36,7 +36,7 @@ reviewsController.list2 = ((req, res) => {
     let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, 
     album.album_image, album.album_name, user.username, user.user_image from review 
     INNER JOIN album ON review.album_id = album.album_id
-    INNER JOIN user ON review.user_id = ${user_id} and user.user_id = ${user_id}`;
+    INNER JOIN user ON review.user_id = ${user_id} and user.user_id = ${user_id} order by review_date desc`;
     // let sqlNoReview = `SELECT album_id, album_name, record_label, album_image FROM album WHERE album_id = ${album_id}`
     connection.query(sql, (error, results) => {
       console.log(sql)
