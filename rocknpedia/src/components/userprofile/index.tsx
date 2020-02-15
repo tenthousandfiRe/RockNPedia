@@ -223,13 +223,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
 
 
   render() {
-    const { followers } = this.state;
-    console.log(followers)
-    const { reviews } = this.state;
-    console.log(reviews)
-    const { bandsLikes } = this.state
-    console.log(bandsLikes)
-    const { username, rol, user_image } = this.state;
+    const { followers, reviews, bandsLikes, username, rol, user_image } = this.state;
     return (
       <>
         <div className="separationDiv"></div>
@@ -358,8 +352,8 @@ class UserProfile extends React.PureComponent<TProps, IState> {
               >
                 <div className="card-body reviews">
                     {reviews.map(({ review, review_date, album_name, album_image }) => (reviews ?
-                      <div className="col-12 float-left">
-                        <div className="d-block justify-content-center mt-2 mb-5"> <img
+                      <div className="row">
+                        <div className="col-2 justify-content-center mt-2 mb-5"> <img
                           src={album_image ? URL_images + album_image : defaultBandImage}
                         ></img>
                           <div className="d-block justify-content-left mt-2 mb-3 p-0">
