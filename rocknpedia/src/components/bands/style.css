@@ -75,6 +75,11 @@
 .divPadre p {
   color: white;
 }
+.divPadre h2 {
+  color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
 
 .bandDivs {
   background-color: rgba(245, 245, 245, 0.89);

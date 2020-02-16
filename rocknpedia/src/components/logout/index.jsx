@@ -14,8 +14,8 @@ class Logout extends React.Component {
     render() {
         return (
             <>
-            <div className="separationDiv"></div>
-                <video className="video" loop autoPlay muted src={video}></video>
+            <div className="container-fluid d-flex justify-content-center">
+                <video className="videoLogout" loop autoPlay muted src={video}></video>
                 <Sound
                     url={audio}
                     playStatus={Sound.status.PLAYING}
@@ -23,6 +23,7 @@ class Logout extends React.Component {
                     onPlaying={this.handleSongPlaying}
                     onFinishedPlaying={this.handleSongFinishedPlaying}
                 />
+                </div>
 
             </>
         );

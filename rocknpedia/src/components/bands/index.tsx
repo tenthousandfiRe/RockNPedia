@@ -127,7 +127,18 @@ class Bands extends React.PureComponent<TProps, IState> {
                 </div>
               </div>
             </div>
-            <div className="col-5"><h1>Última review añadida por {username}</h1>
+            <div className="col-5 d-flex justify-content-center"><h1>En Rock 'N' Pedia puedes darte un paseo por la historia del rock</h1>
+                  </div>
+
+          </div>
+        </div>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-5">
+              <h1>Añade y comenta tus álbumes favoritos</h1>
+            </div>
+            <div className="col-5"><h2>Última review añadida por {username}</h2>
             <p>{new Date(review_date).toLocaleString()}</p>
               <img
               style={{width: 200}}
