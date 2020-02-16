@@ -68,6 +68,7 @@ class Bands extends React.PureComponent<TProps, IState> {
     });
   }
 
+  //A POST has to be forced to get the info, for unknown reaasons GET method didn't work
   getLatestReview() {
     myFetch({ method: "POST", path: "/reviews/latest_review/" }).then(json => {
       this.setState({ review: json[0] });

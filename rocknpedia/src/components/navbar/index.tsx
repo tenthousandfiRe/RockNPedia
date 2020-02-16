@@ -74,7 +74,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
     const { logout } = this.props;
     localStorage.removeItem("token");
     logout();
-    this.props.history.push("/");
+    this.props.history.push("/logout");
   }
 
   vistaProfile() {

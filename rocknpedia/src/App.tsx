@@ -19,6 +19,7 @@ import userProfile from "./components/userprofile/index"
 import usersList from "./components/usersList";
 import AlbumReviews from './components/albumes/albumReviews/'
 import SearchedBand from './components/bands/searchedBand'
+import Logout from './components/logout/'
 
 
 
@@ -60,6 +61,7 @@ class App extends React.PureComponent<TProps> {
         <Route path='/users' exact component={usersList} />
         <Route path='/reviews/:id/' exact component={AlbumReviews} />
         <Route path='/searchByNames/' exact component={SearchedBand} />
+        <Route path='/logout' exact component={Logout} />
       </BrowserRouter>
     </>;
   }
