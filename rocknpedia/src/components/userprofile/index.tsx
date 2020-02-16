@@ -146,7 +146,6 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     }).then(response => {
       if (response) {
         this.setState({ followers: response });
-        // const { username, rol, user_image } = json;
       }
     });
   }
@@ -397,12 +396,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                       <div className={`col-8 ${reviewsShowed.find((IdReviewShowed) => Number(IdReviewShowed) === Number(review_id)) ? "reviewDivFull" : "reviewDiv"}`}>
                         <p>{ReactHtmlParser(`${review}`)}</p>
                       </div>
-                      <div className="container">
-                        <div className="row">
-                          <div className="col-8"></div>
-                          <div className="col-2"><button className="ButtonShowMoreProfileView" meta-id={review_id} onClick={this.changeReviewClassName}>Ver {`${reviewsShowed.find((IdReviewShowed) => Number(IdReviewShowed) === Number(review_id)) ? "menos" : "más"}`}</button></div>
-                        </div>
-                      </div>
+                      <div className="col-2 float-left"><button className="ButtonShowMoreProfileView" meta-id={review_id} onClick={this.changeReviewClassName}>Ver {`${reviewsShowed.find((IdReviewShowed) => Number(IdReviewShowed) === Number(review_id)) ? "menos" : "más"}`}</button></div>
                     </div>
                     : <p>No has hecho ninguna review aún</p>))}
                 </div>
