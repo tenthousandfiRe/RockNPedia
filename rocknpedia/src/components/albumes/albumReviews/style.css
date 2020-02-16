@@ -25,12 +25,6 @@
   overflow: hidden;
   transition: height 2s;
 }
-.ReviewsContainer .reviewCard p {
-  margin-top: 10;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font-size: 15px;
-}
 .ReviewsContainer .reviewCardFull {
   background-color: rgba(245, 245, 245, 0.89);
   position: relative;
@@ -51,7 +45,6 @@
   margin-top: 10;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 15px;
 }
 
 .userInfo {

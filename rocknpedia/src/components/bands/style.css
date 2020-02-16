@@ -34,8 +34,9 @@
   animation: appear 1s;
   cursor: pointer;
 }
-.divPadre .imgDiv :hover {
-  cursor: pointer;
+.divPadre .imgDiv .imgDiv:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
 }
 @keyframes appear {
   0% {
@@ -44,6 +45,35 @@
   100% {
     opacity: 1;
   }
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.divPadre .reviewCard {
+  position: relative;
+  text-align: left;
+  height: 133px;
+  background-color: rgba(245, 245, 245, 0.89);
+  padding: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  line-height: 1.6;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: height 2s;
+}
+.divPadre .reviewCard p {
+  color: black !important;
+}
+.divPadre p {
+  color: white;
 }
 
 .bandDivs {
