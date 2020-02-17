@@ -7,8 +7,9 @@
 
 
     img{
-        border-radius: 50%;
+        // border-radius: 50%;
         width: 40%;
+        
     }
 
     .buttonsDiv{
@@ -157,3 +158,8 @@ overflow: hidden;
     float: right;
 }
 
+.imagenLogo {
+    background-repeat: no-repeat;
+        background-size: 20% !important;
+        background-position: center;
+}

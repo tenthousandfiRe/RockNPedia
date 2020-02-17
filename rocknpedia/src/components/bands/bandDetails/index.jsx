@@ -270,7 +270,7 @@ class BandDetails extends React.PureComponent {
           <div className="col-12 bandDivsImage">
             <img
               src={band_image ? URL_bandupdate + band_image : defaultBandImage}
-              className="img"
+              className="img imagenLogo"
               alt="..."
             ></img>
             {token ? (

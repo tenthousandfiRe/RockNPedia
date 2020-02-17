@@ -33,16 +33,21 @@
     
 
     .imgDiv {
-        flex-direction: column;
-        background: 50%;
-        height: 200px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        border-radius: 20px;
-        animation-duration: 3s;
-        border: solid 1px white;
+        // flex-direction: column;
+        // background: 50%;
+        // height: 200px;
+        // margin-top: 20px;
+        // margin-bottom: 20px;
+        // border-radius: 20px;
+        // animation-duration: 3s;
+        // border: solid 1px white;
+        height: 300px;
         animation: appear 1s;
         cursor: pointer;
+        background-repeat: no-repeat;
+        background-size: 40%;
+        background-position: center;
+
      
 
         .imgDiv:hover {
@@ -140,5 +145,21 @@
 
 #out{
     background-color: unset !important;
+
+}
+
+
+@media only screen and (max-width: 768px ){
+
+    .imgDiv {
+    margin-right: 20px;
+    background-repeat: no-repeat !important;
+    background-position: center center!important;
+    background-size: auto 100% !important;
+    min-height: 350px !important;
+    max-height: 450px !important;
+    max-width: 450px !important;
+    min-width: 350px !important;
+    }
 
 }
