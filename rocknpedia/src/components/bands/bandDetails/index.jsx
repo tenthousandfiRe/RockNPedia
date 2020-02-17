@@ -29,7 +29,7 @@ class BandDetails extends React.PureComponent {
       album_image: "",
       album_id: null,
       error: "",
-      iconColor: "",
+      iconColor: "white",
       review: "",
       reviews: [],
       selectedAlbum: 0,
@@ -223,7 +223,7 @@ class BandDetails extends React.PureComponent {
         token
       });
       if (iconColor === "red") {
-        this.setState({ iconColor: "" });
+        this.setState({ iconColor: "white" });
         myFetch({
           method: "DELETE",
           path: `/bands/user_unlikes/${band_id}/${user_id}/`,
@@ -245,7 +245,7 @@ class BandDetails extends React.PureComponent {
       json => {
         if (json) {
           if (json.length === 0) {
-            this.setState({ iconColor: "" });
+            this.setState({ iconColor: "white" });
           } else {
             this.setState({ iconColor: "red" });
           }

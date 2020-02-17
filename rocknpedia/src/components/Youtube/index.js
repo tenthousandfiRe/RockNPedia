@@ -8,8 +8,8 @@ import VideoDetail from "./components/video_detail";
 import { connect } from "react-redux";
 
 // const APIYoutube = "AIzaSyBa0GSoND22D8Rht2Op9zB7xjR92JSi0fc"
-// const API_KEY = "AIzaSyBa0GSoND22D8Rht2Op9zB7xjR92JSi0fc";
-const API_KEY = "AIzaSyBd0pAc-1ayarsVv9gW2cj0JVAeiW7Oop0";
+const API_KEY = "AIzaSyBa0GSoND22D8Rht2Op9zB7xjR92JSi0fc";
+// const API_KEY = "AIzaSyBd0pAc-1ayarsVv9gW2cj0JVAeiW7Oop0";
 // const API_KEY = "AIzaSyDrHn1Dq1Rb8n_i9iApNilK87T8MA_463w";
 // 'https://www.googleapis.com/youtube/v3/search?key=[AIzaSyBa0GSoND22D8Rht2Op9zB7xjR92JSi0fc]'
 
