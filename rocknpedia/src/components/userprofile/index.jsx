@@ -51,8 +51,6 @@ class UserProfile extends React.PureComponent {
     const flag = reviewsShowed.find((reviewShowedId) => {
       return Number(reviewShowedId) === Number(id_e);
     });
-    console.log(flag)
-
     if (flag) {
       let newState = reviewsShowed;
       newState.pop();
@@ -113,7 +111,6 @@ class UserProfile extends React.PureComponent {
 
   onRolChange(event) {
     const rol = event.target.selectedOptions[0].value;
-    console.log(event.target.selectedOptions[0].value);
     this.setState({ rol, error: "  " });
   }
   getUser() {
@@ -124,7 +121,6 @@ class UserProfile extends React.PureComponent {
       token
     }).then(json => {
       if (json) {
-        console.log(json);
         // const { username, rol, user_image } = json;
         this.props.setAccount(json);
       }
@@ -147,15 +143,10 @@ class UserProfile extends React.PureComponent {
       myFetch({
         path: `/users/${user_id}`,
         method: "POST",
-        // json: { username, rol, is_admin, user_image },
         token,
         formData
       }).then(json => {
         if (json) {
-          console.log(json);
-
-          console.log(token);
-          // const { username, rol, user_image } = token;
           const {
             username,
             rol,
@@ -360,7 +351,6 @@ class UserProfile extends React.PureComponent {
                       disabled={num + 1 === currentPage}
                       onClick={() => this.setState({ currentPage: num + 1 })}
                     >
-                      {console.log(currentPage)}
                       {num + 1}
                     </button>
                   ))}

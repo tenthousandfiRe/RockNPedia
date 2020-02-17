@@ -35,11 +35,9 @@ class AlbumDetails extends React.PureComponent {
     myFetch({ path: `/reviews/${album_id}` }).then(json => {
       this.setState({ reviews: json })
       if (json) {
-        console.log(json)
         this.setState({ album_selected_image: json[0].album_image })
         this.setState({ album_selected_name: json[0].album_name })
         let rating = 0
-        console.log(json.length)
         for (let i = 0; i < json.length; i++) {
           rating = rating + json[i].rating
         }
@@ -56,7 +54,6 @@ class AlbumDetails extends React.PureComponent {
     const flag = reviewsShowed.find((reviewShowedId) => {
       return Number(reviewShowedId) === Number(id_e);
     });
-    console.log(flag)
 
     if (flag) {
       let newState = reviewsShowed;
@@ -139,7 +136,6 @@ class AlbumDetails extends React.PureComponent {
                 disabled={num + 1 === currentPage}
                 onClick={() => this.setState({ currentPage: num + 1 })}
               >
-                {console.log(currentPage)}
                 {num + 1}
               </button>
             ))}

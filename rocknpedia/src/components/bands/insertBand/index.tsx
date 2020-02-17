@@ -49,13 +49,11 @@ class InsertBand extends React.PureComponent<TProps, IState> {
   onNameChange(event: any) {
     const name = event.target.value;
     this.setState({ name });
-    console.log(name);
   }
 
   onFoundationYearChange(event: any) {
     const foundation_year = event.target.value;
     this.setState({ foundation_year });
-    console.log(foundation_year);
   }
 
   insertBand() {
@@ -64,7 +62,6 @@ class InsertBand extends React.PureComponent<TProps, IState> {
       const formData = new FormData();
       const token = localStorage.getItem("token");
       const band_image = this.inputFileRef.current.files[0];
-      console.log(band_image);
       formData.append("band_image", band_image);
       formData.append("name", name);
       formData.append("foundation_year", foundation_year);
@@ -72,7 +69,6 @@ class InsertBand extends React.PureComponent<TProps, IState> {
       myFetch({ method: "POST", path: "/bands/", token, formData }).then(
         json => {
           if (json) {
-            console.log(json);
           }
         }
       );

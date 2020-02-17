@@ -54,7 +54,6 @@ interface IState {
     render() {
       const {  iconColor } = this.state;
       const { follow_id } = this.props;
-      console.log(follow_id)
       return (
         <>      
  <FontAwesomeIcon className="followIcon fas fa-user-minus d-flex float-left" style={{ color: iconColor, width: 20, height: 20 }} icon={faUserMinus} onClick={() => this.unfollowUser(follow_id)} />                           

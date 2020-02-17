@@ -55,7 +55,6 @@ class Navbar extends React.PureComponent<TProps, IState> {
   onSearchNameChange(event: any) {
     const name = event.target.value;
     this.setState({ name: name });
-    console.log(name)
   }
 
 

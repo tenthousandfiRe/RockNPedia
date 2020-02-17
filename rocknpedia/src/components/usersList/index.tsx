@@ -51,7 +51,6 @@ class userList extends React.PureComponent<TProps, IState> {
       token
     }).then(response => {
       if (response) {
-        console.log(response);
         this.setState({ users: response });
       }
     });
@@ -82,7 +81,6 @@ getFollowers() {
           this.setState({ iconColor: "#6084AD" });
         }
       }
-      console.log(json);
     }
   );
 }

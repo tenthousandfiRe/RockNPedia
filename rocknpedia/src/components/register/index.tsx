@@ -44,7 +44,6 @@ class Register extends React.PureComponent<IProps, IState> {
 
   onRolChange(event: any) {
     const rol = event.target.selectedOptions[0].value;
-    console.log(event.target.selectedOptions[0].value);
     this.setState({ rol, error: "" });
   }
 

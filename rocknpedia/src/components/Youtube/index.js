@@ -42,12 +42,6 @@ componentDidMount() {
   }
 
   render() {
-
-    
-             
-    // console.log(this.props.banda)
-    // const videoSearch = _.debounce( (term) => {this.videoSearch(term), 300});
-    
     return (
       <div className="container col-12 ">
         <div className="row">

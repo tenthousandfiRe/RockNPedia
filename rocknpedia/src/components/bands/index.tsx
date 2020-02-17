@@ -146,7 +146,7 @@ class Bands extends React.PureComponent<TProps, IState> {
                 <p>{ReactHtmlParser(`${review}`)}</p>
               </div>
               <Link to={`/reviews/${album_id}`} className="btn btn-outline-light">
-                Ver review completa</Link>
+                Ver reviews</Link>
             </div>
 
           </div>
