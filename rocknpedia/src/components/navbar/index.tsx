@@ -93,10 +93,10 @@ class Navbar extends React.PureComponent<TProps, IState> {
     const { name } = this.state;
     const token = localStorage.getItem("token");
     return (
-      <nav className="navbar navbar-expand-lg navbar-light navie container-fluid">
-        <a className="navbar-brand" href="/" ><img className="logo ml-2" src="https://i.imgur.com/0MATbvy.png" />
-
+      <nav className="navbar navbar-light navbar-expand-lg navie container-fluid">
+        <a className="navbar-brand" href="/" ><img className="logo ml-2 logoresponsive" style={{cursor: "pointer"}} src="https://i.imgur.com/0MATbvy.png" />
         </a>
+        
         <button
           className="navbar-toggler"
           type="button"
@@ -106,17 +106,18 @@ class Navbar extends React.PureComponent<TProps, IState> {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          
+         <span className="btn btn-light bg-light navbar-toggler-icon" style={{color:"white !important"}}></span>
         </button>
 
-        <input className="form-control offset-3 mr-sm-2 col-2 d-flex justify-content-end searchBar" type="text" value={name} onChange={this.onSearchNameChange} aria-label="Search">
-        </input>
-        <button className="btn btn-outline-light" type="submit" onClick={() => this.searchBand()}>Buscar banda</button>
-
-
+        
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div className="d-flex justify-content-end" style={{width: "100%"}}>
+            
+        <input className="form-control nav-item offset-3 mr-sm-2 col-2 searchBar mt-2" type="text" value={name} onChange={this.onSearchNameChange} aria-label="Search">
+        </input>
+        <a className="btn btn-outline-light nav-link mt-2 botonSearch" style={{color: "white", height: "100%"}} onClick={() => this.searchBand()}>Buscar</a>
           <ul className="navbar-nav mr-auto"></ul>
-          <a className="nav-item">
+          <a className="nav-item d-flex justify-content-end">
             {/* ternary to show the button to login */}
             {!token ? (
               <button
@@ -232,7 +233,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
           {token ? (
             <div className="nav-item dropdown dropleft ml-3">
               <a
-                className="nav-link dropdown-toggle btn btn-outline-light"
+                className="nav-link dropdown-toggle btn btn-outline-light mt-2"
                 href="#"
                 id="navbarDropdown"
                 role="button"
@@ -275,6 +276,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
           ) : (
               ""
             )}
+            </div>
         </div>
       </nav>
     );

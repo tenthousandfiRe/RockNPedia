@@ -26,3 +26,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@media only screen and (max-width: 576px ){
+body {
+  background-image: url("./2.jpg");
+color:green
+}
+
+
+}

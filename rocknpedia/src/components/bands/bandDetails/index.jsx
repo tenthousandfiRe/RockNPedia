@@ -308,7 +308,7 @@ class BandDetails extends React.PureComponent {
           </div>
             <div className="row d-flex text-align-center">
             <div className="col-12 accordion" style={{marginBottom: "20px"}}id="accordionExample">
-            <div id="backie" className="card collapseColor">
+            <div id="out"className="card collapseColor">
               <div
                 className="card-header d-flex justify-content-center backAlb"
                 id="headingOne"
@@ -343,8 +343,8 @@ class BandDetails extends React.PureComponent {
                 aria-labelledby="headingOne"
                 data-parent="#accordionExample"
               >
-                <div className="card-body col-12 backgroundCollapse">
-                  <div className="  d-flex justify-content-end">
+                <div className="card-body col-12" id="out">
+                  <div className="d-flex justify-content-end">
                     <button
                       className=" btn btn-outline-light"
                       data-toggle="modal"
