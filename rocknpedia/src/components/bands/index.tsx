@@ -105,7 +105,7 @@ class Bands extends React.PureComponent<TProps, IState> {
             <div className="col-5">
               {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, name, band_image }) => (
                 <div className="imgDiv" onClick={() => this.bandView(band_id)} style={{ backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})` }}>
-                  <h1>{name}</h1>
+                  {/* <h1>{name}</h1> */}
                 </div>
               ))}
               <div className="container-fluid">

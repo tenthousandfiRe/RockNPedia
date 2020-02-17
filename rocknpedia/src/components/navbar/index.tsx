@@ -94,6 +94,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
     const token = localStorage.getItem("token");
     return (
       <nav className="navbar navbar-light navbar-expand-lg navie container-fluid">
+        
         <a className="navbar-brand" href="/" ><img className="logo ml-2 logoresponsive" style={{cursor: "pointer"}} src="https://i.imgur.com/0MATbvy.png" />
         </a>
         
