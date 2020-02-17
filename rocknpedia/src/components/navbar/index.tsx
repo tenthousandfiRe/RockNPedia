@@ -112,18 +112,19 @@ class Navbar extends React.PureComponent<TProps, IState> {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <div className="d-flex justify-content-end" style={{width: "100%"}}>
             
-        <input className="form-control nav-item offset-3 mr-sm-2 col-2 searchBar mt-2" type="text" value={name} onChange={this.onSearchNameChange} aria-label="Search">
+        <input className="form-control nav-item offset-3 mr-sm-2 col-2 searchBar" type="text" value={name} onChange={this.onSearchNameChange} aria-label="Search">
         </input>
-        <a className="btn btn-outline-light nav-link mt-2 botonSearch" style={{color: "white", height: "100%"}} onClick={() => this.searchBand()}>Buscar</a>
+        <a className="btn btn-outline-light nav-link botonSearch" style={{color: "white"}} onClick={() => this.searchBand()}>Buscar</a>
           <ul className="navbar-nav mr-auto"></ul>
           <a className="nav-item d-flex justify-content-end">
             {/* ternary to show the button to login */}
             {!token ? (
               <button
                 type="button"
-                className="btn btn-outline-light my-2 my-sm-0"
+                className="btn btn-outline-light my-2 my-sm-0 ml-3 d-flex justify-content-end botonSearch"
                 data-toggle="modal"
                 data-target="#exampleModal"
+                
               >
                 {""}
                 Log In
@@ -169,7 +170,7 @@ class Navbar extends React.PureComponent<TProps, IState> {
             {!token ? (
               <button
                 type="button"
-                className="btn btn-outline-light my-2 my-sm-0 ml-3 d-flex justify-content-end"
+                className="btn btn-outline-light my-2 my-sm-0 ml-3 d-flex justify-content-end botonSearch"
                 data-toggle="modal"
                 data-target="#exampleModal2"
               >
