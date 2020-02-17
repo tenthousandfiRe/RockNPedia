@@ -1,8 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { IBand } from "../../../interfaces/IBand";
-import { IStore } from "../../../interfaces/IStore";
-import { IAccount } from "../../../interfaces/IAccount"
+import StarRatings from 'react-star-ratings';
 import { Link } from "react-router-dom";
 import CKEditor from 'ckeditor4-react';
 import { myFetch } from "../../../utils";
@@ -33,27 +31,25 @@ class BandDetails extends React.PureComponent {
       review: "",
       reviews: [],
       selectedAlbum: 0,
-      bandHistoryDiv: "historyBackgroundEditBand",
-      buttonShowMore: "más",
-      buttonClicked: false
+      rating: 1
+
     };
     this.inputFileRef = React.createRef();
     this.onAlbumNameChange = this.onAlbumNameChange.bind(this);
     this.onRecordLabelChange = this.onRecordLabelChange.bind(this);
     this.addAlbum = this.addAlbum.bind(this);
-    this.onMenuChange = this.onMenuChange.bind(this);
+    this.onChangeRating = this.onChangeRating.bind(this);
+
 
   }
 
-  onMenuChange() { 
-    const { buttonShowMore, bandHistoryDiv } = this.state 
-    if (buttonShowMore === this.state.buttonShowMore) {
-      this.setState({buttonShowMore: "menos", bandHistoryDiv: "historyBackgroundEditBandFull"}) 
-    } if (buttonShowMore === "menos") {
-      this.setState({buttonShowMore: "más", bandHistoryDiv: "historyBackgroundEditBand"}) 
-    }
-
-}
+  onChangeRating(newRating) {
+    const { rating } = this.state
+    this.setState({
+      rating: newRating
+    });
+    console.log(rating)
+  }
 
   onAlbumNameChange(event) {
     const album_name = event.target.value;
@@ -165,10 +161,10 @@ class BandDetails extends React.PureComponent {
 
 
   insertReview(album_id) {
-    const { review } = this.state;
+    const { review, rating } = this.state;
     const { user_id } = this.props.account
     const token = localStorage.getItem("token")
-    myFetch({ method: "POST", path: `/reviews/${user_id}/${album_id}`, token, json: { review } }).then(
+    myFetch({ method: "POST", path: `/reviews/${user_id}/${album_id}`, token, json: { review, rating } }).then(
       json => {
         if (json) {
         }
@@ -176,7 +172,7 @@ class BandDetails extends React.PureComponent {
     );
     const Toast = Swal.mixin({
       toast: true,
-      position: 'top-left',
+      position: 'center',
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
@@ -292,18 +288,18 @@ class BandDetails extends React.PureComponent {
             <div className="col-12"><h1>{name}</h1>
             <p>{foundation_year}</p></div>
             {band_history ? (
-              <>
-              <div
-                className={bandHistoryDiv}
-                style={{ borderRadius: 20 }}
-              >
-                <p>{ReactHtmlParser(`${band_history}`)}</p>
-              </div>
-              <div><button className="ButtonShowMoreHistoryBand" onClick={this.onMenuChange}>Ver {buttonShowMore}</button></div>
-              </> 
-            ) : (
-                ""
-              )}
+                <>
+                  <div
+                    className="historyBackgroundEditBandFull"
+                    style={{ borderRadius: 20 }}
+                  >
+                    <p>{ReactHtmlParser(`${band_history}`)}</p>
+                  </div>
+                  {/* <div><button className="ButtonShowMoreHistoryBand" onClick={this.onMenuChange}>Ver {buttonShowMore}</button></div> */}
+                </>
+              ) : (
+                  ""
+                )}
           </div>
           </div>
             <div className="row d-flex text-align-center">
@@ -399,7 +395,7 @@ class BandDetails extends React.PureComponent {
                               </div>
                               <div className="form-group">
                                 <label className="label mt-4 mb-4">
-                                  <strong>Sello Discografico</strong>
+                                  <strong>Año</strong>
                                 </label>
                                 <div className="control">
                                   <input
@@ -498,6 +494,22 @@ class BandDetails extends React.PureComponent {
                             onChange={e => this.onReviewChange(e)}
                           />
                         </div>
+                        <div className="container">
+                            <div className="row">
+                              <div className="col-12">
+                                <h5>...y puntúalo</h5>
+                                <StarRatings
+                                  starDimension="30px"
+                                  starSpacing="5px"
+                                  rating={this.state.rating}
+                                  starRatedColor="red"
+                                  changeRating={this.onChangeRating}
+                                  numberOfStars={6}
+                                  name='rating'
+                                />
+                              </div>
+                            </div>
+                          </div>
                         <div class="modal-footer">
                           <button type="button" className="btn btn-outline-dark mt-3 buttonsEditBand"
                             data-dismiss="modal" onClick={() => this.insertReview(selectedAlbum)}>Guardar</button>

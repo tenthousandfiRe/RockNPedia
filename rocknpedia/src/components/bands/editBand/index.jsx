@@ -52,7 +52,7 @@ class EditBand extends React.PureComponent {
             this.inputFileRef.current.value = "";
             const Toast = Swal.mixin({
                 toast: true,
-                position: 'top-end',
+                position: 'center',
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,
