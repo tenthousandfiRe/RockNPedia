@@ -332,7 +332,7 @@ class BandDetails extends React.PureComponent {
                     aria-expanded="true"
                     aria-controls="collapseThree"
                   >
-                    <h5>Covers</h5>
+                    <h5>Videos</h5>
                   </button>
                 </h2>
               </div>
