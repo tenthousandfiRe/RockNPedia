@@ -90,8 +90,6 @@ class Bands extends React.PureComponent<TProps, IState> {
   render() {
     const { currentPage } = this.state;
     const { review, username, review_date, album_image, album_name, album_id } = this.state.review
-    console.log(review)
-    console.log(username)
     const { bands } = this.props
     const bandsPerPage = 3;
     const totalPages = Math.round(bands.length / bandsPerPage);

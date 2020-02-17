@@ -7,7 +7,7 @@ reviewsController.list = ((req, res) => {
   try {
   let album_id = req.params.album_id;
     let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, rating,
-    album.album_image, album.album_name, user.username, user.user_image from review 
+    album.album_image, album.album_name, user.username, album.record_label, user.user_image from review 
     INNER JOIN album ON review.album_id = album.album_id and album.album_id = ${album_id}
     INNER JOIN user ON review.user_id = user.user_id order by review_date desc`;
     let sqlNoReview = `SELECT album_id, album_name, record_label, album_image FROM album WHERE album_id = ${album_id}`

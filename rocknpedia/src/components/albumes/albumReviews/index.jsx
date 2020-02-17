@@ -19,6 +19,7 @@ class AlbumDetails extends React.PureComponent {
       reviews: [],
       album_selected_image: "",
       album_selected_name: "",
+      album_recordLabel: 0,
       currentPage: 1,
       showFullReview: "reviewCard",
       reviewsShowed: [],
@@ -40,6 +41,7 @@ class AlbumDetails extends React.PureComponent {
       } else {
         this.setState({ album_selected_image: json[0].album_image })
         this.setState({ album_selected_name: json[0].album_name })
+        this.setState({ album_recordLabel: json[0].record_label })
         let rating = 0
         for (let i = 0; i < json.length; i++) {
           rating = rating + json[i].rating
@@ -78,11 +80,11 @@ class AlbumDetails extends React.PureComponent {
 
 
   render() {
-    const { reviews, average_rating } = this.state;
+    const { reviews, average_rating, album_recordLabel } = this.state;
     const { album_selected_image, album_selected_name } = this.state;
     const { currentPage, reviewsShowed } = this.state;
     const reviewsPerPage = 3;
-    const totalPages = Math.round(reviews.length / reviewsPerPage);
+    const totalPages = Math.round(reviews.length / reviewsPerPage)
     const reviewToShowPosition = reviewsPerPage * (currentPage - 1);
     return (
       <>
@@ -92,7 +94,7 @@ class AlbumDetails extends React.PureComponent {
             src={album_selected_image ? URL_images + album_selected_image : defaultBandImage}
             className="albumImage"
           ></img>
-          <div><h2>{album_selected_name}</h2></div>
+          <div><h2>{album_selected_name}</h2><h3>{album_recordLabel}</h3></div>
           <div><StarRatings
             starDimension="30px"
             starSpacing="5px"
