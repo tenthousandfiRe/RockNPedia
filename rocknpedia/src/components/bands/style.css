@@ -43,8 +43,7 @@
 }
 @keyframes appear {
   0% {
-    opacity: 0;
-  }
+    opacity: 0; }
   100% {
     opacity: 1;
   }
@@ -87,27 +86,26 @@
 .bandDivs {
   background-color: rgba(245, 245, 245, 0.89);
   margin-top: 40px;
-  height: 150px;
-}
+  height: 150px; }
 
 .imageAdjust {
-  justify-content: left;
-}
+  -webkit-box-pack: left;
+  -ms-flex-pack: left;
+  justify-content: left; }
 
 .boton {
   color: black !important;
-  border-color: black !important;
-}
+  border-color: black !important; }
 
 .boton:hover {
   color: white !important;
-  border-color: white !important;
-}
+  border-color: white !important; }
 
 .cuerpo {
-  height: 400px !important;
-}
+  height: 400px !important; }
 
 .paginationButtonsDiv {
-  margin-left: 150px;
-}
+  margin-left: 150px; }
+
+#out {
+  background-color: unset !important; }

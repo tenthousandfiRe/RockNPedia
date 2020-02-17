@@ -28,3 +28,14 @@ nav {
   border: unset;
   border-bottom: solid 1px white;
   border-bottom-right-radius: 0; }
+
+.logoUser {
+  height: 40px;
+  width: 100px; }
+
+.botonSearch {
+  color: white;
+  height: 100%; }
+
+.botonSearch:hover {
+  color: black !important; }
