@@ -41,8 +41,9 @@
         cursor: pointer;
      
 
-        :hover {
-            cursor: pointer;
+        .imgDiv:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease-in-out;
         }
 
         @keyframes appear {
@@ -52,9 +53,44 @@
             100% {
               opacity: 1;
             }
+
+            from {
+                opacity: 0;
+                -webkit-transform: scale3d(0.3, 0.3, 0.3);
+                transform: scale3d(0.3, 0.3, 0.3);
+              }
+            
+              50% {
+                opacity: 1;
+              }
           }
           
     }
+
+        .reviewCard {
+            position: relative;
+            text-align: left;
+            height: 133px;
+            background-color: rgba(245, 245, 245, 0.89);
+            padding: 5px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+      line-height: 1.6;
+      -webkit-line-clamp: 10;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: height 2s;
+
+      p{
+          color: black !important
+      }
+        }
+
+        p{
+            color: white
+        }
 }
 
 
