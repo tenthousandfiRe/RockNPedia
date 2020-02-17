@@ -34,7 +34,10 @@ class AlbumDetails extends React.PureComponent {
     const album_id = this.props.match.params.id;
     myFetch({ path: `/reviews/${album_id}` }).then(json => {
       this.setState({ reviews: json })
-      if (json) {
+      if (json[0].rating === undefined) {
+        this.setState({ album_selected_image: json[0].album_image })
+        this.setState({ album_selected_name: json[0].album_name })
+      } else {
         this.setState({ album_selected_image: json[0].album_image })
         this.setState({ album_selected_name: json[0].album_name })
         let rating = 0
