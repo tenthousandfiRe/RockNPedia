@@ -38,6 +38,8 @@ class AlbumDetails extends React.PureComponent {
       if (json[0].rating === undefined) {
         this.setState({ album_selected_image: json[0].album_image })
         this.setState({ album_selected_name: json[0].album_name })
+        this.setState({ album_recordLabel: json[0].record_label })
+
       } else {
         this.setState({ album_selected_image: json[0].album_image })
         this.setState({ album_selected_name: json[0].album_name })
