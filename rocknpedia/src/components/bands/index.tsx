@@ -91,8 +91,6 @@ class Bands extends React.PureComponent<TProps, IState> {
   render() {
     const { currentPage } = this.state;
     const { review, username, review_date, album_image, album_name, album_id } = this.state.review
-    console.log(review)
-    console.log(username)
     const { bands } = this.props
     const bandsPerPage = 3;
     const totalPages = Math.round(bands.length / bandsPerPage);
@@ -106,14 +104,13 @@ class Bands extends React.PureComponent<TProps, IState> {
             <div className="col-5">
               {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, name, band_image }) => (
                 <div className="imgDiv" onClick={() => this.bandView(band_id)} style={{ backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})` }}>
-                  <h1>{name}</h1>
+                  <h1 className="h1Image">{name}</h1>
                 </div>
               ))}
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-12">
                     {[...Array(totalPages)].map((_, num) => (
-
                       <button
                         className="paginationButton"
                         key={num}
@@ -127,21 +124,20 @@ class Bands extends React.PureComponent<TProps, IState> {
                 </div>
               </div>
             </div>
-            <div className="col-5 d-flex justify-content-center"><h1>En Rock 'N' Pedia puedes darte un paseo por la historia del rock</h1>
-                  </div>
-
+            <div className="col-5 d-flex justify-content-center align-items-center"><h1 className="text-align-center title">Date un paseo por la historia del rock en Rock 'N' Pedia </h1>
+            </div>
           </div>
         </div>
         <div className="container-fluid">
           <div className="row">
             <div className="col-1"></div>
-            <div className="col-5">
-              <h1>Añade y comenta tus álbumes favoritos</h1>
+            <div className="col-5 d-flex justify-content-center align-items-center">
+              <h1 className="text-align-center title">Añade y comenta tus álbumes favoritos</h1>
             </div>
             <div className="col-5"><h2>Última review añadida por {username}</h2>
-            <p>{new Date(review_date).toLocaleString()}</p>
+              <p>{new Date(review_date).toLocaleString()}</p>
               <img
-              style={{width: 200}}
+                style={{ width: 200 }}
                 src={album_image ? URL_images + album_image : defaultBandImage}
                 className="albumImage"
               ></img>
@@ -150,8 +146,8 @@ class Bands extends React.PureComponent<TProps, IState> {
                 <p>{ReactHtmlParser(`${review}`)}</p>
               </div>
               <Link to={`/reviews/${album_id}`} className="btn btn-outline-light">
-                  Ver review completa</Link>
-                  </div>
+                Ver review completa</Link>
+            </div>
 
           </div>
         </div>

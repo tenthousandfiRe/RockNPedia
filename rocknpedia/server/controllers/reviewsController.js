@@ -6,12 +6,13 @@ const reviewsController = {};
 reviewsController.list = ((req, res) => {
   try {
   let album_id = req.params.album_id;
-    let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, 
+    let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, rating,
     album.album_image, album.album_name, user.username, user.user_image from review 
     INNER JOIN album ON review.album_id = album.album_id and album.album_id = ${album_id}
     INNER JOIN user ON review.user_id = user.user_id order by review_date desc`;
     let sqlNoReview = `SELECT album_id, album_name, record_label, album_image FROM album WHERE album_id = ${album_id}`
     connection.query(sql, (error, results) => {
+      console.log(sql)
       if (error) throw error;
       else if (results.length === 0) {
         connection.query(sqlNoReview, (__, results2) => {
@@ -33,10 +34,10 @@ reviewsController.list = ((req, res) => {
 reviewsController.list2 = ((req, res) => {
   try {
   let user_id = req.params.user_id;
-    let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, 
+    let sql = `SELECT review.review_id, review.review, review.review_date, review.user_id, review.album_id, rating,
     album.album_image, album.album_name, user.username, user.user_image from review 
     INNER JOIN album ON review.album_id = album.album_id
-    INNER JOIN user ON review.user_id = ${user_id} and user.user_id = ${user_id} order by review_date desc`;
+    INNER JOIN user ON review.user_id = ${user_id} and user.user_id = ${user_id}`;
     // let sqlNoReview = `SELECT album_id, album_name, record_label, album_image FROM album WHERE album_id = ${album_id}`
     connection.query(sql, (error, results) => {
       console.log(sql)
@@ -84,7 +85,8 @@ reviewsController.save = ((req, res) => {
   console.log(review)
   let user_id = req.params.user_id;
   let album_id = req.params.album_id;
-  let sql = `INSERT INTO review (review, user_id, album_id) values ('${review}', ${user_id}, ${album_id});`;
+  let rating = req.body.rating
+  let sql = `INSERT INTO review (review, user_id, album_id, rating) values ('${review}', ${user_id}, ${album_id}, ${rating});`;
   console.log(sql)
   connection.query
   if (token) {

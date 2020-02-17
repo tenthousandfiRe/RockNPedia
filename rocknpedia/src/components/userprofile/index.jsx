@@ -1,4 +1,5 @@
 import React from "react";
+import StarRatings from 'react-star-ratings';
 import "./style.css";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
@@ -10,72 +11,14 @@ import ReactHtmlParser from 'react-html-parser'
 import { API_URL, defaultBandImage } from "../../constants";
 import { IBand } from "../../interfaces/IBand";
 import Swal from 'sweetalert2';
-import Unfollow from '../unfollowIcon/'
+import Unfollow from '../unfollowIcon'
 const URL_images = `${API_URL}/avatars/`;
 
-interface IGlobalStateProps {
-  bands: IBand[]
-  band: IBand
-  account: IAccount | any;
+class UserProfile extends React.PureComponent {
 
 
-}
-
-interface IProps {
-  history: any;
-}
-
-interface IreviewsBD {
-  review_id: number;
-  review: string;
-  review_date: string;
-  user_id: number;
-  album_name: string;
-  album_id: number;
-  album_image: string | null;
-  username: string;
-  user_image: string;
-}
-
-interface IBandsLikeBD {
-  band_id: number
-  band_image: string
-  name: string
-}
-
-interface IGlobalActionProps {
-  setBand(band: IBand): void;
-  uploadAvatar(id: number): void;
-  setAccount(account: any): void;
-  history: any;
-}
-type TProps = IGlobalStateProps & IGlobalActionProps & IProps;
-
-interface IState {
-  username: string;
-  user_image: string;
-  rol: string;
-  error: string;
-  is_admin: number;
-  bandsLikes: IBandsLikeBD[];
-  reviews: IreviewsBD[];
-  followers: IFollowersBD[];
-  showFullReview: string;
-  currentPage: number;
-  reviewsShowed: number[]
-}
-
-interface IFollowersBD {
-  user_image: string;
-  user_id: number;
-  username: string;
-}
-
-class UserProfile extends React.PureComponent<TProps, IState> {
-
-
-  inputFileRef: React.RefObject<HTMLInputElement>;
-  constructor(props: TProps) {
+  inputFileRef;
+  constructor(props) {
     super(props);
     this.inputFileRef = React.createRef();
     this.onUsernameChange = this.onUsernameChange.bind(this);
@@ -93,31 +36,32 @@ class UserProfile extends React.PureComponent<TProps, IState> {
       followers: [],
       currentPage: 1,
       showFullReview: "reviewDiv",
-      reviewsShowed: []
+      reviewsShowed: [],
+      rating: 1
     };
 
     this.changeReviewClassName = this.changeReviewClassName.bind(this)
 
   }
 
-  changeReviewClassName(e: any) {
+  changeReviewClassName(e) {
     const { reviewsShowed } = this.state;
     let id_e = e.target.getAttribute("meta-id");
 
     const flag = reviewsShowed.find((reviewShowedId) => {
-      return Number(reviewShowedId)  === Number(id_e);
+      return Number(reviewShowedId) === Number(id_e);
     });
     console.log(flag)
 
     if (flag) {
       let newState = reviewsShowed;
       newState.pop();
-      this.setState({ reviewsShowed: [...newState]})
+      this.setState({ reviewsShowed: [...newState] })
 
     } else {
       let newState = reviewsShowed;
-      newState.push(id_e as number);
-      this.setState({ reviewsShowed: [...newState]})
+      newState.push(id_e);
+      this.setState({ reviewsShowed: [...newState] })
     }
 
   }
@@ -162,12 +106,12 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     });
   }
 
-  onUsernameChange(event: any) {
+  onUsernameChange(event) {
     const username = event.target.value;
     this.setState({ username, error: "" });
   }
 
-  onRolChange(event: any) {
+  onRolChange(event) {
     const rol = event.target.selectedOptions[0].value;
     console.log(event.target.selectedOptions[0].value);
     this.setState({ rol, error: "  " });
@@ -243,7 +187,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     }
   }
 
-  bandView(band_id?: number) {
+  bandView(band_id) {
     myFetch({ path: `/bands/${band_id}` }).then(json => {
       this.props.setBand(json)
     })
@@ -384,13 +328,21 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                 data-parent="#accordionExample"
               >
                 <div className="card-body reviews">
-                  {reviews.slice(reviewToShowPosition, reviewToShowPosition + reviewsPerPage).map(({ review_id, review, review_date, album_name, album_image }) => (reviews ?
+                  {reviews.slice(reviewToShowPosition, reviewToShowPosition + reviewsPerPage).map(({ review_id, review, review_date, album_name, album_image, rating }) => (reviews ?
                     <div className="row">
                       <div className="col-2 justify-content-center mt-2 mb-5"> <img
                         src={album_image ? URL_images + album_image : defaultBandImage}
                       ></img>
                         <div className="d-block justify-content-left mt-2 mb-3 p-0">
                           <div><h5>{album_name}</h5></div>
+                          <div><StarRatings
+                            starDimension="15px"
+                            starSpacing="1px"
+                            rating={rating}
+                            starRatedColor="red"
+                            numberOfStars={6}
+                            name='rating'
+                          /></div>
                           <span>{new Date(review_date).toLocaleString()}</span></div>
                       </div>
                       <div className={`col-8 ${reviewsShowed.find((IdReviewShowed) => Number(IdReviewShowed) === Number(review_id)) ? "reviewDivFull" : "reviewDiv"}`}>
@@ -401,18 +353,18 @@ class UserProfile extends React.PureComponent<TProps, IState> {
                     : <p>No has hecho ninguna review aún</p>))}
                 </div>
                 <div>
-          {[...Array(totalPages)].map((_, num) => (
-            <button
-              className="paginationButtonProfileView"
-              key={num}
-              disabled={num + 1 === currentPage}
-              onClick={() => this.setState({ currentPage: num + 1 })}
-              >
-              {console.log(currentPage)}
-              {num + 1}
-            </button>
-          ))}
-        </div>
+                  {[...Array(totalPages)].map((_, num) => (
+                    <button
+                      className="paginationButtonProfileView"
+                      key={num}
+                      disabled={num + 1 === currentPage}
+                      onClick={() => this.setState({ currentPage: num + 1 })}
+                    >
+                      {console.log(currentPage)}
+                      {num + 1}
+                    </button>
+                  ))}
+                </div>
               </div>
               <div
                 id="collapseThree"
@@ -476,7 +428,7 @@ class UserProfile extends React.PureComponent<TProps, IState> {
     );
   }
 }
-const mapStateToProps = ({ account, band, bands }: IStore): IGlobalStateProps => ({
+const mapStateToProps = ({ account, band, bands }) => ({
   account,
   band,
   bands

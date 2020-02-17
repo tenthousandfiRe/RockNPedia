@@ -63,11 +63,11 @@ class SearchedBand extends React.PureComponent<TProps, IState> {
                       }}
                       onClick={() => this.bandView(band_id)}
                     >
-                      <h1 style={{}}>{name}</h1>
+                      <h1 className="h1SearchedBand">{name}</h1>
                     </div>                
                 ))
               ) : (
-                <div className="container-fluid">
+                <div className="container">
                   <h2 style={{ color: "white" }}>
                     Esta banda no existe, date de alta o loguéate y añádela
                   </h2>

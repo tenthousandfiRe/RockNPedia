@@ -53,8 +53,6 @@ bandsController.getBand = (req, res) => {
 //Query for searching a band 
 bandsController.searchBand = (req, res) => {
   const { name } = req.body;
-  console.log(name)
-  console.log("eeeeeeeeeeeeeeeeeeeee")
   let sql = `SELECT * FROM band WHERE name LIKE '%${name}%'`;
   console.log(sql)
   try {
@@ -95,7 +93,7 @@ bandsController.update = (req, res) => {
   let band_history = req.body.band_history;
   let band_image = req.file.filename;
   console.log(req.body)
-  let sql = `UPDATE band SET ${name ? `name='${name}',` : ""} ${foundation_year ? `foundation_year='${foundation_year}',` : ""}${band_image ? `band_image='${band_image}',` : ""}${band_history ? `band_history='${band_history}'` : ""} WHERE band_id=${band_id}`;
+  let sql = `UPDATE band SET name='${name}', foundation_year='${foundation_year}', band_image='${band_image}', band_history='${band_history}' WHERE band_id=${band_id}`;
   console.log(sql)
   if (token) {
     connection.query(

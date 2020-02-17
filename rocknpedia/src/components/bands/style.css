@@ -2,6 +2,9 @@
   text-align: center;
 }
 .divPadre h1 {
+  color: whitesmoke;
+}
+.divPadre .h1Image {
   margin-top: 20px;
   color: white;
   -webkit-text-stroke-width: 1.5px;

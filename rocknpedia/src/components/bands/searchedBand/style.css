@@ -1,50 +1,41 @@
 .cuerpo {
-  height: 400px !important; }
+  height: 400px !important;
+}
 
 #backAlb {
-  background-color: rgba(245, 245, 245, 0.808); }
+  background-color: rgba(245, 245, 245, 0.808);
+}
 
 .imgDiv {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
   background: 50%;
-  height: 200px; }
+  height: 200px;
+}
 
 .cursor {
-  cursor: pointer; }
+  cursor: pointer;
+}
 
-h1 {
+.h1SearchedBand {
   -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+          user-select: none;
   -webkit-text-stroke-width: 1.5px;
-  -webkit-text-stroke-color: black; }
-
-@-webkit-keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3); }
-  50% {
-    opacity: 1; } }
-
+  -webkit-text-stroke-color: black;
+}
 @keyframes zoomIn {
   from {
     opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3); }
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
   50% {
-    opacity: 1; } }
-
+    opacity: 1;
+  }
+}
 .zoomIn {
-  -webkit-animation-name: zoomIn;
-  animation-name: zoomIn; }
+  animation-name: zoomIn;
+}
 
 .animated {
-  -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both; }
+  animation-fill-mode: both;
+}

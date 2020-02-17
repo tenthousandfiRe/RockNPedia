@@ -1,8 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { IBand } from "../../../interfaces/IBand";
-import { IStore } from "../../../interfaces/IStore";
-import { IAccount } from "../../../interfaces/IAccount"
+import StarRatings from 'react-star-ratings';
 import { Link } from "react-router-dom";
 import CKEditor from 'ckeditor4-react';
 import { myFetch } from "../../../utils";
@@ -33,27 +31,38 @@ class BandDetails extends React.PureComponent {
       review: "",
       reviews: [],
       selectedAlbum: 0,
-      bandHistoryDiv: "historyBackgroundEditBand",
-      buttonShowMore: "más",
-      buttonClicked: false
+      rating: 1
+      // bandHistoryDiv: "historyBackgroundEditBand", // Not needed?
+      // buttonShowMore: "más",
+      // buttonClicked: false
     };
     this.inputFileRef = React.createRef();
     this.onAlbumNameChange = this.onAlbumNameChange.bind(this);
     this.onRecordLabelChange = this.onRecordLabelChange.bind(this);
     this.addAlbum = this.addAlbum.bind(this);
-    this.onMenuChange = this.onMenuChange.bind(this);
+    this.onChangeRating = this.onChangeRating.bind(this);
+    // this.onMenuChange = this.onMenuChange.bind(this);
 
   }
 
-  onMenuChange() { 
-    const { buttonShowMore, bandHistoryDiv } = this.state 
-    if (buttonShowMore === this.state.buttonShowMore) {
-      this.setState({buttonShowMore: "menos", bandHistoryDiv: "historyBackgroundEditBandFull"}) 
-    } if (buttonShowMore === "menos") {
-      this.setState({buttonShowMore: "más", bandHistoryDiv: "historyBackgroundEditBand"}) 
-    }
+  //   onMenuChange() { // feature finally left out of the appliccation 
+  //     const { buttonShowMore } = this.state 
+  //     if (buttonShowMore === this.state.buttonShowMore) {
+  //       this.setState({buttonShowMore: "menos", bandHistoryDiv: "historyBackgroundEditBandFull"}) 
+  //     } if (buttonShowMore === "menos") {
+  //       this.setState({buttonShowMore: "más", bandHistoryDiv: "historyBackgroundEditBand"}) 
+  //     }
 
-}
+  // }
+
+  onChangeRating(newRating) {
+    const { rating } = this.state
+    this.setState({
+      rating: newRating
+    });
+    console.log(rating)
+  }
+
 
   onAlbumNameChange(event) {
     const album_name = event.target.value;
@@ -82,7 +91,7 @@ class BandDetails extends React.PureComponent {
     this.props.history.push(`/`);
   }
 
-  removeAlbumAlert(album_id){
+  removeAlbumAlert(album_id) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -90,7 +99,7 @@ class BandDetails extends React.PureComponent {
       },
       buttonsStyling: true
     })
-    
+
     swalWithBootstrapButtons.fire({
       background: 'black',
       title: 'Estás seguro de borrar el álbum?',
@@ -108,7 +117,8 @@ class BandDetails extends React.PureComponent {
           background: 'black',
           title: 'Borrado!',
           text: 'El álbum ha sido borrado.',
-          icon: 'success'}
+          icon: 'success'
+        }
         )
       } else if (
         result.dismiss === Swal.DismissReason.cancel
@@ -116,14 +126,14 @@ class BandDetails extends React.PureComponent {
         swalWithBootstrapButtons.fire({
           background: 'black',
           title: 'Cancelado',
-          text:'Aquí no ha pasao ná',
+          text: 'Aquí no ha pasao ná',
           icon: 'error'
         }
-          
+
         )
       }
     })
-    
+
   }
 
   addAlbum() {
@@ -162,13 +172,18 @@ class BandDetails extends React.PureComponent {
     });
   }
 
+  selectScore(event) {
+    this.setState({ score: event.target.value });
+  }
+
+
 
 
   insertReview(album_id) {
-    const { review } = this.state;
+    const { review, rating } = this.state;
     const { user_id } = this.props.account
     const token = localStorage.getItem("token")
-    myFetch({ method: "POST", path: `/reviews/${user_id}/${album_id}`, token, json: { review } }).then(
+    myFetch({ method: "POST", path: `/reviews/${user_id}/${album_id}`, token, json: { review, rating } }).then(
       json => {
         if (json) {
         }
@@ -185,7 +200,7 @@ class BandDetails extends React.PureComponent {
         toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
     })
-    
+
     Toast.fire({
       icon: 'success',
       title: 'Review añadida!'
@@ -241,17 +256,19 @@ class BandDetails extends React.PureComponent {
     myFetch({ path: `/bands/${band_id}` }).then(json => {
       this.props.setBand(json);
     });
-    setTimeout(() => {myFetch({ path: `/bands/user_likes/${band_id}/${user_id}/`, token }).then(
-      json => {
-        if (json) {
-          if (json.length === 0) {
-            this.setState({ iconColor: "" });
-          } else {
-            this.setState({ iconColor: "red" });
+    setTimeout(() => {
+      myFetch({ path: `/bands/user_likes/${band_id}/${user_id}/`, token }).then(
+        json => {
+          if (json) {
+            if (json.length === 0) {
+              this.setState({ iconColor: "" });
+            } else {
+              this.setState({ iconColor: "red" });
+            }
           }
         }
-      }
-    )}, 1000)
+      )
+    }, 1000)
     this.getAlbum(band_id);
   }
 
@@ -262,181 +279,182 @@ class BandDetails extends React.PureComponent {
     const band_id = this.props.match.params.id;
     var token = localStorage.getItem("token");
     return (
-      
+
       <>
-      <div className="separationDiv" />
+        <div className="separationDiv" />
         <div className="container">
           <div className="row d-flex text-align-center">
-          <div className="col-12 bandDivsImage">
-            <img
-              src={band_image ? URL_bandupdate + band_image : defaultBandImage}
-              className="img"
-              alt="..."
-            ></img>
-            {token ? (
-              <div className="buttonsDiv">
-              <FontAwesomeIcon className="heartIcon" style={{ color: iconColor }} icon={faHeart} onClick={() => this.likesBand()} />
-              <button
-                type="button"
-                className="btn mt-3 buttonBandDetails"
-                onClick={() => this.bandEdit(band_id)}
-              >
-                Editar
-                  </button>
-              </div>
-            ) : ("")}
-          </div>
-          </div>
-          <div className="row d-flex text-align-center"> 
-          <div className="col-12 bandDivsInfo mt-5 mb-5">
-            <div className="col-12"><h1>{name}</h1>
-            <p>{foundation_year}</p></div>
-            {band_history ? (
-              <>
-              <div
-                className={bandHistoryDiv}
-                style={{ borderRadius: 20 }}
-              >
-                <p>{ReactHtmlParser(`${band_history}`)}</p>
-              </div>
-              <div><button className="ButtonShowMoreHistoryBand" onClick={this.onMenuChange}>Ver {buttonShowMore}</button></div>
-              </> 
-            ) : (
-                ""
-              )}
-          </div>
-          </div>
-            <div className="row d-flex text-align-center">
-            <div className="col-12 accordion" style={{marginBottom: "20px"}}id="accordionExample">
-            <div id="backie" className="card collapseColor">
-              <div
-                className="card-header d-flex justify-content-center backAlb"
-                id="headingOne"
-              >
-                <h2 className="mb-0">
+            <div className="col-12 bandDivsImage">
+              <img
+                src={band_image ? URL_bandupdate + band_image : defaultBandImage}
+                className="img"
+                alt="..."
+              ></img>
+              {token ? (
+                <div className="buttonsDiv">
+                  <FontAwesomeIcon className="heartIcon" style={{ color: iconColor }} icon={faHeart} onClick={() => this.likesBand()} />
                   <button
-                    className="btn btn-outline-dark mr-5"
                     type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseOne"
-                    aria-expanded="true"
-                    aria-controls="collapseOne"
+                    className="btn mt-3 buttonBandDetails"
+                    onClick={() => this.bandEdit(band_id)}
                   >
-                    <h5>Albumes</h5>
+                    Editar
                   </button>
-                  <button
-                    className="btn btn-outline-dark ml-5"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#collapseThree"
-                    aria-expanded="true"
-                    aria-controls="collapseThree"
-                  >
-                    <h5>Covers</h5>
-                  </button>
-                </h2>
-              </div>
-
-              <div
-                id="collapseOne"
-                className="collapse"
-                aria-labelledby="headingOne"
-                data-parent="#accordionExample"
-              >
-                <div className="card-body col-12 backgroundCollapse">
-                  <div className="  d-flex justify-content-end">
-                    <button
-                      className=" btn btn-outline-light"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
-                    >
-                      Añadir Album
-                    </button>
-                  </div>
+                </div>
+              ) : ("")}
+            </div>
+          </div>
+          <div className="row d-flex text-align-center">
+            <div className="col-12 bandDivsInfo mt-5 mb-5">
+              <div className="col-12"><h1>{name}</h1>
+                <p>{foundation_year}</p></div>
+              {band_history ? (
+                <>
                   <div
-                    className="modal fade"
-                    id="exampleModalCenter"
-                    role="dialog"
-                    aria-labelledby="exampleModalCenterTitle"
-                    aria-hidden="true"
+                    className="historyBackgroundEditBandFull"
+                    style={{ borderRadius: 20 }}
                   >
-                    <div
-                      className="modal-dialog modal-dialog-centered"
-                      role="document"
+                    <p>{ReactHtmlParser(`${band_history}`)}</p>
+                  </div>
+                  {/* <div><button className="ButtonShowMoreHistoryBand" onClick={this.onMenuChange}>Ver {buttonShowMore}</button></div> */}
+                </>
+              ) : (
+                  ""
+                )}
+            </div>
+          </div>
+          <div className="row d-flex text-align-center">
+            <div className="col-12 accordion" style={{ marginBottom: "20px" }} id="accordionExample">
+              <div id="backie" className="card collapseColor">
+                <div
+                  className="card-header d-flex justify-content-center backAlb"
+                  id="headingOne"
+                >
+                  <h2 className="mb-0">
+                    <button
+                      className="btn btn-outline-dark mr-5"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
                     >
-                      <div className="modal-content backModal">
-                        <div className="modal-header">
-                          <h5
-                            className="modal-title offset-4"
-                            id="exampleModalLongTitle"
-                          >
-                            Añade un Album!
+                      <h5>Albumes</h5>
+                    </button>
+                    <button
+                      className="btn btn-outline-dark ml-5"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#collapseThree"
+                      aria-expanded="true"
+                      aria-controls="collapseThree"
+                    >
+                      <h5>Covers</h5>
+                    </button>
+                  </h2>
+                </div>
+
+                <div
+                  id="collapseOne"
+                  className="collapse"
+                  aria-labelledby="headingOne"
+                  data-parent="#accordionExample"
+                >
+                  <div className="card-body col-12 backgroundCollapse">
+                    <div className="  d-flex justify-content-end">
+                      <button
+                        className=" btn btn-outline-light"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter"
+                      >
+                        Añadir Album
+                    </button>
+                    </div>
+                    <div
+                      className="modal fade"
+                      id="exampleModalCenter"
+                      role="dialog"
+                      aria-labelledby="exampleModalCenterTitle"
+                      aria-hidden="true"
+                    >
+                      <div
+                        className="modal-dialog modal-dialog-centered"
+                        role="document"
+                      >
+                        <div className="modal-content backModal">
+                          <div className="modal-header">
+                            <h5
+                              className="modal-title offset-4"
+                              id="exampleModalLongTitle"
+                            >
+                              Añade un Album!
                           </h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div className="modal-body">
-                          <div className="">
-                            <div className="card-content">
-                              <div className="form">
-                                <label className="label mb-3">
-                                  <strong>Nombre</strong>
-                                </label>
-                                <div className="control">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    value={album_name}
-                                    onChange={this.onAlbumNameChange}
-                                  />
-                                </div>
-                              </div>
-                              <div className="form-group">
-                                <label className="label mt-4 mb-4">
-                                  <strong>Sello Discografico</strong>
-                                </label>
-                                <div className="control">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    value={record_label}
-                                    onChange={this.onRecordLabelChange}
-                                  />
-                                </div>
-                              </div>
-                              <div className="field">
-                                <label className="label">
-                                  <strong>Imagen del Album!</strong>
-                                </label>
-                                <div className="control">
-                                  <div className="select">
+                            <button
+                              type="button"
+                              className="close"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div className="modal-body">
+                            <div className="">
+                              <div className="card-content">
+                                <div className="form">
+                                  <label className="label mb-3">
+                                    <strong>Nombre</strong>
+                                  </label>
+                                  <div className="control">
                                     <input
-                                      type="file"
-                                      ref={this.inputFileRef}
-                                    ></input>
+                                      className="form-control"
+                                      type="text"
+                                      value={album_name}
+                                      onChange={this.onAlbumNameChange}
+                                    />
                                   </div>
                                 </div>
-                              </div>
-                              <div className="field is-grouped">
-                                <div className="control">
-                                  <button
-                                    className="btn btn-outline-light mt-3 offset-5"
-                                    disabled={
-                                      album_name.length === 0 ||
-                                      record_label.length === 0
-                                    }
-                                    onClick={this.addAlbum}
-                                    data-dismiss="modal"
-                                  >
-                                    Guardar
+                                <div className="form-group">
+                                  <label className="label mt-4 mb-4">
+                                    <strong>Sello Discografico</strong>
+                                  </label>
+                                  <div className="control">
+                                    <input
+                                      className="form-control"
+                                      type="text"
+                                      value={record_label}
+                                      onChange={this.onRecordLabelChange}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="field">
+                                  <label className="label">
+                                    <strong>Imagen del Album!</strong>
+                                  </label>
+                                  <div className="control">
+                                    <div className="select">
+                                      <input
+                                        type="file"
+                                        ref={this.inputFileRef}
+                                      ></input>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="field is-grouped">
+                                  <div className="control">
+                                    <button
+                                      className="btn btn-outline-light mt-3 offset-5"
+                                      disabled={
+                                        album_name.length === 0 ||
+                                        record_label.length === 0
+                                      }
+                                      onClick={this.addAlbum}
+                                      data-dismiss="modal"
+                                    >
+                                      Guardar
                                   </button>
-                                  {this.state.error}
+                                    {this.state.error}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -444,123 +462,160 @@ class BandDetails extends React.PureComponent {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                  {albumes.map(
-                    ({ album_name, record_label, album_image, album_id }) => (
-                      <div className="card cuerpoCardAlbum mt-4 ml-5 mr-1 backAlb row ">
-                        <img
-                          className="card-img-top imgSize"
-                          src={
-                            album_image
-                              ? URL_bandupdate + album_image
-                              : defaultBandImage
-                          }
-                        />
+                    <div className="row">
+                      {albumes.map(
+                        ({ album_name, record_label, album_image, album_id }) => (
+                          <div className="card cuerpoCardAlbum mt-4 ml-5 mr-1 backAlb row ">
+                            <img
+                              className="card-img-top imgSize"
+                              src={
+                                album_image
+                                  ? URL_bandupdate + album_image
+                                  : defaultBandImage
+                              }
+                            />
 
-                        <div className="card-body">
-                          <h5 className="card-title">{album_name}</h5>
-                          <FontAwesomeIcon
-                            className="trashIcon d-flex float-right"
-                            icon={faTrashAlt}
-                            onClick={() => this.removeAlbumAlert(album_id)}
-                          />
-                          <p className="card-text">{record_label}</p>
-                          {token ? <a href="#" data-toggle="modal" onClick={() => this.setState({ selectedAlbum: album_id })} data-target="#Review" className="btn btn-outline-dark mr-2">
-                            Añadir review
+                            <div className="card-body">
+                              <h5 className="card-title">{album_name}</h5>
+                              {token ? <FontAwesomeIcon
+                                className="trashIcon d-flex float-right"
+                                icon={faTrashAlt}
+                                onClick={() => this.removeAlbumAlert(album_id)}
+                              /> : ""}
+                              <p className="card-text">{record_label}</p>
+                              {token ? <a href="#" data-toggle="modal" onClick={() => this.setState({ selectedAlbum: album_id })} data-target="#Review" className="btn btn-outline-dark mr-2">
+                                Añadir review
                           </a> : ""}
-                          <Link to={`/reviews/${album_id}`} className="btn btn-outline-dark">
-                            Ver reviews</Link>
-                        </div>
-                      </div>
-                    )
-                  )}
-                  </div>
-                </div>
-                <div className="control">
-                  <div class="modal fade" id="Review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content modalBackground">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Añade una review</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body justify-content-center">
-                          <CKEditor
-                            type="inline"
-                            style={{ borderBottom: "1px solid black"}}
-                            config={{
-                              toolbar: [['Bold', 'Italic', 'Cut', 'Copy', 'Paste']]
-                            }}
-                            data={review}
-                            onChange={e => this.onReviewChange(e)}
-                          />
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" className="btn btn-outline-dark mt-3 buttonsEditBand"
-                            data-dismiss="modal" onClick={() => this.insertReview(selectedAlbum)}>Guardar</button>
-                        </div>
-                      </div>
+                              <Link to={`/reviews/${album_id}`} className="btn btn-outline-dark">
+                                Ver reviews</Link>
+                            </div>
+                          </div>
+                        )
+                      )}
                     </div>
                   </div>
+                  <div className="control">
+                    <div class="modal fade" id="Review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content modalBackground">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Añade una review...</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body justify-content-center">
+                            <CKEditor
+                              type="inline"
+                              style={{ borderBottom: "1px solid black" }}
+                              config={{
+                                toolbar: [['Bold', 'Italic', 'Cut', 'Copy', 'Paste']]
+                              }}
+                              data={review}
+                              onChange={e => this.onReviewChange(e)}
+                            />
+                          </div>
+                          <div className="container">
+                            <div className="row">
+                              <div className="col-12">
+                                <h5>...y puntúalo</h5>
+                                <StarRatings
+                                  starDimension="30px"
+                                  starSpacing="5px"
+                                  rating={this.state.rating}
+                                  starRatedColor="red"
+                                  changeRating={this.onChangeRating}
+                                  numberOfStars={6}
+                                  name='rating'
+                                />
+                                {/* <select name="select" onChange={this.selectScore.bind(this)}>
+                                <option value="1" selected>1</option>
+                                <option value="1,5">1,5</option>
+                                <option value="2">2</option>
+                                <option value="2,5">2,5</option>
+                                <option value="3">3</option>
+                                <option value="3,5">3,5</option>
+                                <option value="4">4</option>
+                                <option value="4,5">4,5</option>
+                                <option value="5">5</option>
+                                <option value="5,5">5,5</option>
+                                <option value="6">6</option>
+                                <option value="6,5">6,5</option>
+                                <option value="7">7</option>
+                                <option value="7,5">7,5</option>
+                                <option value="8">8</option>
+                                <option value="8,5">8,5</option>
+                                <option value="9">9</option>
+                                <option value="9,5">9,5</option>
+                                <option value="10">10</option>
+                              </select> */}
 
-                </div>
-              </div>
-              <div
-                className="modal fade"
-                id="EditModalAlbum"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title">Modal title</h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" className="btn btn-outline-dark mt-3 buttonsEditBand"
+                              data-dismiss="modal" onClick={() => this.insertReview(selectedAlbum)}>Guardar</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="modal-body">...</div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Close
+
+                  </div>
+                </div>
+                <div
+                  className="modal fade"
+                  id="EditModalAlbum"
+                  role="dialog"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">Modal title</h5>
+                        <button
+                          type="button"
+                          className="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">...</div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Close
                       </button>
-                      <button type="button" className="btn btn-primary">
-                        Save changes
+                        <button type="button" className="btn btn-primary">
+                          Save changes
                       </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                id="collapseThree"
-                className="collapse"
-                aria-labelledby="headingTwo"
-                data-parent="#accordionExample"
-              >
-                <div className="card-body">
-                  <Youtube/>
-                  
+                <div
+                  id="collapseThree"
+                  className="collapse"
+                  aria-labelledby="headingTwo"
+                  data-parent="#accordionExample"
+                >
+                  <div className="card-body">
+                    <Youtube />
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          </div>
-          
+
         </div>
-        
+
       </>
     );
   }
