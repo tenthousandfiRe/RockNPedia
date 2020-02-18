@@ -1,0 +1,166 @@
+.divPadre {
+  text-align: center;
+}
+.divPadre h2 {
+  color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+.divPadre h3 {
+  margin-top: 20px;
+  color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+.divPadre .mainVideoDiv {
+  height: 100px;
+}
+.divPadre .VideoMainPage {
+  height: 1000px;
+  width: 1000px;
+}
+.divPadre .video {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  z-index: 1;
+  overflow: hidden;
+  color: #E3E3E3;
+}
+.divPadre .imgDiv {
+  height: 335px;
+  animation: appear 1s;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: 55%;
+  background-position: center;
+}
+.divPadre .imgDiv .imgDiv:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.divPadre .reviewCard {
+  position: relative;
+  text-align: left;
+  height: 133px;
+  background-color: rgba(245, 245, 245, 0.89);
+  padding: 5px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  line-height: 1.6;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: height 2s;
+}
+.divPadre .reviewCard p {
+  color: black !important;
+}
+.divPadre p {
+  color: white;
+}
+
+.bandDivs {
+  background-color: rgba(245, 245, 245, 0.89);
+  margin-top: 40px;
+  height: 150px;
+}
+
+.imageAdjust {
+  justify-content: left;
+}
+
+.boton {
+  color: black !important;
+  border-color: black !important;
+}
+
+.boton:hover {
+  color: white !important;
+  border-color: white !important;
+}
+
+.cuerpo {
+  height: 400px !important;
+}
+
+.paginationButtonsDiv {
+  margin-left: 150px;
+}
+
+#out {
+  background-color: unset !important;
+}
+
+@media only screen and (max-width: 576px) {
+  .imgDiv {
+    margin-right: 20px;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: auto 100% !important;
+    margin-top: 90px;
+    min-height: 150px !important;
+    max-height: 150px !important;
+    max-width: 150px !important;
+    min-width: 150px !important;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .imgDiv {
+    margin-right: 40px;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: auto 100% !important;
+    margin-top: 70px;
+    min-height: 150px !important;
+    max-height: 150px !important;
+    max-width: 150px !important;
+    min-width: 150px !important;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .albumImage {
+    width: 100px !important;
+    height: 100px;
+  }
+
+  .reviewCard {
+    display: none;
+    font-size: 14px;
+    justify-content: center;
+    height: 100px !important;
+    margin-right: 20px;
+  }
+
+  .reviewsButton {
+    margin-left: 5px;
+  }
+
+  .divReview {
+    margin-left: 20px;
+  }
+
+  .revi {
+    display: none !important;
+  }
+}

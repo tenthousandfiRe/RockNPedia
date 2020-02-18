@@ -1,0 +1,27 @@
+.sombreado:hover {
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 10px 10px 5px 0px #6084AD;
+  transform: scale(1.1);
+}
+
+.imagenescalada:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.zoomIn {
+  animation-name: zoomIn;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}

@@ -1,0 +1,84 @@
+.ReviewsContainer {
+  text-align: center;
+}
+.ReviewsContainer h2 {
+  color: white;
+}
+.ReviewsContainer h3 {
+  color: white;
+}
+.ReviewsContainer .albumImage {
+  width: 300px;
+  height: 300px;
+  margin: 50px;
+  border-radius: 5px;
+}
+.ReviewsContainer .reviewCard {
+  position: relative;
+  text-align: left;
+  height: 133px;
+  background-color: rgba(245, 245, 245, 0.89);
+  padding: 6px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  line-height: 1.6;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: height 2s;
+}
+.ReviewsContainer .reviewCardFull {
+  background-color: rgba(245, 245, 245, 0.89);
+  position: relative;
+  text-align: left;
+  height: Auto;
+  transition: height 2s;
+  white-space: initial;
+  padding: 6px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  line-height: 1.6;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ReviewsContainer .reviewCardFull p {
+  margin-top: 10;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.userInfo {
+  vertical-align: middle;
+  margin-top: 85px;
+  float: right;
+  font-size: 12px;
+  margin-bottom: 0;
+  text-align: center;
+  justify-content: center;
+}
+.userInfo img {
+  width: 50px;
+  height: 50px;
+}
+.userInfo p {
+  color: white !important;
+}
+
+.paginationButton {
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(245, 245, 245, 0.89);
+  margin: 5px;
+}
+
+.ButtonShowMore {
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(245, 245, 245, 0.89);
+  margin: 5px;
+  display: flex;
+  float: right;
+}

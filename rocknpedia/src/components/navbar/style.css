@@ -1,0 +1,51 @@
+nav {
+  background-color: rgba(0, 0, 0, 0.459) !important;
+  position: fixed !important;
+  z-index: 9999;
+  box-shadow: 0px 23px 12px -23px white;
+}
+
+.boton {
+  color: white !important;
+  border-color: white !important;
+}
+
+.modalIndex {
+  background-color: rgba(0, 0, 0, 0.904);
+  color: white;
+}
+
+.light {
+  color: white;
+}
+
+.marcoNav {
+  border-radius: 40%;
+}
+
+.logo {
+  height: 50px;
+  width: 100px;
+}
+
+.searchBar {
+  background: unset;
+  border: unset;
+  border-bottom: solid 1px white;
+  border-bottom-right-radius: 0;
+}
+
+.logoUser {
+  margin-top: 2px;
+  height: 50px !important;
+  width: 60px !important;
+}
+
+.botonSearch {
+  color: white;
+  height: 100%;
+}
+
+.botonSearch:hover {
+  color: black !important;
+}

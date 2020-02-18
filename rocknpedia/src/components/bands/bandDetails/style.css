@@ -1,0 +1,136 @@
+.bandDivsImage {
+  display: flex;
+  margin-top: 40px;
+  width: 900px;
+  justify-content: center;
+  position: relative; }
+  .bandDivsImage img {
+    width: 40%; }
+  .bandDivsImage .buttonsDiv {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .bandDivsImage .buttonsDiv .heartIcon {
+      margin-right: 15px;
+      font-size: 50px;
+      position: relative;
+      bottom: -300px;
+      left: -130px; }
+    .bandDivsImage .buttonsDiv .buttonBandDetails {
+      background-color: rgba(245, 245, 245, 0.904);
+      color: black !important;
+      border-radius: 150%;
+      height: 80px;
+      width: 80px;
+      position: relative;
+      bottom: -300px;
+      right: -160px; }
+    .bandDivsImage .buttonsDiv .buttonBandDetails:hover {
+      background-color: rgba(68, 68, 68, 0.904);
+      color: white !important; }
+
+.bandDivsInfo {
+  color: whitesmoke !important;
+  height: 100%;
+  width: 900px;
+  text-align: center; }
+
+.historyBackgroundEditBand {
+  color: black;
+  position: relative;
+  text-align: left;
+  height: 133px;
+  background-color: rgba(245, 245, 245, 0.89);
+  padding: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  line-height: 1.6;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-transition: height 2s;
+  -o-transition: height 2s;
+  transition: height 2s; }
+  .historyBackgroundEditBand p {
+    margin-top: 10;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 15px; }
+
+.historyBackgroundEditBandFull {
+  color: black;
+  background-color: rgba(245, 245, 245, 0.89);
+  position: relative;
+  text-align: left;
+  height: Auto;
+  -webkit-transition: height 2s;
+  -o-transition: height 2s;
+  transition: height 2s;
+  white-space: initial;
+  padding: 10px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  line-height: 1.6;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden; }
+  .historyBackgroundEditBandFull p {
+    margin-top: 10;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 15px; }
+
+.cuerpoCardAlbum {
+  width: 18rem; }
+
+.backgroundCollapse {
+  background-color: none !important;
+  border: none !important; }
+
+.trashIcon {
+  font-size: 20px; }
+
+#pruebita {
+  background-color: unset !important;
+  border: none !important; }
+
+.backAlb {
+  background-color: rgba(245, 245, 245, 0.767); }
+
+.imgSize {
+  max-width: 290px;
+  max-height: 250px; }
+
+.backModal {
+  background-color: rgba(0, 0, 0, 0.904);
+  color: white; }
+
+.separationDiv {
+  height: 100px; }
+
+.ButtonShowMoreHistoryBand {
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(245, 245, 245, 0.89);
+  margin: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  float: right; }
+
+.imagenLogo {
+  background-repeat: no-repeat;
+  background-size: 20% !important;
+  background-position: center; }

@@ -1,0 +1,42 @@
+.cuerpo {
+  height: 400px !important;
+}
+
+#backAlb {
+  background-color: rgba(245, 245, 245, 0.808);
+}
+
+.imgDiv {
+  flex-direction: column;
+  background-size: 100%;
+  height: 400px;
+  background-repeat: no-repeat;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.h1SearchedBand {
+  -webkit-user-select: none;
+          user-select: none;
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: black;
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.zoomIn {
+  animation-name: zoomIn;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}

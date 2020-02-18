@@ -1,0 +1,165 @@
+.bandDivsImage {
+    display: flex;
+    margin-top: 40px;
+    width: 900px;
+    justify-content: center;
+    position: relative; 
+
+
+    img{
+        // border-radius: 50%;
+        width: 40%;
+        
+    }
+
+    .buttonsDiv{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
+        align-items: center;
+
+        .heartIcon{
+            margin-right: 15px;
+            font-size: 50px;
+            position: relative; 
+            bottom: -300px; 
+            left: -130px;
+        }
+
+        .buttonBandDetails {
+            background-color: rgba(245, 245, 245, 0.904);
+            color: black !important;
+            border-radius: 150%;
+            height: 80px;
+            width: 80px;
+            position: relative; 
+            bottom: -300px; 
+            right: -160px;
+        }
+        
+        .buttonBandDetails:hover {
+            background-color: rgba(68, 68, 68, 0.904);
+            color: white !important;
+        }
+    }
+   
+}
+.bandDivsInfo {
+    color: whitesmoke !important;
+    height: 100%;
+    width: 900px;
+    text-align:center;
+}
+
+
+.historyBackgroundEditBand {
+    color: black;
+    position: relative;
+    text-align: left;
+    height: 133px;
+    background-color: rgba(245, 245, 245, 0.89);
+    padding: 10px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+line-height: 1.6;
+-webkit-line-clamp: 10;
+-webkit-box-orient: vertical;
+overflow: hidden;
+transition: height 2s;
+
+    p{
+    margin-top: 10;
+    text-overflow: ellipsis;
+    overflow: hidden;  
+    font-size: 15px;    
+
+    
+}
+}
+
+.historyBackgroundEditBandFull {
+    color: black;
+    background-color: rgba(245, 245, 245, 0.89);
+    position: relative;
+    text-align: left;
+    height: Auto;
+    transition: height 2s;
+    white-space: initial;
+    padding: 10px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+line-height: 1.6;
+-webkit-line-clamp: 10;
+-webkit-box-orient: vertical;
+overflow: hidden;
+
+    p{
+    margin-top: 10;
+    text-overflow: ellipsis;
+    overflow: hidden;  
+    font-size: 15px;    
+
+    
+}
+}
+
+.cuerpoCardAlbum{
+    width: 18rem;
+}
+
+.backgroundCollapse {
+    background-color: none !important;
+    border: none !important;
+}
+
+
+
+.trashIcon{
+    // margin-top: 15px;
+    // margin-left: 128px;
+    font-size: 20px;
+}
+
+#pruebita{
+    background-color: unset !important;
+    border: none !important;
+    
+    
+}
+.backAlb{
+    background-color: rgba(245, 245, 245, 0.767);    
+}
+
+.imgSize {
+    max-width: 290px;
+    max-height: 250px;
+}
+
+
+.backModal {
+    background-color: rgba(0, 0, 0, 0.904);
+    color: white;
+    
+}
+
+.separationDiv {
+    height: 100px;
+}
+
+.ButtonShowMoreHistoryBand{
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(245, 245, 245, 0.89);
+    margin: 5px;
+    display: flex;
+    float: right;
+}
+
+.imagenLogo {
+    background-repeat: no-repeat;
+        background-size: 20% !important;
+        background-position: center;
+}
