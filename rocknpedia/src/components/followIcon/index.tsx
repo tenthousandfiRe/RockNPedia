@@ -2,7 +2,6 @@ import React from "react";
 import { myFetch } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { API_URL } from "../../constants";
 import { connect } from "react-redux";
 import { IStore } from "../../interfaces/IStore";
 import { IAccount } from "../../interfaces/IAccount";

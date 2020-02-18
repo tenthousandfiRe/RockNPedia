@@ -7,8 +7,6 @@ import { SetAccountAction } from "./redux/actions";
 import { IStore } from "./interfaces/IStore";
 import { IAccount } from "./interfaces/IAccount";
 import { generateAccountFromToken } from "./utils";
-import Login from './components/login/index'
-import Register from "./components/register";
 import Navbar from "./components/navbar";
 import Bands from "./components/bands/";
 import BandDetails from "./components/bands/bandDetails/";
@@ -44,15 +42,9 @@ class App extends React.PureComponent<TProps> {
     }
   }
   render() {
-    const { account } = this.props;
-    const { band } = this.props
-    const { band_id } = band
     return <>
       <BrowserRouter>
         <Route path='/' component={Navbar} />
-        {/* <Route path='/' component={Login} /> */}
-        {/* <Route path='/' component={Register} /> */}
-        {/* <Route path='/' exact component={Reviews} /> */}
         <Route path='/insertBand' exact component={InsertBand} />
         <Route path='/' exact component={Bands} />
         <Route path='/bands/:id' exact component={BandDetails} />

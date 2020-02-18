@@ -9,6 +9,7 @@ import Register from "../register/index";
 import "./style.css";
 import { generateAccountFromToken } from "../../utils";
 import { IBand } from "../../interfaces/IBand";
+
 interface IGlobalStateProps {
   account: IAccount;
 }

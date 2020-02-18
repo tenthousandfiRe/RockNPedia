@@ -5,12 +5,9 @@ import { IAccount } from "../../interfaces/IAccount";
 import { myFetch, generateAccountFromToken } from "../../utils";
 import { SetAccountAction, SetUsersAction } from "../../redux/actions";
 import "./style.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { IUser } from "../../interfaces/IUsers";
 import { API_URL } from "../../constants";
 import { defaultBandImage } from "../../constants";
-import  FollowIcon   from "../followIcon/index";
+import FollowIcon from "../followIcon/index";
 const URL_images = `${API_URL}/avatars/`;
 
 interface IGlobalStateProps {

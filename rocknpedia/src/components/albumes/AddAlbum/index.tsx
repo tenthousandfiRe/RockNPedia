@@ -20,7 +20,6 @@ interface IState {
 
 class AlbumEdit extends React.PureComponent<IProps, IState> {
   componentDidMount() {  
-    // this.getAlbum();
   }
   constructor(props: IProps) { 
     
@@ -33,12 +32,11 @@ class AlbumEdit extends React.PureComponent<IProps, IState> {
     };
 
   
-    // this.getAlbum = this.getAlbum.bind(this);
   }
 
 
   render() {
-    const { name, record_label, album_image } = this.state;
+    const { name, record_label } = this.state;
     return (
       <>
       <div className="container">

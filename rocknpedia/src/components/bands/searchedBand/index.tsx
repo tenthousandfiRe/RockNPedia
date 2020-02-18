@@ -48,10 +48,8 @@ class SearchedBand extends React.PureComponent<TProps, IState> {
         <div className="separationDiv"></div>
         <div className="container">
           <div className="row d-flex justify-content-center">
-            
               {bands.length !== 0 ? (
                 bands.map(({ band_id, name, band_image }) => (
-                  
                     <div
                       className="col-3 imgDiv d-flex justify-content-center float-left mb-5 mr-5 ml-5 cursor animated zoomIn"
                       style={{
@@ -63,7 +61,6 @@ class SearchedBand extends React.PureComponent<TProps, IState> {
                       }}
                       onClick={() => this.bandView(band_id)}
                     >
-                      {/* <h1 className="h1SearchedBand">{name}</h1> */}
                     </div>                
                 ))
               ) : (

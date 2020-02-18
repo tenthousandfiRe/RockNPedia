@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactHtmlParser from 'react-html-parser';
 import Swal from 'sweetalert2'
 import Youtube from '../../Youtube'
-import Spotify from '../../Spotify/App'
 const URL_bandupdate = `${API_URL}/avatars/`;
 
 class BandDetails extends React.PureComponent {
@@ -48,7 +47,6 @@ class BandDetails extends React.PureComponent {
     this.setState({
       rating: newRating
     });
-    console.log(rating)
   }
 
   onAlbumNameChange(event) {
@@ -152,7 +150,6 @@ class BandDetails extends React.PureComponent {
       path: `/bands/${band_id}/albumes`,
     }).then(json => {
       if (json) {
-        // const { name, record_label, album_image } = json;
         this.setState({ albumes: json });
       }
     });
@@ -200,7 +197,6 @@ class BandDetails extends React.PureComponent {
       path: `/reviews/${album_id}`,
     }).then(json => {
       if (json) {
-        // const { name, record_label, album_image } = json;
         this.setState({ reviews: json });
       }
     });
@@ -295,7 +291,6 @@ class BandDetails extends React.PureComponent {
                   >
                     <p>{ReactHtmlParser(`${band_history}`)}</p>
                   </div>
-                  {/* <div><button className="ButtonShowMoreHistoryBand" onClick={this.onMenuChange}>Ver {buttonShowMore}</button></div> */}
                 </>
               ) : (
                   ""
@@ -341,13 +336,13 @@ class BandDetails extends React.PureComponent {
               >
                 <div className="card-body col-12" id="out">
                   <div className="d-flex justify-content-end">
-                    <button
+                    {token ? <button
                       className=" btn btn-outline-light"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
                     >
                       Añadir Album
-                    </button>
+                    </button> : ""}
                   </div>
                   <div
                     className="modal fade"
@@ -456,11 +451,11 @@ class BandDetails extends React.PureComponent {
 
                         <div className="card-body">
                           <h5 className="card-title">{album_name}</h5>
-                          <FontAwesomeIcon
+                          {token ? <FontAwesomeIcon
                             className="trashIcon d-flex float-right"
                             icon={faTrashAlt}
                             onClick={() => this.removeAlbumAlert(album_id)}
-                          />
+                          /> : ""}
                           <p className="card-text">{record_label}</p>
                           {token ? <a href="#" data-toggle="modal" onClick={() => this.setState({ selectedAlbum: album_id })} data-target="#Review" className="btn btn-outline-dark mr-2">
                             Añadir review

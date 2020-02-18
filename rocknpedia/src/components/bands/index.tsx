@@ -1,7 +1,6 @@
 import React from "react";
 import "./style.css";
 import { connect } from "react-redux";
-// import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
 import landingVideo from "../../assets/videos/rocknpedia.mp4"
 import { myFetch } from "../../utils";
 import { SetBandsAction, SetBandAction } from "../../redux/actions";
@@ -104,7 +103,6 @@ class Bands extends React.PureComponent<TProps, IState> {
               <h2 style={{marginTop: 50}}>Últimas bandas añadidas</h2>
               {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, name, band_image }) => (
                 <div className="imgDiv" onClick={() => this.bandView(band_id)} style={{ backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})` }}>
-                  {/* <h1>{name}</h1> */}
                 </div>
               ))}
               <div className="container-fluid">
