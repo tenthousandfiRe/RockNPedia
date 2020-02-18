@@ -102,7 +102,7 @@ class AlbumDetails extends React.PureComponent {
             starSpacing="5px"
             rating={average_rating}
             starRatedColor="red"
-            numberOfStars={6}
+            numberOfStars={5}
             name='rating'
           /></div>
           {reviews.slice(reviewToShowPosition, reviewToShowPosition + reviewsPerPage).map(({ review_id, review, review_date, username, user_image, rating }) => (review ?
@@ -120,7 +120,7 @@ class AlbumDetails extends React.PureComponent {
                     starSpacing="2px"
                     rating={rating}
                     starRatedColor="red"
-                    numberOfStars={6}
+                    numberOfStars={5}
                     name='rating'
                   /></div>
                   <p>{username}</p>

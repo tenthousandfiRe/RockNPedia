@@ -1,4 +1,3 @@
-const express = require("express");
 const connection = require("../config/db.js");
 const bandsController = {};
 //GET query for listing all the bands info
@@ -107,21 +106,6 @@ bandsController.update = (req, res) => {
     res.status(401).send("no puedes actualizarlo");
   }
 };
-// //Deleting one band
-// bandsController.delete2 = ((req, res) => {
-//   const { band_id } = req.params;
-//   try {
-//     const token = req.headers.authorization.replace("Bearer ", "");
-//     let sql = `DELETE from band WHERE band_id = ${band_id}`;
-//     if (token) {
-//       connection.query(sql, (error, results) => {
-//         if (error) console.log(error);
-//         res.send(results);
-//       });
-//     }
-//   } catch {
-//     res.sendStatus(401);
-//   }
-// });
+
 module.exports = bandsController;
 

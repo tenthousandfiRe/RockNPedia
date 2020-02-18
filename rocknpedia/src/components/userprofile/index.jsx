@@ -331,7 +331,7 @@ class UserProfile extends React.PureComponent {
                             starSpacing="1px"
                             rating={rating}
                             starRatedColor="red"
-                            numberOfStars={6}
+                            numberOfStars={5}
                             name='rating'
                           /></div>
                           <span>{new Date(review_date).toLocaleString()}</span></div>

@@ -9,8 +9,10 @@
 
 .imgDiv {
     flex-direction: column;
-    background: 50%;
-    height: 200px;
+    background-size: 100%;
+    height: 400px;
+    background-repeat: no-repeat;
+
 }
 
 .cursor {

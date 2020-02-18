@@ -1,56 +1,46 @@
 .divPadre {
     text-align: center;
-
-    h1{
-        margin-top: 20px;
+    h2 {
         color: white;
-        -webkit-text-stroke-width: 1.5px;
-   -webkit-text-stroke-color: black;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: black;
     }
 
+    h3{
+        margin-top: 20px;
+        color: white;
+        -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: black;
+    }
     .mainVideoDiv{
     height: 100px;
     }
-
     .VideoMainPage{
         height: 1000px;
         width: 1000px; 
     }
-
     .video {
         width: 100%;
         height: 100%;
         left: 0;
         z-index: 1;
         overflow: hidden;
-        color: #e3e3e3;
+        color: #E3E3E3;
     
     }
     
-
     .imgDiv {
-        // flex-direction: column;
-        // background: 50%;
-        // height: 200px;
-        // margin-top: 20px;
-        // margin-bottom: 20px;
-        // border-radius: 20px;
-        // animation-duration: 3s;
-        // border: solid 1px white;
-        height: 300px;
+        height: 335px;
         animation: appear 1s;
         cursor: pointer;
         background-repeat: no-repeat;
-        background-size: 40%;
+        background-size: 55%;
         background-position: center;
-
      
-
         .imgDiv:hover {
         transform: scale(1.1);
         transition: transform 0.3s ease-in-out;
         }
-
         @keyframes appear {
             0% {
               opacity: 0;
@@ -58,7 +48,6 @@
             100% {
               opacity: 1;
             }
-
             from {
                 opacity: 0;
                 -webkit-transform: scale3d(0.3, 0.3, 0.3);
@@ -71,7 +60,6 @@
           }
           
     }
-
         .reviewCard {
             position: relative;
             text-align: left;
@@ -87,20 +75,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
       transition: height 2s;
-
       p{
           color: black !important
       }
         }
-
         p{
             color: white
         }
 }
-
-
-
-
 .bandDivs {
     background-color: rgba(245, 245, 245, 0.89);
     margin-top: 40px;
@@ -110,45 +92,76 @@
 .imageAdjust {
     justify-content: left;
 }
-
 .boton {
     color: black !important;
     border-color: black !important;   
 }
-
 .boton:hover {
     color: white !important;
     border-color: white !important;   
 }
-
-
 .cuerpo {  
     height: 400px !important;
     
 }
-
 .paginationButtonsDiv{
     margin-left: 150px;
 }
-
-
 #out{
     background-color: unset !important;
-
 }
-
-
-@media only screen and (max-width: 768px ){
-
+@media only screen and (max-width: 576px ){
     .imgDiv {
     margin-right: 20px;
     background-repeat: no-repeat !important;
     background-position: center center!important;
     background-size: auto 100% !important;
-    min-height: 350px !important;
-    max-height: 450px !important;
-    max-width: 450px !important;
-    min-width: 350px !important;
+    margin-top: 90px;
+    min-height: 150px !important;
+    max-height: 150px !important;
+    max-width: 150px !important;
+    min-width: 150px !important;
     }
-
 }
+@media only screen and (max-width: 375px ){
+    .imgDiv {
+    margin-right: 40px;
+    background-repeat: no-repeat !important;
+    background-position: center center!important;
+    background-size: auto 100% !important;
+    margin-top: 70px;
+    min-height: 150px !important;
+    max-height: 150px !important;
+    max-width: 150px !important;
+    min-width: 150px !important;
+    }
+    
+    h2  {
+        font-size:20px ;
+        
+    }
+    .albumImage {
+        width: 100px !important;
+        height: 100px;
+        
+    }
+    .reviewCard {
+        display: none;
+        font-size: 14px;
+        justify-content: center;
+        height: 100px !important;
+        margin-right: 20px;
+    }
+    .reviewsButton {
+        margin-left: 5px;
+    }
+    .divReview {
+        margin-left: 20px;
+}
+.revi {
+    display: none !important;
+}
+}
+
+
+

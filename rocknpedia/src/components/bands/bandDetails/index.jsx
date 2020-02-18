@@ -504,7 +504,7 @@ class BandDetails extends React.PureComponent {
                                   rating={this.state.rating}
                                   starRatedColor="red"
                                   changeRating={this.onChangeRating}
-                                  numberOfStars={6}
+                                  numberOfStars={5}
                                   name='rating'
                                 />
                               </div>

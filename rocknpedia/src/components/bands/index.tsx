@@ -91,7 +91,7 @@ class Bands extends React.PureComponent<TProps, IState> {
     const { currentPage } = this.state;
     const { review, username, review_date, album_image, album_name, album_id } = this.state.review
     const { bands } = this.props
-    const bandsPerPage = 3;
+    const bandsPerPage = 2;
     const totalPages = Math.round(bands.length / bandsPerPage);
     const bandsToShowPosition = bandsPerPage * (currentPage - 1);
     return (
@@ -101,6 +101,7 @@ class Bands extends React.PureComponent<TProps, IState> {
           <div className="row">
             <div className="col-1"></div>
             <div className="col-5">
+              <h2 style={{marginTop: 50}}>Últimas bandas añadidas</h2>
               {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, name, band_image }) => (
                 <div className="imgDiv" onClick={() => this.bandView(band_id)} style={{ backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})` }}>
                   {/* <h1>{name}</h1> */}
@@ -124,10 +125,10 @@ class Bands extends React.PureComponent<TProps, IState> {
                 </div>
               </div>
             </div>
-            <div className="col-5"><h1>Última review añadida por {username}</h1>
-            <p>{new Date(review_date).toLocaleString()}</p>
+            <div className="col-5" style={{marginTop: 50}}><h2>Última review añadida por el usuario {username}</h2>
+              <p>{new Date(review_date).toLocaleString()}</p>
               <img
-              style={{width: 200}}
+                style={{ width: 200 }}
                 src={album_image ? URL_images + album_image : defaultBandImage}
                 className="albumImage"
               ></img>
@@ -136,8 +137,9 @@ class Bands extends React.PureComponent<TProps, IState> {
                 <p>{ReactHtmlParser(`${review}`)}</p>
               </div>
               <Link to={`/reviews/${album_id}`} className="btn btn-outline-light">
-                  Ver reviews</Link>
-                  </div>
+                Ver reviews</Link>
+            </div>
+           
 
           </div>
         </div>
