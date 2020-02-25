@@ -74,7 +74,6 @@ class EditBand extends React.PureComponent {
         this.setState({
             band_history: e.editor.getData()
         });
-        console.log(this.state.band_history);
     }
 
 
@@ -87,7 +86,6 @@ class EditBand extends React.PureComponent {
 
     componentDidMount() {
         const band_id = this.props.match.params.id
-        console.log(band_id)
         myFetch({ path: `/bands/${band_id}` }).then(json =>
             this.props.setBand(json)
         )
