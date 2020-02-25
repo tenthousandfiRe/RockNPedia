@@ -29,7 +29,6 @@ followController.get = ((req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
     let user_id = req.params.user_id;
     let sql = `SELECT username, user.user_id, user_image FROM user JOIN followers WHERE followers.follow_id = user.user_id and followers.user_id = ${user_id};`;
-    console.log(sql)
     connection.query
     if (token) {
         connection.query(
@@ -48,7 +47,6 @@ followController.get = ((req, res) => {
 followController.unfollow = ((req, res) => {
     let { follow_id, user_id } = req.params;
     try {
-        console.log("entro en la query del delete")
         const token = req.headers.authorization.replace("Bearer ", "");
         let sql = `DELETE FROM followers WHERE user_id = ${user_id} and follow_id = ${follow_id};`;
         

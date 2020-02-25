@@ -26,7 +26,7 @@ class Youtube extends PureComponent {
   }
 
 componentDidMount() {
-  setTimeout(() => {this.videoSearch(this.props.band.name + " concert")}, 1000);
+  setTimeout(() => {this.videoSearch(this.props.band.name)}, 1000);
   }
   
 

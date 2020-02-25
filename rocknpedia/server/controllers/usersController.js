@@ -74,8 +74,6 @@ usersController.list = (req, res) => {
 };
 
 usersController.save = (req, res, next) => {
-  console.log(req.body);
-  console.log("entro a la query");
   let username = req.body.username;
   let password = sha1(req.body.password);
   let is_admin = req.body.is_admin;
@@ -97,7 +95,6 @@ usersController.save = (req, res, next) => {
         connection.query(
           `SELECT user_id, username FROM user WHERE username = '${username}'`,
           (err, results) => {
-            console.log(results);
             res.send(results[0]);
           }
         );
@@ -132,20 +129,14 @@ usersController.listId = (req, res) => {
 };
 //HERE WE UPDATE USERS BY ID
 usersController.update = (req, res) => {
-  console.log("entroo")
   const { user_id } = req.params;
-
-  // console.log(user_id)
   let { is_admin, username, rol } = req.body;
   
   let user_image = req.file.filename;
   console.log(req.file.filename);
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
-    console.log(token)
-
     const { user_id } = jwt.verify(token, myKey)
-    console.log(user_id)
     connection.query(
       `UPDATE user SET? WHERE user_id = ${user_id};`,
       { is_admin, username, user_image, rol },
@@ -169,8 +160,6 @@ usersController.update = (req, res) => {
               res.send({
                 token
               });
-              // res.send(results[0]);
-              // console.log(results[0])
             }
           );
         }
@@ -211,26 +200,5 @@ usersController.delete = (req, res) => {
     res.sendStatus(401);
   }
 };
-
-// usersController.updateAvatar = (req, res) => {
-//   const avatar = req.file.filename;
-//   const token = req.headers.authorization.replace("Bearer ", "");
-//   const id = jwt.verify(token, myKey).user_id;
-//   let sql = `UPDATE user SET user_image = "${avatar}" where user_id = ${id}`;
-
-//   console.log("entro a la query");
-//   connection.query(sql, (error, results) => {
-//     console.log("entro al envio");
-//     if (error) console.log(error);
-//     res.send("the image has been upload");
-//     console.log(results);
-//   });
-
-// connection.query(sql, (error, results) => {
-//   if (error) console.log(error);
-//   res.send("/users");
-// });
-
-// response.sendStatus(200);
 
 module.exports = usersController;

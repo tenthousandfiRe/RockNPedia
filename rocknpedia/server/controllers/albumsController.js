@@ -35,7 +35,6 @@ albumsController.save = ((req, res) => {
   let album_image = req.file.filename;
   let band_id = req.params.band_id;
   let sql = `INSERT INTO album (album_name, record_label, album_image, band_id) VALUES ('${album_name}', '${record_label}', '${album_image}', ${band_id} )`;
-  console.log(sql)
   connection.query
   if (token) {
     connection.query(
@@ -52,42 +51,13 @@ albumsController.save = ((req, res) => {
 
 
 
-// //Update the band 
-// bandsController.update = (req, res) => {
-//   const { band_id } = req.params;
-//   let name = req.body.name;
-//   let foundation_year = req.body.foundation_year;
-//   let band_image = req.body.band_image;
-//   try {
-//     const token = req.headers.authorization.replace("Bearer ", "");
-//     // const Admin = jwt.verify(token, myKey).isAdmin;
-//     // const idUser = jwt.verify (token, myKey).id;
-//     let sql = `UPDATE band SET name = '${name}', foundation_year = ${foundation_year}, band_image = '${band_image}' WHERE (band_id = ${band_id})`;
-//     console.log(sql)
-//     if (token) {
-//       connection.query(sql, (error, results) => {
-//         if (error) console.log(error);
-//         res.send('banda actualizada');
-//       });
-//     }
-//     else {
-//       res.send(error)
-//     }
-
-//   } catch {
-//     res.sendStatus(401);
-//   }
-// };
-
 
 //Deleting one band
 albumsController.delete = ((req, res) => {
   const { album_id } = req.params;
-  console.log("aaaaaaaaaaaaaaaaaaaaaaa");
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     let sql = `DELETE from album WHERE album_id = ${album_id}`;
-    console.log(sql);
     if (token) {
       connection.query(sql, (error, results) => {
         if (error) console.log(error);

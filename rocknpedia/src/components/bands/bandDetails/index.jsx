@@ -469,16 +469,16 @@ class BandDetails extends React.PureComponent {
                   </div>
                 </div>
                 <div className="control">
-                  <div class="modal fade" id="Review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content modalBackground">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Añade una review</h5>
+                  <div className="modal fade" id="Review" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                      <div className="modal-content modalBackground">
+                        <div className="modal-header">
+                          <h5 className="modal-title" id="exampleModalLabel">Añade una review</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
-                        <div class="modal-body justify-content-center">
+                        <div className="modal-body justify-content-center">
                           <CKEditor
                             type="inline"
                             style={{ borderBottom: "1px solid black"}}

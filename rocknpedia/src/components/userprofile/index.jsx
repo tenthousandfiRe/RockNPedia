@@ -362,12 +362,12 @@ class UserProfile extends React.PureComponent {
                 aria-labelledby="headingTwo"
                 data-parent="#accordionExample"
               >
-                <div className="card-body container">
+                <div className="card-body">
                   {bandsLikes.map(({ band_id, name, band_image }) => (
                     <div className="col-md-6 d-flex justify-content-center mt-2 mb-5 float-left">
                       <div className="row">
                         <img style={{ width: 100, height: 100, borderRadius: 50 }} src={band_image ? URL_images + band_image : defaultBandImage} className="card-img" alt="..."></img>
-                        <a onClick={() => this.bandView(band_id)} style={{ height: 40, width: 200 }} className="btn btn-outline-dark boton ml-4 mt-5">{name}</a>
+                        <a onClick={() => this.bandView(band_id)} style={{ height: 40, width: 200, display: "block", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} className="btn btn-outline-dark boton ml-4 mt-5">{name}</a>
                       </div>
 
                     </div>

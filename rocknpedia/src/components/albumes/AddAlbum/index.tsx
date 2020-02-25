@@ -4,11 +4,6 @@ import "./style.css";
 import {match, RouteComponentProps} from "react-router-dom"
 
 
-interface IProps {
-}
-
-
-
 interface IState {
   name: "",
   record_label: "",
@@ -16,12 +11,10 @@ interface IState {
 }
 
 
-
-
-class AlbumEdit extends React.PureComponent<IProps, IState> {
+class AlbumEdit extends React.PureComponent<any, IState> {
   componentDidMount() {  
   }
-  constructor(props: IProps) { 
+  constructor(props: any) { 
     
     super(props);
 

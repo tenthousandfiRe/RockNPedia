@@ -100,8 +100,8 @@ class Bands extends React.PureComponent<TProps, IState> {
           <div className="row">
             <div className="col-1"></div>
             <div className="col-5">
-              <h2 style={{marginTop: 50}}>Últimas bandas añadidas</h2>
-              {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, name, band_image }) => (
+              <h2 style={{marginTop: 50}}>Ya en Rock 'N' Pedia</h2>
+              {bands.slice(bandsToShowPosition, bandsToShowPosition + bandsPerPage).map(({ band_id, band_image }) => (
                 <div className="imgDiv" onClick={() => this.bandView(band_id)} style={{ backgroundImage: `url(${band_image ? URL_images + band_image : defaultBandImage})` }}>
                 </div>
               ))}
